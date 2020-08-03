@@ -24,45 +24,45 @@ FOUNDATION_EXPORT double AppAuthVersionNumber;
 //! Project version string for AppAuthFramework-iOS.
 FOUNDATION_EXPORT const unsigned char AppAuthVersionString[];
 
-#import <AppAuth/EkoOIDAuthState.h>
-#import <AppAuth/EkoOIDAuthStateChangeDelegate.h>
-#import <AppAuth/EkoOIDAuthStateErrorDelegate.h>
-#import <AppAuth/EkoOIDAuthorizationRequest.h>
-#import <AppAuth/EkoOIDAuthorizationResponse.h>
-#import <AppAuth/EkoOIDAuthorizationService.h>
-#import <AppAuth/EkoOIDError.h>
-#import <AppAuth/EkoOIDErrorUtilities.h>
-#import <AppAuth/EkoOIDExternalUserAgent.h>
-#import <AppAuth/EkoOIDExternalUserAgentRequest.h>
-#import <AppAuth/EkoOIDExternalUserAgentSession.h>
-#import <AppAuth/EkoOIDGrantTypes.h>
-#import <AppAuth/EkoOIDIDToken.h>
-#import <AppAuth/EkoOIDRegistrationRequest.h>
-#import <AppAuth/EkoOIDRegistrationResponse.h>
-#import <AppAuth/EkoOIDResponseTypes.h>
-#import <AppAuth/EkoOIDScopes.h>
-#import <AppAuth/EkoOIDScopeUtilities.h>
-#import <AppAuth/EkoOIDServiceConfiguration.h>
-#import <AppAuth/EkoOIDServiceDiscovery.h>
-#import <AppAuth/EkoOIDTokenRequest.h>
-#import <AppAuth/EkoOIDTokenResponse.h>
-#import <AppAuth/EkoOIDTokenUtilities.h>
-#import <AppAuth/EkoOIDURLSessionProvider.h>
-#import <AppAuth/EkoOIDEndSessionRequest.h>
-#import <AppAuth/EkoOIDEndSessionResponse.h>
+#import <AppAuth/OIDAuthState.h>
+#import <AppAuth/OIDAuthStateChangeDelegate.h>
+#import <AppAuth/OIDAuthStateErrorDelegate.h>
+#import <AppAuth/OIDAuthorizationRequest.h>
+#import <AppAuth/OIDAuthorizationResponse.h>
+#import <AppAuth/OIDAuthorizationService.h>
+#import <AppAuth/OIDError.h>
+#import <AppAuth/OIDErrorUtilities.h>
+#import <AppAuth/OIDExternalUserAgent.h>
+#import <AppAuth/OIDExternalUserAgentRequest.h>
+#import <AppAuth/OIDExternalUserAgentSession.h>
+#import <AppAuth/OIDGrantTypes.h>
+#import <AppAuth/OIDIDToken.h>
+#import <AppAuth/OIDRegistrationRequest.h>
+#import <AppAuth/OIDRegistrationResponse.h>
+#import <AppAuth/OIDResponseTypes.h>
+#import <AppAuth/OIDScopes.h>
+#import <AppAuth/OIDScopeUtilities.h>
+#import <AppAuth/OIDServiceConfiguration.h>
+#import <AppAuth/OIDServiceDiscovery.h>
+#import <AppAuth/OIDTokenRequest.h>
+#import <AppAuth/OIDTokenResponse.h>
+#import <AppAuth/OIDTokenUtilities.h>
+#import <AppAuth/OIDURLSessionProvider.h>
+#import <AppAuth/OIDEndSessionRequest.h>
+#import <AppAuth/OIDEndSessionResponse.h>
 
 #if TARGET_OS_TV
 #elif TARGET_OS_WATCH
 #elif TARGET_OS_IOS || TARGET_OS_MACCATALYST
-#import <AppAuth/EkoOIDAuthState+IOS.h>
-#import <AppAuth/EkoOIDAuthorizationService+IOS.h>
-#import <AppAuth/EkoOIDExternalUserAgentIOS.h>
-#import "AppAuth/EkoOIDExternalUserAgentCatalyst.h"
+#import <AppAuth/OIDAuthState+IOS.h>
+#import <AppAuth/OIDAuthorizationService+IOS.h>
+#import <AppAuth/OIDExternalUserAgentIOS.h>
+#import "AppAuth/OIDExternalUserAgentCatalyst.h"
 #elif TARGET_OS_MAC
-#import <AppAuth/EkoOIDAuthState+Mac.h>
-#import <AppAuth/EkoOIDAuthorizationService+Mac.h>
-#import <AppAuth/EkoOIDExternalUserAgentMac.h>
-#import <AppAuth/EkoOIDRedirectHTTPHandler.h>
+#import <AppAuth/OIDAuthState+Mac.h>
+#import <AppAuth/OIDAuthorizationService+Mac.h>
+#import <AppAuth/OIDExternalUserAgentMac.h>
+#import <AppAuth/OIDRedirectHTTPHandler.h>
 #else
 #error "Platform Undefined"
 #endif
