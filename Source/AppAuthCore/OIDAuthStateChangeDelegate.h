@@ -1,4 +1,4 @@
-/*! @file OIDAuthStateChangeDelegate.h
+/*! @file EkoOIDAuthStateChangeDelegate.h
     @brief AppAuth iOS SDK
     @copyright
         Copyright 2015 Google Inc. All Rights Reserved.
@@ -18,21 +18,21 @@
 
 #import <Foundation/Foundation.h>
 
-@class OIDAuthState;
+@class EkoOIDAuthState;
 
 NS_ASSUME_NONNULL_BEGIN
 
-/*! @protocol OIDAuthStateChangeDelegate
-    @brief Delegate of the OIDAuthState used to monitor various changes in state.
+/*! @protocol EkoOIDAuthStateChangeDelegate
+    @brief Delegate of the EkoOIDAuthState used to monitor various changes in state.
  */
-@protocol OIDAuthStateChangeDelegate <NSObject>
+@protocol EkoOIDAuthStateChangeDelegate <NSObject>
 
 /*! @brief Called when the authorization state changes and any backing storage needs to be updated.
-    @param state The @c OIDAuthState that changed.
+    @param state The @c EkoOIDAuthState that changed.
     @discussion If you are storing the authorization state, you should update the storage when the
         state changes.
  */
-- (void)didChangeState:(OIDAuthState *)state;
+- (void)didChangeState:(EkoOIDAuthState *)state;
 
 @end
 

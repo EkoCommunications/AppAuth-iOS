@@ -1,4 +1,4 @@
-/*! @file OIDEndSessionResponse.m
+/*! @file EkoOIDEndSessionResponse.m
     @brief AppAuth iOS SDK
     @copyright
         Copyright 2017 The AppAuth Authors. All Rights Reserved.
@@ -35,20 +35,20 @@ static NSString *const kRequestKey = @"request";
  */
 static NSString *const kAdditionalParametersKey = @"additionalParameters";
 
-@implementation OIDEndSessionResponse
+@implementation EkoOIDEndSessionResponse
 
 #pragma mark - Initializers
 
 - (instancetype)init
-    OID_UNAVAILABLE_USE_INITIALIZER(@selector(initWithRequest:parameters:))
+    EkoOID_UNAVAILABLE_USE_INITIALIZER(@selector(initWithRequest:parameters:))
 
-- (instancetype)initWithRequest:(OIDEndSessionRequest *)request
+- (instancetype)initWithRequest:(EkoOIDEndSessionRequest *)request
                      parameters:(NSDictionary<NSString *,NSObject<NSCopying> *> *)parameters {
   self = [super init];
   if (self) {
     _request = [request copy];
     NSDictionary<NSString *, NSObject<NSCopying> *> *additionalParameters =
-    [OIDFieldMapping remainingParametersWithMap:[[self class] fieldMap]
+    [EkoOIDFieldMapping remainingParametersWithMap:[[self class] fieldMap]
                                      parameters:parameters
                                        instance:self];
     _additionalParameters = additionalParameters;
@@ -59,13 +59,13 @@ static NSString *const kAdditionalParametersKey = @"additionalParameters";
 /*! @brief Returns a mapping of incoming parameters to instance variables.
     @return A mapping of incoming parameters to instance variables.
  */
-+ (NSDictionary<NSString *, OIDFieldMapping *> *)fieldMap {
-  static NSMutableDictionary<NSString *, OIDFieldMapping *> *fieldMap;
++ (NSDictionary<NSString *, EkoOIDFieldMapping *> *)fieldMap {
+  static NSMutableDictionary<NSString *, EkoOIDFieldMapping *> *fieldMap;
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
     fieldMap = [NSMutableDictionary dictionary];
     fieldMap[kStateKey] =
-        [[OIDFieldMapping alloc] initWithName:@"_state" type:[NSString class]];
+        [[EkoOIDFieldMapping alloc] initWithName:@"_state" type:[NSString class]];
   });
   return fieldMap;
 }
@@ -87,12 +87,12 @@ static NSString *const kAdditionalParametersKey = @"additionalParameters";
 }
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
-  OIDEndSessionRequest *request =
-      [aDecoder decodeObjectOfClass:[OIDEndSessionRequest class] forKey:kRequestKey];
+  EkoOIDEndSessionRequest *request =
+      [aDecoder decodeObjectOfClass:[EkoOIDEndSessionRequest class] forKey:kRequestKey];
   self = [self initWithRequest:request parameters:@{ }];
   if (self) {
-    [OIDFieldMapping decodeWithCoder:aDecoder map:[[self class] fieldMap] instance:self];
-    _additionalParameters = [aDecoder decodeObjectOfClasses:[OIDFieldMapping JSONTypes]
+    [EkoOIDFieldMapping decodeWithCoder:aDecoder map:[[self class] fieldMap] instance:self];
+    _additionalParameters = [aDecoder decodeObjectOfClasses:[EkoOIDFieldMapping JSONTypes]
                                                      forKey:kAdditionalParametersKey];
   }
   return self;
@@ -100,7 +100,7 @@ static NSString *const kAdditionalParametersKey = @"additionalParameters";
 
 - (void)encodeWithCoder:(NSCoder *)aCoder {
   [aCoder encodeObject:_request forKey:kRequestKey];
-  [OIDFieldMapping encodeWithCoder:aCoder map:[[self class] fieldMap] instance:self];
+  [EkoOIDFieldMapping encodeWithCoder:aCoder map:[[self class] fieldMap] instance:self];
   [aCoder encodeObject:_additionalParameters forKey:kAdditionalParametersKey];
 }
 

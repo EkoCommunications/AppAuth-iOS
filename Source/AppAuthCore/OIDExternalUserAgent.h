@@ -1,4 +1,4 @@
-/*! @file OIDExternalUserAgent.h
+/*! @file EkoOIDExternalUserAgent.h
     @brief AppAuth iOS SDK
     @copyright
         Copyright 2016 Google Inc. All Rights Reserved.
@@ -18,28 +18,28 @@
 
 #import <Foundation/Foundation.h>
 
-@protocol OIDExternalUserAgentSession;
-@protocol OIDExternalUserAgentRequest;
+@protocol EkoOIDExternalUserAgentSession;
+@protocol EkoOIDExternalUserAgentRequest;
 
 NS_ASSUME_NONNULL_BEGIN
 
-/*! @protocol OIDExternalUserAgent
+/*! @protocol EkoOIDExternalUserAgent
     @brief An external user-agent UI that presents displays the request to the user. Clients may
         provide custom implementations of an external user-agent to customize the way the requests
         are presented to the end user.
  */
-@protocol OIDExternalUserAgent<NSObject>
+@protocol EkoOIDExternalUserAgent<NSObject>
 
 /*! @brief Presents the request in the external user-agent.
     @param request The request to be presented in the external user-agent.
-    @param session The @c OIDExternalUserAgentSession instance that initiates presenting the UI.
-        Concrete implementations of a @c OIDExternalUserAgent may call
+    @param session The @c EkoOIDExternalUserAgentSession instance that initiates presenting the UI.
+        Concrete implementations of a @c EkoOIDExternalUserAgent may call
         resumeExternalUserAgentFlowWithURL or failExternalUserAgentFlowWithError on session to either
         resume or fail the request.
     @return YES If the request UI was successfully presented to the user.
  */
-- (BOOL)presentExternalUserAgentRequest:(id<OIDExternalUserAgentRequest> )request
-                                session:(id<OIDExternalUserAgentSession>)session;
+- (BOOL)presentExternalUserAgentRequest:(id<EkoOIDExternalUserAgentRequest> )request
+                                session:(id<EkoOIDExternalUserAgentSession>)session;
 
 /*! @brief Dimisses the external user-agent and calls completion when the dismiss operation ends.
     @param animated Whether or not the dismiss operation should be animated.

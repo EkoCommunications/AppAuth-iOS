@@ -1,4 +1,4 @@
-/*! @file OIDTokenResponse.m
+/*! @file EkoOIDTokenResponse.m
     @brief AppAuth iOS SDK
     @copyright
         Copyright 2015 Google Inc. All Rights Reserved.
@@ -59,30 +59,30 @@ static NSString *const kScopeKey = @"scope";
  */
 static NSString *const kAdditionalParametersKey = @"additionalParameters";
 
-@implementation OIDTokenResponse
+@implementation EkoOIDTokenResponse
 
 /*! @brief Returns a mapping of incoming parameters to instance variables.
     @return A mapping of incoming parameters to instance variables.
  */
-+ (NSDictionary<NSString *, OIDFieldMapping *> *)fieldMap {
-  static NSMutableDictionary<NSString *, OIDFieldMapping *> *fieldMap;
++ (NSDictionary<NSString *, EkoOIDFieldMapping *> *)fieldMap {
+  static NSMutableDictionary<NSString *, EkoOIDFieldMapping *> *fieldMap;
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
     fieldMap = [NSMutableDictionary dictionary];
     fieldMap[kAccessTokenKey] =
-        [[OIDFieldMapping alloc] initWithName:@"_accessToken" type:[NSString class]];
+        [[EkoOIDFieldMapping alloc] initWithName:@"_accessToken" type:[NSString class]];
     fieldMap[kExpiresInKey] =
-        [[OIDFieldMapping alloc] initWithName:@"_accessTokenExpirationDate"
+        [[EkoOIDFieldMapping alloc] initWithName:@"_accessTokenExpirationDate"
                                          type:[NSDate class]
-                                   conversion:[OIDFieldMapping dateSinceNowConversion]];
+                                   conversion:[EkoOIDFieldMapping dateSinceNowConversion]];
     fieldMap[kTokenTypeKey] =
-        [[OIDFieldMapping alloc] initWithName:@"_tokenType" type:[NSString class]];
+        [[EkoOIDFieldMapping alloc] initWithName:@"_tokenType" type:[NSString class]];
     fieldMap[kIDTokenKey] =
-        [[OIDFieldMapping alloc] initWithName:@"_idToken" type:[NSString class]];
+        [[EkoOIDFieldMapping alloc] initWithName:@"_idToken" type:[NSString class]];
     fieldMap[kRefreshTokenKey] =
-        [[OIDFieldMapping alloc] initWithName:@"_refreshToken" type:[NSString class]];
+        [[EkoOIDFieldMapping alloc] initWithName:@"_refreshToken" type:[NSString class]];
     fieldMap[kScopeKey] =
-        [[OIDFieldMapping alloc] initWithName:@"_scope" type:[NSString class]];
+        [[EkoOIDFieldMapping alloc] initWithName:@"_scope" type:[NSString class]];
   });
   return fieldMap;
 }
@@ -90,15 +90,15 @@ static NSString *const kAdditionalParametersKey = @"additionalParameters";
 #pragma mark - Initializers
 
 - (instancetype)init
-    OID_UNAVAILABLE_USE_INITIALIZER(@selector(initWithRequest:parameters:))
+    EkoOID_UNAVAILABLE_USE_INITIALIZER(@selector(initWithRequest:parameters:))
 
-- (instancetype)initWithRequest:(OIDTokenRequest *)request
+- (instancetype)initWithRequest:(EkoOIDTokenRequest *)request
     parameters:(NSDictionary<NSString *, NSObject<NSCopying> *> *)parameters {
   self = [super init];
   if (self) {
     _request = [request copy];
     NSDictionary<NSString *, NSObject<NSCopying> *> *additionalParameters =
-        [OIDFieldMapping remainingParametersWithMap:[[self class] fieldMap]
+        [EkoOIDFieldMapping remainingParametersWithMap:[[self class] fieldMap]
                                          parameters:parameters
                                            instance:self];
     _additionalParameters = additionalParameters;
@@ -123,19 +123,19 @@ static NSString *const kAdditionalParametersKey = @"additionalParameters";
 }
 
 - (nullable instancetype)initWithCoder:(NSCoder *)aDecoder {
-  OIDTokenRequest *request =
-      [aDecoder decodeObjectOfClass:[OIDTokenRequest class] forKey:kRequestKey];
+  EkoOIDTokenRequest *request =
+      [aDecoder decodeObjectOfClass:[EkoOIDTokenRequest class] forKey:kRequestKey];
   self = [self initWithRequest:request parameters:@{ }];
   if (self) {
-    [OIDFieldMapping decodeWithCoder:aDecoder map:[[self class] fieldMap] instance:self];
-    _additionalParameters = [aDecoder decodeObjectOfClasses:[OIDFieldMapping JSONTypes]
+    [EkoOIDFieldMapping decodeWithCoder:aDecoder map:[[self class] fieldMap] instance:self];
+    _additionalParameters = [aDecoder decodeObjectOfClasses:[EkoOIDFieldMapping JSONTypes]
                                                      forKey:kAdditionalParametersKey];
   }
   return self;
 }
 
 - (void)encodeWithCoder:(NSCoder *)aCoder {
-  [OIDFieldMapping encodeWithCoder:aCoder map:[[self class] fieldMap] instance:self];
+  [EkoOIDFieldMapping encodeWithCoder:aCoder map:[[self class] fieldMap] instance:self];
   [aCoder encodeObject:_request forKey:kRequestKey];
   [aCoder encodeObject:_additionalParameters forKey:kAdditionalParametersKey];
 }
@@ -148,11 +148,11 @@ static NSString *const kAdditionalParametersKey = @"additionalParameters";
                                      "scope: \"%@\", additionalParameters: %@, request: %@>",
                                     NSStringFromClass([self class]),
                                     (void *)self,
-                                    [OIDTokenUtilities redact:_accessToken],
+                                    [EkoOIDTokenUtilities redact:_accessToken],
                                     _accessTokenExpirationDate,
                                     _tokenType,
-                                    [OIDTokenUtilities redact:_idToken],
-                                    [OIDTokenUtilities redact:_refreshToken],
+                                    [EkoOIDTokenUtilities redact:_idToken],
+                                    [EkoOIDTokenUtilities redact:_refreshToken],
                                     _scope,
                                     _additionalParameters,
                                     _request];

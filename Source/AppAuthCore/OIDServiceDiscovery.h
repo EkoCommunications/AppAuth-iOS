@@ -1,4 +1,4 @@
-/*! @file OIDServiceDiscovery.h
+/*! @file EkoOIDServiceDiscovery.h
     @brief AppAuth iOS SDK
     @copyright
         Copyright 2015 Google Inc. All Rights Reserved.
@@ -23,7 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 /*! @brief Represents an OpenID Connect 1.0 Discovery Document
     @see https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata
  */
-@interface OIDServiceDiscovery : NSObject <NSCopying, NSSecureCoding>
+@interface EkoOIDServiceDiscovery : NSObject <NSCopying, NSSecureCoding>
 
 /*! @brief The decoded OpenID Connect 1.0 Discovery Document as a dictionary.
  */
@@ -327,7 +327,7 @@ NS_ASSUME_NONNULL_BEGIN
 /*! @brief Decodes a OpenID Connect Discovery 1.0 JSON document.
     @param serviceDiscoveryJSON An OpenID Connect Service Discovery document.
     @param error If a required field is missing from the dictionary, an error with domain
-        @c ::OIDGeneralErrorDomain and code @c ::OIDErrorCodeInvalidDiscoveryDocument will be
+        @c ::EkoOIDGeneralErrorDomain and code @c ::EkoOIDErrorCodeInvalidDiscoveryDocument will be
         returned.
  */
 - (nullable instancetype)initWithJSON:(NSString *)serviceDiscoveryJSON
@@ -336,7 +336,7 @@ NS_ASSUME_NONNULL_BEGIN
 /*! @brief Decodes a OpenID Connect Discovery 1.0 JSON document.
     @param serviceDiscoveryJSONData An OpenID Connect Service Discovery document.
     @param error If a required field is missing from the dictionary, an error with domain
-        @c ::OIDGeneralErrorDomain and code @c ::OIDErrorCodeInvalidDiscoveryDocument will be
+        @c ::EkoOIDGeneralErrorDomain and code @c ::EkoOIDErrorCodeInvalidDiscoveryDocument will be
         returned.
  */
 - (nullable instancetype)initWithJSONData:(NSData *)serviceDiscoveryJSONData
@@ -347,7 +347,7 @@ NS_ASSUME_NONNULL_BEGIN
     @param serviceDiscoveryDictionary A dictionary representing an OpenID Connect Service Discovery
         document.
     @param error If a required field is missing from the dictionary, an error with domain
-        @c ::OIDGeneralErrorDomain and code @c ::OIDErrorCodeInvalidDiscoveryDocument will be
+        @c ::EkoOIDGeneralErrorDomain and code @c ::EkoOIDErrorCodeInvalidDiscoveryDocument will be
         returned.
  */
 - (nullable instancetype)initWithDictionary:(NSDictionary *)serviceDiscoveryDictionary

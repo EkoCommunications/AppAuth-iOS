@@ -1,4 +1,4 @@
-/*! @file OIDDefines.h
+/*! @file EkoOIDDefines.h
     @brief AppAuth iOS SDK
     @copyright
         Copyright 2015 Google Inc. All Rights Reserved.
@@ -16,16 +16,16 @@
         limitations under the License.
  */
 
-/*! @def OIDIsEqualIncludingNil(x, y)
+/*! @def EkoOIDIsEqualIncludingNil(x, y)
     @brief Returns YES if x and y are equal by reference or value.
     @discussion NOTE: parameters may be evaluated multiple times. Be careful if using this check
         with expressions - especially if the expressions have side effects.
     @param x An object.
     @param y An object.
  */
-#define OIDIsEqualIncludingNil(x, y) (((x) == (y)) || [(x) isEqual:(y)])
+#define EkoOIDIsEqualIncludingNil(x, y) (((x) == (y)) || [(x) isEqual:(y)])
 
-/*! @def OID_UNAVAILABLE_USE_INITIALIZER(designatedInitializer)
+/*! @def EkoOID_UNAVAILABLE_USE_INITIALIZER(designatedInitializer)
     @brief Provides a template implementation for init-family methods which have been marked as
         NS_UNAVILABLE. Stops the compiler from giving a warning when it's the super class'
         designated initializer, and gives callers useful feedback telling them what the
@@ -34,7 +34,7 @@
         designated intializer's signature changes.
     @param designatedInitializer A SEL referencing the designated initializer.
  */
-#define OID_UNAVAILABLE_USE_INITIALIZER(designatedInitializer) { \
+#define EkoOID_UNAVAILABLE_USE_INITIALIZER(designatedInitializer) { \
   NSString *reason = [NSString stringWithFormat:@"Called: %@\nDesignated Initializer:%@", \
                                                 NSStringFromSelector(_cmd), \
                                                 NSStringFromSelector(designatedInitializer)]; \

@@ -1,4 +1,4 @@
-/*! @file OIDAuthorizationRequest.m
+/*! @file EkoOIDAuthorizationRequest.m
     @brief AppAuth iOS SDK
     @copyright
         Copyright 2015 Google Inc. All Rights Reserved.
@@ -86,17 +86,17 @@ static NSUInteger const kCodeVerifierBytes = 32;
 
 /*! @brief Assertion text for unsupported response types.
  */
-static NSString *const OIDOAuthUnsupportedResponseTypeMessage =
+static NSString *const EkoOIDOAuthUnsupportedResponseTypeMessage =
     @"The response_type \"%@\" isn't supported. AppAuth only supports the \"code\" or \"code id_token\" response_type.";
 
 /*! @brief Code challenge request method.
  */
-NSString *const OIDOAuthorizationRequestCodeChallengeMethodS256 = @"S256";
+NSString *const EkoOIDOAuthorizationRequestCodeChallengeMethodS256 = @"S256";
 
-@implementation OIDAuthorizationRequest
+@implementation EkoOIDAuthorizationRequest
 
 - (instancetype)init
-    OID_UNAVAILABLE_USE_INITIALIZER(
+    EkoOID_UNAVAILABLE_USE_INITIALIZER(
         @selector(initWithConfiguration:
                                clientId:
                                  scopes:
@@ -112,17 +112,17 @@ NSString *const OIDOAuthorizationRequestCodeChallengeMethodS256 = @"S256";
  */
 + (BOOL)isSupportedResponseType:(NSString *)responseType
 {
-  NSString *codeIdToken = [@[OIDResponseTypeCode, OIDResponseTypeIDToken]
+  NSString *codeIdToken = [@[EkoOIDResponseTypeCode, EkoOIDResponseTypeIDToken]
                            componentsJoinedByString:@" "];
-  NSString *idTokenCode = [@[OIDResponseTypeIDToken, OIDResponseTypeCode]
+  NSString *idTokenCode = [@[EkoOIDResponseTypeIDToken, EkoOIDResponseTypeCode]
                            componentsJoinedByString:@" "];
 
-  return [responseType isEqualToString:OIDResponseTypeCode]
+  return [responseType isEqualToString:EkoOIDResponseTypeCode]
          || [responseType isEqualToString:codeIdToken]
          || [responseType isEqualToString:idTokenCode];
 }
 
-- (instancetype)initWithConfiguration:(OIDServiceConfiguration *)configuration
+- (instancetype)initWithConfiguration:(EkoOIDServiceConfiguration *)configuration
                 clientId:(NSString *)clientID
             clientSecret:(nullable NSString *)clientSecret
                    scope:(nullable NSString *)scope
@@ -144,7 +144,7 @@ NSString *const OIDOAuthorizationRequestCodeChallengeMethodS256 = @"S256";
     _redirectURL = [redirectURL copy];
     _responseType = [responseType copy];
     if (![[self class] isSupportedResponseType:_responseType]) {
-      NSAssert(NO, OIDOAuthUnsupportedResponseTypeMessage, _responseType);
+      NSAssert(NO, EkoOIDOAuthUnsupportedResponseTypeMessage, _responseType);
       return nil;
     }
     _state = [state copy];
@@ -160,7 +160,7 @@ NSString *const OIDOAuthorizationRequestCodeChallengeMethodS256 = @"S256";
 }
 
 - (instancetype)
-   initWithConfiguration:(OIDServiceConfiguration *)configuration
+   initWithConfiguration:(EkoOIDServiceConfiguration *)configuration
                 clientId:(NSString *)clientID
             clientSecret:(NSString *)clientSecret
                   scopes:(nullable NSArray<NSString *> *)scopes
@@ -175,19 +175,19 @@ NSString *const OIDOAuthorizationRequestCodeChallengeMethodS256 = @"S256";
   return [self initWithConfiguration:configuration
                             clientId:clientID
                         clientSecret:clientSecret
-                               scope:[OIDScopeUtilities scopesWithArray:scopes]
+                               scope:[EkoOIDScopeUtilities scopesWithArray:scopes]
                          redirectURL:redirectURL
                         responseType:responseType
                                state:[[self class] generateState]
                                nonce:[[self class] generateState]
                         codeVerifier:codeVerifier
                        codeChallenge:codeChallenge
-                 codeChallengeMethod:OIDOAuthorizationRequestCodeChallengeMethodS256
+                 codeChallengeMethod:EkoOIDOAuthorizationRequestCodeChallengeMethodS256
                 additionalParameters:additionalParameters];
 }
 
 - (instancetype)
-    initWithConfiguration:(OIDServiceConfiguration *)configuration
+    initWithConfiguration:(EkoOIDServiceConfiguration *)configuration
                  clientId:(NSString *)clientID
                    scopes:(nullable NSArray<NSString *> *)scopes
               redirectURL:(NSURL *)redirectURL
@@ -219,8 +219,8 @@ NSString *const OIDOAuthorizationRequestCodeChallengeMethodS256 = @"S256";
 }
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
-  OIDServiceConfiguration *configuration =
-      [aDecoder decodeObjectOfClass:[OIDServiceConfiguration class]
+  EkoOIDServiceConfiguration *configuration =
+      [aDecoder decodeObjectOfClass:[EkoOIDServiceConfiguration class]
                              forKey:kConfigurationKey];
   NSString *responseType = [aDecoder decodeObjectOfClass:[NSString class] forKey:kResponseTypeKey];
   NSString *clientID = [aDecoder decodeObjectOfClass:[NSString class] forKey:kClientIDKey];
@@ -284,11 +284,11 @@ NSString *const OIDOAuthorizationRequestCodeChallengeMethodS256 = @"S256";
 #pragma mark - State and PKCE verifier/challenge generation Methods
 
 + (nullable NSString *)generateCodeVerifier {
-  return [OIDTokenUtilities randomURLSafeStringWithSize:kCodeVerifierBytes];
+  return [EkoOIDTokenUtilities randomURLSafeStringWithSize:kCodeVerifierBytes];
 }
 
 + (nullable NSString *)generateState {
-  return [OIDTokenUtilities randomURLSafeStringWithSize:kStateSizeBytes];
+  return [EkoOIDTokenUtilities randomURLSafeStringWithSize:kStateSizeBytes];
 }
 
 + (nullable NSString *)codeChallengeS256ForVerifier:(NSString *)codeVerifier {
@@ -298,14 +298,14 @@ NSString *const OIDOAuthorizationRequestCodeChallengeMethodS256 = @"S256";
   // generates the code_challenge per spec https://tools.ietf.org/html/rfc7636#section-4.2
   // code_challenge = BASE64URL-ENCODE(SHA256(ASCII(code_verifier)))
   // NB. the ASCII conversion on the code_verifier entropy was done at time of generation.
-  NSData *sha256Verifier = [OIDTokenUtilities sha256:codeVerifier];
-  return [OIDTokenUtilities encodeBase64urlNoPadding:sha256Verifier];
+  NSData *sha256Verifier = [EkoOIDTokenUtilities sha256:codeVerifier];
+  return [EkoOIDTokenUtilities encodeBase64urlNoPadding:sha256Verifier];
 }
 
 #pragma mark -
 
 - (NSURL *)authorizationRequestURL {
-  OIDURLQueryComponent *query = [[OIDURLQueryComponent alloc] init];
+  EkoOIDURLQueryComponent *query = [[EkoOIDURLQueryComponent alloc] init];
 
   // Required parameters.
   [query addParameter:kResponseTypeKey value:_responseType];
@@ -338,7 +338,7 @@ NSString *const OIDOAuthorizationRequestCodeChallengeMethodS256 = @"S256";
   return [query URLByReplacingQueryInURL:_configuration.authorizationEndpoint];
 }
 
-#pragma mark - OIDExternalUserAgentRequest
+#pragma mark - EkoOIDExternalUserAgentRequest
 
 - (NSURL *)externalUserAgentRequestURL {
   return [self authorizationRequestURL];

@@ -1,4 +1,4 @@
-/*! @file OIDAuthorizationService+Mac.m
+/*! @file EkoOIDAuthorizationService+Mac.m
     @brief AppAuth iOS SDK
     @copyright
         Copyright 2016 Google Inc. All Rights Reserved.
@@ -26,11 +26,11 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@implementation OIDAuthorizationService (Mac)
+@implementation EkoOIDAuthorizationService (Mac)
 
-+ (id<OIDExternalUserAgentSession>) presentAuthorizationRequest:(OIDAuthorizationRequest *)request
-                                                       callback:(OIDAuthorizationCallback)callback {
-  OIDExternalUserAgentMac *externalUserAgent = [[OIDExternalUserAgentMac alloc] init];
++ (id<EkoOIDExternalUserAgentSession>) presentAuthorizationRequest:(EkoOIDAuthorizationRequest *)request
+                                                       callback:(EkoOIDAuthorizationCallback)callback {
+  EkoOIDExternalUserAgentMac *externalUserAgent = [[EkoOIDExternalUserAgentMac alloc] init];
   return [self presentAuthorizationRequest:request
                          externalUserAgent:externalUserAgent
                                   callback:callback];

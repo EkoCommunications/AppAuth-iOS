@@ -1,4 +1,4 @@
-/*! @file OIDGrantTypes.h
+/*! @file EkoOIDGrantTypes.h
     @brief AppAuth iOS SDK
     @copyright
         Copyright 2015 Google Inc. All Rights Reserved.
@@ -21,20 +21,20 @@
 /*! @brief For exchanging an authorization code for an access token.
     @see https://tools.ietf.org/html/rfc6749#section-4.1.3
  */
-extern NSString *const OIDGrantTypeAuthorizationCode;
+extern NSString *const EkoOIDGrantTypeAuthorizationCode;
 
 /*! @brief For refreshing an access token with a refresh token.
     @see https://tools.ietf.org/html/rfc6749#section-6
  */
-extern NSString *const OIDGrantTypeRefreshToken;
+extern NSString *const EkoOIDGrantTypeRefreshToken;
 
 /*! @brief For obtaining an access token with a username and password.
     @see https://tools.ietf.org/html/rfc6749#section-4.3.2
  */
-extern NSString *const OIDGrantTypePassword;
+extern NSString *const EkoOIDGrantTypePassword;
 
 /*! @brief For obtaining an access token from the token endpoint using client credentials.
     @see https://tools.ietf.org/html/rfc6749#section-3.2.1
     @see https://tools.ietf.org/html/rfc6749#section-4.4.2
  */
-extern NSString *const OIDGrantTypeClientCredentials;
+extern NSString *const EkoOIDGrantTypeClientCredentials;

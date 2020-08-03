@@ -1,4 +1,4 @@
-/*! @file OIDFieldMapping.h
+/*! @file EkoOIDFieldMapping.h
     @brief AppAuth iOS SDK
     @copyright
         Copyright 2015 Google Inc. All Rights Reserved.
@@ -23,12 +23,12 @@ NS_ASSUME_NONNULL_BEGIN
 /*! @brief Represents a function which transforms incoming source values into instance variable
         values.
  */
-typedef _Nullable id(^OIDFieldMappingConversionFunction)(NSObject *_Nullable value);
+typedef _Nullable id(^EkoOIDFieldMappingConversionFunction)(NSObject *_Nullable value);
 
 /*! @brief Describes the mapping of a key/value pair to an iVar with an optional conversion
         function.
  */
-@interface OIDFieldMapping : NSObject
+@interface EkoOIDFieldMapping : NSObject
 
 /*! @brief The name of the instance variable the field should be mapped to.
  */
@@ -41,7 +41,7 @@ typedef _Nullable id(^OIDFieldMappingConversionFunction)(NSObject *_Nullable val
 /*! @brief An optional conversion function which specifies a transform from the incoming data to the
         instance variable value.
  */
-@property(nonatomic, readonly, nullable) OIDFieldMappingConversionFunction conversion;
+@property(nonatomic, readonly, nullable) EkoOIDFieldMappingConversionFunction conversion;
 
 /*! @internal
     @brief Unavailable. Please use initWithName:type:conversion:.
@@ -53,13 +53,13 @@ typedef _Nullable id(^OIDFieldMappingConversionFunction)(NSObject *_Nullable val
     @param type The type of the instance variable.
     @param conversion An optional conversion function which specifies a transform from the incoming
         data to the instance variable value. Used during the process performed by
-        @c OIDFieldMapping.remainingParametersWithMap:parameters:instance: but not during
+        @c EkoOIDFieldMapping.remainingParametersWithMap:parameters:instance: but not during
         encoding/decoding, since the encoded and decoded values should already be of the type
         specified by the @c type parameter.
  */
 - (instancetype)initWithName:(NSString *)name
                         type:(Class)type
-                  conversion:(nullable OIDFieldMappingConversionFunction)conversion
+                  conversion:(nullable EkoOIDFieldMappingConversionFunction)conversion
     NS_DESIGNATED_INITIALIZER;
 
 /*! @brief A convenience initializer.
@@ -78,7 +78,7 @@ typedef _Nullable id(^OIDFieldMappingConversionFunction)(NSObject *_Nullable val
     @return A dictionary of parameter key/values which didn't map to instance variables.
  */
 + (NSDictionary<NSString *, NSObject<NSCopying> *> *)remainingParametersWithMap:
-    (NSDictionary<NSString *, OIDFieldMapping *> *)map
+    (NSDictionary<NSString *, EkoOIDFieldMapping *> *)map
     parameters:(NSDictionary<NSString *, NSObject<NSCopying> *> *)parameters
       instance:(id)instance;
 
@@ -89,7 +89,7 @@ typedef _Nullable id(^OIDFieldMappingConversionFunction)(NSObject *_Nullable val
     @param instance The instance whose variables should be serialized based on the mapping.
  */
 + (void)encodeWithCoder:(NSCoder *)aCoder
-                    map:(NSDictionary<NSString *, OIDFieldMapping *> *)map
+                    map:(NSDictionary<NSString *, EkoOIDFieldMapping *> *)map
                instance:(id)instance;
 
 /*! @brief This helper method for @c NSCoding implementations performs a deserialization of
@@ -99,7 +99,7 @@ typedef _Nullable id(^OIDFieldMappingConversionFunction)(NSObject *_Nullable val
     @param instance The instance whose variables should be deserialized based on the mapping.
  */
 + (void)decodeWithCoder:(NSCoder *)aCoder
-                    map:(NSDictionary<NSString *, OIDFieldMapping *> *)map
+                    map:(NSDictionary<NSString *, EkoOIDFieldMapping *> *)map
                instance:(id)instance;
 
 /*! @brief Returns an @c NSSet of classes suitable for deserializing JSON content in an
@@ -109,17 +109,17 @@ typedef _Nullable id(^OIDFieldMappingConversionFunction)(NSObject *_Nullable val
 
 /*! @brief Returns a function for converting an @c NSString to an @c NSURL.
  */
-+ (OIDFieldMappingConversionFunction)URLConversion;
++ (EkoOIDFieldMappingConversionFunction)URLConversion;
 
 /*! @brief Returns a function for converting an @c NSNumber number of seconds from now to an
         @c NSDate.
  */
-+ (OIDFieldMappingConversionFunction)dateSinceNowConversion;
++ (EkoOIDFieldMappingConversionFunction)dateSinceNowConversion;
 
 /*! @brief Returns a function for converting an @c NSNumber representing a unix time stamp to an
         @c NSDate.
  */
-+ (OIDFieldMappingConversionFunction)dateEpochConversion;
++ (EkoOIDFieldMappingConversionFunction)dateEpochConversion;
 
 @end
 

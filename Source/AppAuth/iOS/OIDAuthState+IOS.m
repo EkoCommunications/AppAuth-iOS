@@ -1,4 +1,4 @@
-/*! @file OIDAuthState+IOS.m
+/*! @file EkoOIDAuthState+IOS.m
     @brief AppAuth iOS SDK
     @copyright
         Copyright 2016 Google Inc. All Rights Reserved.
@@ -24,18 +24,18 @@
 #import "OIDExternalUserAgentIOS.h"
 #import "OIDExternalUserAgentCatalyst.h"
 
-@implementation OIDAuthState (IOS)
+@implementation EkoOIDAuthState (IOS)
 
-+ (id<OIDExternalUserAgentSession>)
-    authStateByPresentingAuthorizationRequest:(OIDAuthorizationRequest *)authorizationRequest
++ (id<EkoOIDExternalUserAgentSession>)
+    authStateByPresentingAuthorizationRequest:(EkoOIDAuthorizationRequest *)authorizationRequest
                      presentingViewController:(UIViewController *)presentingViewController
-                                     callback:(OIDAuthStateAuthorizationCallback)callback {
-  id<OIDExternalUserAgent> externalUserAgent;
+                                     callback:(EkoOIDAuthStateAuthorizationCallback)callback {
+  id<EkoOIDExternalUserAgent> externalUserAgent;
 #if TARGET_OS_MACCATALYST
-  externalUserAgent = [[OIDExternalUserAgentCatalyst alloc]
+  externalUserAgent = [[EkoOIDExternalUserAgentCatalyst alloc]
       initWithPresentingViewController:presentingViewController];
 #else // TARGET_OS_MACCATALYST
-  externalUserAgent = [[OIDExternalUserAgentIOS alloc] initWithPresentingViewController:presentingViewController];
+  externalUserAgent = [[EkoOIDExternalUserAgentIOS alloc] initWithPresentingViewController:presentingViewController];
 #endif // TARGET_OS_MACCATALYST
   return [self authStateByPresentingAuthorizationRequest:authorizationRequest
                                        externalUserAgent:externalUserAgent
@@ -43,10 +43,10 @@
 }
 
 #if !TARGET_OS_MACCATALYST
-+ (id<OIDExternalUserAgentSession>)
-    authStateByPresentingAuthorizationRequest:(OIDAuthorizationRequest *)authorizationRequest
-                                  callback:(OIDAuthStateAuthorizationCallback)callback {
-  OIDExternalUserAgentIOS *externalUserAgent = [[OIDExternalUserAgentIOS alloc] init];
++ (id<EkoOIDExternalUserAgentSession>)
+    authStateByPresentingAuthorizationRequest:(EkoOIDAuthorizationRequest *)authorizationRequest
+                                  callback:(EkoOIDAuthStateAuthorizationCallback)callback {
+  EkoOIDExternalUserAgentIOS *externalUserAgent = [[EkoOIDExternalUserAgentIOS alloc] init];
   return [self authStateByPresentingAuthorizationRequest:authorizationRequest
                                        externalUserAgent:externalUserAgent
                                                 callback:callback];

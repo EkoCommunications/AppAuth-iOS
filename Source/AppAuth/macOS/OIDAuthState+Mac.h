@@ -1,4 +1,4 @@
-/*! @file OIDAuthState+Mac.h
+/*! @file EkoOIDAuthState+Mac.h
     @brief AppAuth iOS SDK
     @copyright
         Copyright 2016 Google Inc. All Rights Reserved.
@@ -24,25 +24,25 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-/*! @brief macOS specific convenience methods for @c OIDAuthState.
+/*! @brief macOS specific convenience methods for @c EkoOIDAuthState.
  */
-@interface OIDAuthState (Mac)
+@interface EkoOIDAuthState (Mac)
 
-/*! @brief Convenience method to create a @c OIDAuthState by presenting an authorization request
+/*! @brief Convenience method to create a @c EkoOIDAuthState by presenting an authorization request
         and performing the authorization code exchange in the case of code flow requests. For
         the hybrid flow, the caller should validate the id_token and c_hash, then perform the token
-        request (@c OIDAuthorizationService.performTokenRequest:callback:)
-        and update the OIDAuthState with the results (@c
-        OIDAuthState.updateWithTokenResponse:error:).
+        request (@c EkoOIDAuthorizationService.performTokenRequest:callback:)
+        and update the EkoOIDAuthState with the results (@c
+        EkoOIDAuthState.updateWithTokenResponse:error:).
     @param authorizationRequest The authorization request to present.
     @param callback The method called when the request has completed or failed.
-    @return A @c OIDExternalUserAgentSession instance which will terminate when it
-        receives a @c OIDExternalUserAgentSession.cancel message, or after processing a
-        @c OIDExternalUserAgentSession.resumeExternalUserAgentFlowWithURL: message.
+    @return A @c EkoOIDExternalUserAgentSession instance which will terminate when it
+        receives a @c EkoOIDExternalUserAgentSession.cancel message, or after processing a
+        @c EkoOIDExternalUserAgentSession.resumeExternalUserAgentFlowWithURL: message.
  */
-+ (id<OIDExternalUserAgentSession>)
-    authStateByPresentingAuthorizationRequest:(OIDAuthorizationRequest *)authorizationRequest
-                                     callback:(OIDAuthStateAuthorizationCallback)callback;
++ (id<EkoOIDExternalUserAgentSession>)
+    authStateByPresentingAuthorizationRequest:(EkoOIDAuthorizationRequest *)authorizationRequest
+                                     callback:(EkoOIDAuthStateAuthorizationCallback)callback;
 
 @end
 

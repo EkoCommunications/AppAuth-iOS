@@ -1,4 +1,4 @@
-/*! @file OIDErrorUtilities.m
+/*! @file EkoOIDErrorUtilities.m
     @brief AppAuth iOS SDK
     @copyright
         Copyright 2015 Google Inc. All Rights Reserved.
@@ -18,9 +18,9 @@
 
 #import "OIDErrorUtilities.h"
 
-@implementation OIDErrorUtilities
+@implementation EkoOIDErrorUtilities
 
-+ (NSError *)errorWithCode:(OIDErrorCode)code
++ (NSError *)errorWithCode:(EkoOIDErrorCode)code
            underlyingError:(NSError *)underlyingError
                description:(NSString *)description {
   NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
@@ -31,16 +31,16 @@
     userInfo[NSLocalizedDescriptionKey] = description;
   }
   // TODO: Populate localized description based on code.
-  NSError *error = [NSError errorWithDomain:OIDGeneralErrorDomain
+  NSError *error = [NSError errorWithDomain:EkoOIDGeneralErrorDomain
                                        code:code
                                    userInfo:userInfo];
   return error;
 }
 
 + (BOOL)isOAuthErrorDomain:(NSString *)errorDomain {
-  return errorDomain == OIDOAuthRegistrationErrorDomain
-      || errorDomain == OIDOAuthAuthorizationErrorDomain
-      || errorDomain == OIDOAuthTokenErrorDomain;
+  return errorDomain == EkoOIDOAuthRegistrationErrorDomain
+      || errorDomain == EkoOIDOAuthAuthorizationErrorDomain
+      || errorDomain == EkoOIDOAuthTokenErrorDomain;
 }
 
 + (NSError *)resourceServerAuthorizationErrorWithCode:(NSInteger)code
@@ -49,12 +49,12 @@
   // builds the userInfo dictionary with the full OAuth response and other information
   NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
   if (errorResponse) {
-    userInfo[OIDOAuthErrorResponseErrorKey] = errorResponse;
+    userInfo[EkoOIDOAuthErrorResponseErrorKey] = errorResponse;
   }
   if (underlyingError) {
     userInfo[NSUnderlyingErrorKey] = underlyingError;
   }
-  NSError *error = [NSError errorWithDomain:OIDResourceServerAuthorizationErrorDomain
+  NSError *error = [NSError errorWithDomain:EkoOIDResourceServerAuthorizationErrorDomain
                                        code:code
                                    userInfo:userInfo];
   return error;
@@ -66,32 +66,32 @@
   // not a valid OAuth error
   if (![self isOAuthErrorDomain:oAuthErrorDomain]
       || !errorResponse
-      || !errorResponse[OIDOAuthErrorFieldError]
-      || ![errorResponse[OIDOAuthErrorFieldError] isKindOfClass:[NSString class]]) {
-    return [[self class] errorWithCode:OIDErrorCodeNetworkError
+      || !errorResponse[EkoOIDOAuthErrorFieldError]
+      || ![errorResponse[EkoOIDOAuthErrorFieldError] isKindOfClass:[NSString class]]) {
+    return [[self class] errorWithCode:EkoOIDErrorCodeNetworkError
                        underlyingError:underlyingError
                            description:underlyingError.localizedDescription];
   }
 
   // builds the userInfo dictionary with the full OAuth response and other information
   NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
-  userInfo[OIDOAuthErrorResponseErrorKey] = errorResponse;
+  userInfo[EkoOIDOAuthErrorResponseErrorKey] = errorResponse;
   if (underlyingError) {
     userInfo[NSUnderlyingErrorKey] = underlyingError;
   }
 
-  NSString *oauthErrorCodeString = errorResponse[OIDOAuthErrorFieldError];
+  NSString *oauthErrorCodeString = errorResponse[EkoOIDOAuthErrorFieldError];
   NSString *oauthErrorMessage = nil;
-  if ([errorResponse[OIDOAuthErrorFieldErrorDescription] isKindOfClass:[NSString class]]) {
-    oauthErrorMessage = errorResponse[OIDOAuthErrorFieldErrorDescription];
+  if ([errorResponse[EkoOIDOAuthErrorFieldErrorDescription] isKindOfClass:[NSString class]]) {
+    oauthErrorMessage = errorResponse[EkoOIDOAuthErrorFieldErrorDescription];
   } else {
-    oauthErrorMessage = [errorResponse[OIDOAuthErrorFieldErrorDescription] description];
+    oauthErrorMessage = [errorResponse[EkoOIDOAuthErrorFieldErrorDescription] description];
   }
   NSString *oauthErrorURI = nil;
-  if ([errorResponse[OIDOAuthErrorFieldErrorURI] isKindOfClass:[NSString class]]) {
-    oauthErrorURI = errorResponse[OIDOAuthErrorFieldErrorURI];
+  if ([errorResponse[EkoOIDOAuthErrorFieldErrorURI] isKindOfClass:[NSString class]]) {
+    oauthErrorURI = errorResponse[EkoOIDOAuthErrorFieldErrorURI];
   } else {
-    oauthErrorURI = [errorResponse[OIDOAuthErrorFieldErrorURI] description];
+    oauthErrorURI = [errorResponse[EkoOIDOAuthErrorFieldErrorURI] description];
   }
 
   // builds the error description, using the information supplied by the server if possible
@@ -115,7 +115,7 @@
   userInfo[NSLocalizedDescriptionKey] = description;
 
   // looks up the error code based on the "error" response param
-  OIDErrorCodeOAuth code = [[self class] OAuthErrorCodeFromString:oauthErrorCodeString];
+  EkoOIDErrorCodeOAuth code = [[self class] OAuthErrorCodeFromString:oauthErrorCodeString];
 
   NSError *error = [NSError errorWithDomain:oAuthErrorDomain
                                        code:code
@@ -134,30 +134,30 @@
     }
   }
   NSError *serverError =
-      [NSError errorWithDomain:OIDHTTPErrorDomain
+      [NSError errorWithDomain:EkoOIDHTTPErrorDomain
                           code:HTTPURLResponse.statusCode
                       userInfo:userInfo];
   return serverError;
 }
 
-+ (OIDErrorCodeOAuth)OAuthErrorCodeFromString:(NSString *)errorCode {
++ (EkoOIDErrorCodeOAuth)OAuthErrorCodeFromString:(NSString *)errorCode {
   NSDictionary *errorCodes = @{
-      @"invalid_request": @(OIDErrorCodeOAuthInvalidRequest),
-      @"unauthorized_client": @(OIDErrorCodeOAuthUnauthorizedClient),
-      @"access_denied": @(OIDErrorCodeOAuthAccessDenied),
-      @"unsupported_response_type": @(OIDErrorCodeOAuthUnsupportedResponseType),
-      @"invalid_scope": @(OIDErrorCodeOAuthInvalidScope),
-      @"server_error": @(OIDErrorCodeOAuthServerError),
-      @"temporarily_unavailable": @(OIDErrorCodeOAuthTemporarilyUnavailable),
-      @"invalid_client": @(OIDErrorCodeOAuthInvalidClient),
-      @"invalid_grant": @(OIDErrorCodeOAuthInvalidGrant),
-      @"unsupported_grant_type": @(OIDErrorCodeOAuthUnsupportedGrantType),
+      @"invalid_request": @(EkoOIDErrorCodeOAuthInvalidRequest),
+      @"unauthorized_client": @(EkoOIDErrorCodeOAuthUnauthorizedClient),
+      @"access_denied": @(EkoOIDErrorCodeOAuthAccessDenied),
+      @"unsupported_response_type": @(EkoOIDErrorCodeOAuthUnsupportedResponseType),
+      @"invalid_scope": @(EkoOIDErrorCodeOAuthInvalidScope),
+      @"server_error": @(EkoOIDErrorCodeOAuthServerError),
+      @"temporarily_unavailable": @(EkoOIDErrorCodeOAuthTemporarilyUnavailable),
+      @"invalid_client": @(EkoOIDErrorCodeOAuthInvalidClient),
+      @"invalid_grant": @(EkoOIDErrorCodeOAuthInvalidGrant),
+      @"unsupported_grant_type": @(EkoOIDErrorCodeOAuthUnsupportedGrantType),
       };
   NSNumber *code = errorCodes[errorCode];
   if (code) {
     return [code integerValue];
   } else {
-    return OIDErrorCodeOAuthOther;
+    return EkoOIDErrorCodeOAuthOther;
   }
 }
 

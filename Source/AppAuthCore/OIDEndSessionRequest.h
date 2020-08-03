@@ -1,4 +1,4 @@
-/*! @file OIDEndSessionRequest.h
+/*! @file EkoOIDEndSessionRequest.h
     @brief AppAuth iOS SDK
     @copyright
         Copyright 2017 The AppAuth Authors. All Rights Reserved.
@@ -20,18 +20,18 @@
 
 #import "OIDExternalUserAgentRequest.h"
 
-@class OIDServiceConfiguration;
+@class EkoOIDServiceConfiguration;
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface OIDEndSessionRequest : NSObject
-    <NSCopying, NSSecureCoding, OIDExternalUserAgentRequest>
+@interface EkoOIDEndSessionRequest : NSObject
+    <NSCopying, NSSecureCoding, EkoOIDExternalUserAgentRequest>
 
 /*! @brief The service's configuration.
     @remarks This configuration specifies how to connect to a particular OAuth provider.
         Configurations may be created manually, or via an OpenID Connect Discovery Document.
  */
-@property(nonatomic, readonly) OIDServiceConfiguration *configuration;
+@property(nonatomic, readonly) EkoOIDServiceConfiguration *configuration;
 
 /*! @brief The client's redirect URI.
     @remarks post_logout_redirect_uri
@@ -74,7 +74,7 @@ NS_ASSUME_NONNULL_BEGIN
     @param additionalParameters The client's additional authorization parameters.
 */
 - (instancetype)
-    initWithConfiguration:(OIDServiceConfiguration *)configuration
+    initWithConfiguration:(EkoOIDServiceConfiguration *)configuration
               idTokenHint:(NSString *)idTokenHint
     postLogoutRedirectURL:(NSURL *)postLogoutRedirectURL
      additionalParameters:(nullable NSDictionary<NSString *, NSString *> *)additionalParameters;
@@ -88,7 +88,7 @@ NS_ASSUME_NONNULL_BEGIN
     @param additionalParameters The client's additional authorization parameters.
  */
 - (instancetype)
-    initWithConfiguration:(OIDServiceConfiguration *)configuration
+    initWithConfiguration:(EkoOIDServiceConfiguration *)configuration
               idTokenHint:(NSString *)idTokenHint
     postLogoutRedirectURL:(NSURL *)postLogoutRedirectURL
                     state:(NSString *)state

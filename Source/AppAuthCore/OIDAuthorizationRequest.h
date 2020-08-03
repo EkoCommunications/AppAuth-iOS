@@ -1,4 +1,4 @@
-/*! @file OIDAuthorizationRequest.h
+/*! @file EkoOIDAuthorizationRequest.h
     @brief AppAuth iOS SDK
     @copyright
         Copyright 2015 Google Inc. All Rights Reserved.
@@ -18,34 +18,34 @@
 
 #import <Foundation/Foundation.h>
 
-// These files only declare string constants useful for constructing a @c OIDAuthorizationRequest,
+// These files only declare string constants useful for constructing a @c EkoOIDAuthorizationRequest,
 // so they are imported here for convenience.
 #import "OIDExternalUserAgentRequest.h"
 #import "OIDResponseTypes.h"
 #import "OIDScopes.h"
 
-@class OIDServiceConfiguration;
+@class EkoOIDServiceConfiguration;
 
 NS_ASSUME_NONNULL_BEGIN
 
 /*! @brief The @c code_challenge_method  value for the S256 code challenge.
     @see https://tools.ietf.org/html/rfc7636#section-4.3
  */
-extern NSString *const OIDOAuthorizationRequestCodeChallengeMethodS256;
+extern NSString *const EkoOIDOAuthorizationRequestCodeChallengeMethodS256;
 
 
 /*! @brief Represents an authorization request.
     @see https://tools.ietf.org/html/rfc6749#section-4
     @see https://tools.ietf.org/html/rfc6749#section-4.1.1
  */
-@interface OIDAuthorizationRequest :
-    NSObject<NSCopying, NSSecureCoding, OIDExternalUserAgentRequest>
+@interface EkoOIDAuthorizationRequest :
+    NSObject<NSCopying, NSSecureCoding, EkoOIDExternalUserAgentRequest>
 
 /*! @brief The service's configuration.
     @remarks This configuration specifies how to connect to a particular OAuth provider.
         Configurations may be created manually, or via an OpenID Connect Discovery Document.
  */
-@property(nonatomic, readonly) OIDServiceConfiguration *configuration;
+@property(nonatomic, readonly) EkoOIDServiceConfiguration *configuration;
 
 /*! @brief The expected response type.
     @remarks response_type
@@ -111,7 +111,7 @@ extern NSString *const OIDOAuthorizationRequestCodeChallengeMethodS256;
     @remarks code_verifier
     @discussion The code verifier itself is not included in the authorization request that is sent
         on the wire, but needs to be in the token exchange request.
-        @c OIDAuthorizationResponse.tokenExchangeRequest will create a @c OIDTokenRequest that
+        @c EkoOIDAuthorizationResponse.tokenExchangeRequest will create a @c EkoOIDTokenRequest that
         includes this parameter automatically.
     @see https://tools.ietf.org/html/rfc7636#section-4.1
  */
@@ -152,7 +152,7 @@ extern NSString *const OIDOAuthorizationRequestCodeChallengeMethodS256;
         automatically.
  */
 - (instancetype)
-    initWithConfiguration:(OIDServiceConfiguration *)configuration
+    initWithConfiguration:(EkoOIDServiceConfiguration *)configuration
                  clientId:(NSString *)clientID
                    scopes:(nullable NSArray<NSString *> *)scopes
               redirectURL:(NSURL *)redirectURL
@@ -172,7 +172,7 @@ extern NSString *const OIDOAuthorizationRequestCodeChallengeMethodS256;
         automatically.
  */
 - (instancetype)
-    initWithConfiguration:(OIDServiceConfiguration *)configuration
+    initWithConfiguration:(EkoOIDServiceConfiguration *)configuration
                  clientId:(NSString *)clientID
              clientSecret:(nullable NSString *)clientSecret
                    scopes:(nullable NSArray<NSString *> *)scopes
@@ -191,17 +191,17 @@ extern NSString *const OIDOAuthorizationRequestCodeChallengeMethodS256;
     @param nonce String value used to associate a Client session with an ID Token. Can be set to nil
         if not using OpenID Connect, although pure OAuth servers should ignore params they don't
         understand anyway.
-    @param codeVerifier The PKCE code verifier. See @c OIDAuthorizationRequest.generateCodeVerifier.
+    @param codeVerifier The PKCE code verifier. See @c EkoOIDAuthorizationRequest.generateCodeVerifier.
     @param codeChallenge The PKCE code challenge, calculated from the code verifier such as with
-        @c OIDAuthorizationRequest.codeChallengeS256ForVerifier:.
+        @c EkoOIDAuthorizationRequest.codeChallengeS256ForVerifier:.
     @param codeChallengeMethod The PKCE code challenge method.
-        ::OIDOAuthorizationRequestCodeChallengeMethodS256 when
-        @c OIDAuthorizationRequest.codeChallengeS256ForVerifier: is used to create the code
+        ::EkoOIDOAuthorizationRequestCodeChallengeMethodS256 when
+        @c EkoOIDAuthorizationRequest.codeChallengeS256ForVerifier: is used to create the code
         challenge.
     @param additionalParameters The client's additional authorization parameters.
  */
 - (instancetype)
-    initWithConfiguration:(OIDServiceConfiguration *)configuration
+    initWithConfiguration:(EkoOIDServiceConfiguration *)configuration
                  clientId:(NSString *)clientID
              clientSecret:(nullable NSString *)clientSecret
                     scope:(nullable NSString *)scope
@@ -238,9 +238,9 @@ extern NSString *const OIDOAuthorizationRequestCodeChallengeMethodS256;
     @param codeVerifier The code verifier from which the code challenge will be derived.
     @return The generated code challenge.
     @details Generate a secure code verifier to pass into this method with
-        @c OIDAuthorizationRequest.generateCodeVerifier. The matching @c #codeChallengeMethod for
+        @c EkoOIDAuthorizationRequest.generateCodeVerifier. The matching @c #codeChallengeMethod for
         @c #codeChallenge%s created by this method is
-        ::OIDOAuthorizationRequestCodeChallengeMethodS256.
+        ::EkoOIDOAuthorizationRequestCodeChallengeMethodS256.
     @see https://tools.ietf.org/html/rfc7636#section-4.1
  */
 + (nullable NSString *)codeChallengeS256ForVerifier:(nullable NSString *)codeVerifier;

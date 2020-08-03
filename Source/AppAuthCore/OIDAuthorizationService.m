@@ -1,4 +1,4 @@
-/*! @file OIDAuthorizationService.m
+/*! @file EkoOIDAuthorizationService.m
     @brief AppAuth iOS SDK
     @copyright
         Copyright 2015 Google Inc. All Rights Reserved.
@@ -44,26 +44,26 @@ static NSString *const kOpenIDConfigurationWellKnownPath = @".well-known/openid-
 /*! @brief Max allowable iat (Issued At) time skew
     @see https://openid.net/specs/openid-connect-core-1_0.html#IDTokenValidation
  */
-static int const kOIDAuthorizationSessionIATMaxSkew = 600;
+static int const kEkoOIDAuthorizationSessionIATMaxSkew = 600;
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface OIDAuthorizationSession : NSObject<OIDExternalUserAgentSession>
+@interface EkoOIDAuthorizationSession : NSObject<EkoOIDExternalUserAgentSession>
 
 - (instancetype)init NS_UNAVAILABLE;
 
-- (instancetype)initWithRequest:(OIDAuthorizationRequest *)request
+- (instancetype)initWithRequest:(EkoOIDAuthorizationRequest *)request
     NS_DESIGNATED_INITIALIZER;
 
 @end
 
-@implementation OIDAuthorizationSession {
-  OIDAuthorizationRequest *_request;
-  id<OIDExternalUserAgent> _externalUserAgent;
-  OIDAuthorizationCallback _pendingauthorizationFlowCallback;
+@implementation EkoOIDAuthorizationSession {
+  EkoOIDAuthorizationRequest *_request;
+  id<EkoOIDExternalUserAgent> _externalUserAgent;
+  EkoOIDAuthorizationCallback _pendingauthorizationFlowCallback;
 }
 
-- (instancetype)initWithRequest:(OIDAuthorizationRequest *)request {
+- (instancetype)initWithRequest:(EkoOIDAuthorizationRequest *)request {
   self = [super init];
   if (self) {
     _request = [request copy];
@@ -71,14 +71,14 @@ NS_ASSUME_NONNULL_BEGIN
   return self;
 }
 
-- (void)presentAuthorizationWithExternalUserAgent:(id<OIDExternalUserAgent>)externalUserAgent
-                                         callback:(OIDAuthorizationCallback)authorizationFlowCallback {
+- (void)presentAuthorizationWithExternalUserAgent:(id<EkoOIDExternalUserAgent>)externalUserAgent
+                                         callback:(EkoOIDAuthorizationCallback)authorizationFlowCallback {
   _externalUserAgent = externalUserAgent;
   _pendingauthorizationFlowCallback = authorizationFlowCallback;
   BOOL authorizationFlowStarted =
       [_externalUserAgent presentExternalUserAgentRequest:_request session:self];
   if (!authorizationFlowStarted) {
-    NSError *safariError = [OIDErrorUtilities errorWithCode:OIDErrorCodeSafariOpenError
+    NSError *safariError = [EkoOIDErrorUtilities errorWithCode:EkoOIDErrorCodeSafariOpenError
                                             underlyingError:nil
                                                 description:@"Unable to open Safari."];
     [self didFinishWithResponse:nil error:safariError];
@@ -91,7 +91,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)cancelWithCompletion:(nullable void (^)(void))completion {
   [_externalUserAgent dismissExternalUserAgentAnimated:YES completion:^{
-      NSError *error = [OIDErrorUtilities errorWithCode:OIDErrorCodeUserCanceledAuthorizationFlow
+      NSError *error = [EkoOIDErrorUtilities errorWithCode:EkoOIDErrorCodeUserCanceledAuthorizationFlow
                                         underlyingError:nil
                                             description:@"Authorization flow was cancelled."];
       [self didFinishWithResponse:nil error:error];
@@ -109,11 +109,11 @@ NS_ASSUME_NONNULL_BEGIN
   NSURL *standardizedRedirectURL = [redirectionURL standardizedURL];
 
   return [standardizedURL.scheme caseInsensitiveCompare:standardizedRedirectURL.scheme] == NSOrderedSame
-      && OIDIsEqualIncludingNil(standardizedURL.user, standardizedRedirectURL.user)
-      && OIDIsEqualIncludingNil(standardizedURL.password, standardizedRedirectURL.password)
-      && OIDIsEqualIncludingNil(standardizedURL.host, standardizedRedirectURL.host)
-      && OIDIsEqualIncludingNil(standardizedURL.port, standardizedRedirectURL.port)
-      && OIDIsEqualIncludingNil(standardizedURL.path, standardizedRedirectURL.path);
+      && EkoOIDIsEqualIncludingNil(standardizedURL.user, standardizedRedirectURL.user)
+      && EkoOIDIsEqualIncludingNil(standardizedURL.password, standardizedRedirectURL.password)
+      && EkoOIDIsEqualIncludingNil(standardizedURL.host, standardizedRedirectURL.host)
+      && EkoOIDIsEqualIncludingNil(standardizedURL.port, standardizedRedirectURL.port)
+      && EkoOIDIsEqualIncludingNil(standardizedURL.path, standardizedRedirectURL.path);
 }
 
 - (BOOL)shouldHandleURL:(NSURL *)URL {
@@ -130,29 +130,29 @@ NS_ASSUME_NONNULL_BEGIN
   
   // checks for an invalid state
   if (!_pendingauthorizationFlowCallback) {
-    [NSException raise:OIDOAuthExceptionInvalidAuthorizationFlow
-                format:@"%@", OIDOAuthExceptionInvalidAuthorizationFlow, nil];
+    [NSException raise:EkoOIDOAuthExceptionInvalidAuthorizationFlow
+                format:@"%@", EkoOIDOAuthExceptionInvalidAuthorizationFlow, nil];
   }
 
-  OIDURLQueryComponent *query = [[OIDURLQueryComponent alloc] initWithURL:URL];
+  EkoOIDURLQueryComponent *query = [[EkoOIDURLQueryComponent alloc] initWithURL:URL];
 
   NSError *error;
-  OIDAuthorizationResponse *response = nil;
+  EkoOIDAuthorizationResponse *response = nil;
 
   // checks for an OAuth error response as per RFC6749 Section 4.1.2.1
-  if (query.dictionaryValue[OIDOAuthErrorFieldError]) {
-    error = [OIDErrorUtilities OAuthErrorWithDomain:OIDOAuthAuthorizationErrorDomain
+  if (query.dictionaryValue[EkoOIDOAuthErrorFieldError]) {
+    error = [EkoOIDErrorUtilities OAuthErrorWithDomain:EkoOIDOAuthAuthorizationErrorDomain
                                       OAuthResponse:query.dictionaryValue
                                     underlyingError:nil];
   }
 
   // no error, should be a valid OAuth 2.0 response
   if (!error) {
-    response = [[OIDAuthorizationResponse alloc] initWithRequest:_request
+    response = [[EkoOIDAuthorizationResponse alloc] initWithRequest:_request
                                                       parameters:query.dictionaryValue];
       
     // verifies that the state in the response matches the state in the request, or both are nil
-    if (!OIDIsEqualIncludingNil(_request.state, response.state)) {
+    if (!EkoOIDIsEqualIncludingNil(_request.state, response.state)) {
       NSMutableDictionary *userInfo = [query.dictionaryValue mutableCopy];
       userInfo[NSLocalizedDescriptionKey] =
         [NSString stringWithFormat:@"State mismatch, expecting %@ but got %@ in authorization "
@@ -161,8 +161,8 @@ NS_ASSUME_NONNULL_BEGIN
                                    response.state,
                                    response];
       response = nil;
-      error = [NSError errorWithDomain:OIDOAuthAuthorizationErrorDomain
-                                  code:OIDErrorCodeOAuthAuthorizationClientError
+      error = [NSError errorWithDomain:EkoOIDOAuthAuthorizationErrorDomain
+                                  code:EkoOIDErrorCodeOAuthAuthorizationClientError
                               userInfo:userInfo];
       }
   }
@@ -182,9 +182,9 @@ NS_ASSUME_NONNULL_BEGIN
     @param response The authorization response, if any to return to the callback.
     @param error The error, if any, to return to the callback.
  */
-- (void)didFinishWithResponse:(nullable OIDAuthorizationResponse *)response
+- (void)didFinishWithResponse:(nullable EkoOIDAuthorizationResponse *)response
                         error:(nullable NSError *)error {
-  OIDAuthorizationCallback callback = _pendingauthorizationFlowCallback;
+  EkoOIDAuthorizationCallback callback = _pendingauthorizationFlowCallback;
   _pendingauthorizationFlowCallback = nil;
   _externalUserAgent = nil;
   if (callback) {
@@ -194,22 +194,22 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-@interface OIDEndSessionImplementation : NSObject<OIDExternalUserAgentSession> {
+@interface EkoOIDEndSessionImplementation : NSObject<EkoOIDExternalUserAgentSession> {
   // private variables
-  OIDEndSessionRequest *_request;
-  id<OIDExternalUserAgent> _externalUserAgent;
-  OIDEndSessionCallback _pendingEndSessionCallback;
+  EkoOIDEndSessionRequest *_request;
+  id<EkoOIDExternalUserAgent> _externalUserAgent;
+  EkoOIDEndSessionCallback _pendingEndSessionCallback;
 }
 - (instancetype)init NS_UNAVAILABLE;
 
-- (instancetype)initWithRequest:(OIDEndSessionRequest *)request
+- (instancetype)initWithRequest:(EkoOIDEndSessionRequest *)request
     NS_DESIGNATED_INITIALIZER;
 @end
 
 
-@implementation OIDEndSessionImplementation
+@implementation EkoOIDEndSessionImplementation
 
-- (instancetype)initWithRequest:(OIDEndSessionRequest *)request {
+- (instancetype)initWithRequest:(EkoOIDEndSessionRequest *)request {
   self = [super init];
   if (self) {
     _request = [request copy];
@@ -217,14 +217,14 @@ NS_ASSUME_NONNULL_BEGIN
   return self;
 }
 
-- (void)presentAuthorizationWithExternalUserAgent:(id<OIDExternalUserAgent>)externalUserAgent
-                                         callback:(OIDEndSessionCallback)authorizationFlowCallback {
+- (void)presentAuthorizationWithExternalUserAgent:(id<EkoOIDExternalUserAgent>)externalUserAgent
+                                         callback:(EkoOIDEndSessionCallback)authorizationFlowCallback {
   _externalUserAgent = externalUserAgent;
   _pendingEndSessionCallback = authorizationFlowCallback;
   BOOL authorizationFlowStarted =
       [_externalUserAgent presentExternalUserAgentRequest:_request session:self];
   if (!authorizationFlowStarted) {
-    NSError *safariError = [OIDErrorUtilities errorWithCode:OIDErrorCodeSafariOpenError
+    NSError *safariError = [EkoOIDErrorUtilities errorWithCode:EkoOIDErrorCodeSafariOpenError
                                             underlyingError:nil
                                                 description:@"Unable to open Safari."];
     [self didFinishWithResponse:nil error:safariError];
@@ -237,8 +237,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)cancelWithCompletion:(nullable void (^)(void))completion {
   [_externalUserAgent dismissExternalUserAgentAnimated:YES completion:^{
-    NSError *error = [OIDErrorUtilities
-                      errorWithCode:OIDErrorCodeUserCanceledAuthorizationFlow
+    NSError *error = [EkoOIDErrorUtilities
+                      errorWithCode:EkoOIDErrorCodeUserCanceledAuthorizationFlow
                       underlyingError:nil
                       description:nil];
     [self didFinishWithResponse:nil error:error];
@@ -249,7 +249,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (BOOL)shouldHandleURL:(NSURL *)URL {
   // The logic of when to handle the URL is the same as for authorization requests: should match
   // down to the path component.
-  return [[OIDAuthorizationSession class] URL:URL
+  return [[EkoOIDAuthorizationSession class] URL:URL
                         matchesRedirectionURL:_request.postLogoutRedirectURL];
 }
 
@@ -260,20 +260,20 @@ NS_ASSUME_NONNULL_BEGIN
   }
   // checks for an invalid state
   if (!_pendingEndSessionCallback) {
-    [NSException raise:OIDOAuthExceptionInvalidAuthorizationFlow
-                format:@"%@", OIDOAuthExceptionInvalidAuthorizationFlow, nil];
+    [NSException raise:EkoOIDOAuthExceptionInvalidAuthorizationFlow
+                format:@"%@", EkoOIDOAuthExceptionInvalidAuthorizationFlow, nil];
   }
   
   
   NSError *error;
-  OIDEndSessionResponse *response = nil;
+  EkoOIDEndSessionResponse *response = nil;
 
-  OIDURLQueryComponent *query = [[OIDURLQueryComponent alloc] initWithURL:URL];
-  response = [[OIDEndSessionResponse alloc] initWithRequest:_request
+  EkoOIDURLQueryComponent *query = [[EkoOIDURLQueryComponent alloc] initWithURL:URL];
+  response = [[EkoOIDEndSessionResponse alloc] initWithRequest:_request
                                                  parameters:query.dictionaryValue];
   
   // verifies that the state in the response matches the state in the request, or both are nil
-  if (!OIDIsEqualIncludingNil(_request.state, response.state)) {
+  if (!EkoOIDIsEqualIncludingNil(_request.state, response.state)) {
     NSMutableDictionary *userInfo = [query.dictionaryValue mutableCopy];
     userInfo[NSLocalizedDescriptionKey] =
     [NSString stringWithFormat:@"State mismatch, expecting %@ but got %@ in authorization "
@@ -282,8 +282,8 @@ NS_ASSUME_NONNULL_BEGIN
      response.state,
      response];
     response = nil;
-    error = [NSError errorWithDomain:OIDOAuthAuthorizationErrorDomain
-                                code:OIDErrorCodeOAuthAuthorizationClientError
+    error = [NSError errorWithDomain:EkoOIDOAuthAuthorizationErrorDomain
+                                code:EkoOIDErrorCodeOAuthAuthorizationClientError
                             userInfo:userInfo];
   }
   
@@ -302,9 +302,9 @@ NS_ASSUME_NONNULL_BEGIN
  @param response The authorization response, if any to return to the callback.
  @param error The error, if any, to return to the callback.
  */
-- (void)didFinishWithResponse:(nullable OIDEndSessionResponse *)response
+- (void)didFinishWithResponse:(nullable EkoOIDEndSessionResponse *)response
                         error:(nullable NSError *)error {
-  OIDEndSessionCallback callback = _pendingEndSessionCallback;
+  EkoOIDEndSessionCallback callback = _pendingEndSessionCallback;
   _pendingEndSessionCallback = nil;
   _externalUserAgent = nil;
   if (callback) {
@@ -314,10 +314,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-@implementation OIDAuthorizationService
+@implementation EkoOIDAuthorizationService
 
 + (void)discoverServiceConfigurationForIssuer:(NSURL *)issuerURL
-                                   completion:(OIDDiscoveryCallback)completion {
+                                   completion:(EkoOIDDiscoveryCallback)completion {
   NSURL *fullDiscoveryURL =
       [issuerURL URLByAppendingPathComponent:kOpenIDConfigurationWellKnownPath];
 
@@ -326,9 +326,9 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 + (void)discoverServiceConfigurationForDiscoveryURL:(NSURL *)discoveryURL
-    completion:(OIDDiscoveryCallback)completion {
+    completion:(EkoOIDDiscoveryCallback)completion {
 
-  NSURLSession *session = [OIDURLSessionProvider session];
+  NSURLSession *session = [EkoOIDURLSessionProvider session];
   NSURLSessionDataTask *task =
       [session dataTaskWithURL:discoveryURL
              completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
@@ -338,7 +338,7 @@ NS_ASSUME_NONNULL_BEGIN
           [NSString stringWithFormat:@"Connection error fetching discovery document '%@': %@.",
                                      discoveryURL,
                                      error.localizedDescription];
-      error = [OIDErrorUtilities errorWithCode:OIDErrorCodeNetworkError
+      error = [EkoOIDErrorUtilities errorWithCode:EkoOIDErrorCodeNetworkError
                                underlyingError:error
                                    description:errorDescription];
       dispatch_async(dispatch_get_main_queue(), ^{
@@ -352,14 +352,14 @@ NS_ASSUME_NONNULL_BEGIN
     // Check for non-200 status codes.
     // https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderConfigurationResponse
     if (urlResponse.statusCode != 200) {
-      NSError *URLResponseError = [OIDErrorUtilities HTTPErrorWithHTTPResponse:urlResponse
+      NSError *URLResponseError = [EkoOIDErrorUtilities HTTPErrorWithHTTPResponse:urlResponse
                                                                           data:data];
       NSString *errorDescription =
           [NSString stringWithFormat:@"Non-200 HTTP response (%d) fetching discovery document "
                                      "'%@'.",
                                      (int)urlResponse.statusCode,
                                      discoveryURL];
-      error = [OIDErrorUtilities errorWithCode:OIDErrorCodeNetworkError
+      error = [EkoOIDErrorUtilities errorWithCode:EkoOIDErrorCodeNetworkError
                                underlyingError:URLResponseError
                                    description:errorDescription];
       dispatch_async(dispatch_get_main_queue(), ^{
@@ -368,15 +368,15 @@ NS_ASSUME_NONNULL_BEGIN
       return;
     }
 
-    // Construct an OIDServiceDiscovery with the received JSON.
-    OIDServiceDiscovery *discovery =
-        [[OIDServiceDiscovery alloc] initWithJSONData:data error:&error];
+    // Construct an EkoOIDServiceDiscovery with the received JSON.
+    EkoOIDServiceDiscovery *discovery =
+        [[EkoOIDServiceDiscovery alloc] initWithJSONData:data error:&error];
     if (error || !discovery) {
       NSString *errorDescription =
           [NSString stringWithFormat:@"JSON error parsing document at '%@': %@",
                                      discoveryURL,
                                      error.localizedDescription];
-      error = [OIDErrorUtilities errorWithCode:OIDErrorCodeNetworkError
+      error = [EkoOIDErrorUtilities errorWithCode:EkoOIDErrorCodeNetworkError
                                underlyingError:error
                                    description:errorDescription];
       dispatch_async(dispatch_get_main_queue(), ^{
@@ -386,8 +386,8 @@ NS_ASSUME_NONNULL_BEGIN
     }
 
     // Create our service configuration with the discovery document and return it.
-    OIDServiceConfiguration *configuration =
-        [[OIDServiceConfiguration alloc] initWithDiscoveryDocument:discovery];
+    EkoOIDServiceConfiguration *configuration =
+        [[EkoOIDServiceConfiguration alloc] initWithDiscoveryDocument:discovery];
     dispatch_async(dispatch_get_main_queue(), ^{
       completion(configuration, nil);
     });
@@ -397,38 +397,38 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - Authorization Endpoint
 
-+ (id<OIDExternalUserAgentSession>) presentAuthorizationRequest:(OIDAuthorizationRequest *)request
-    externalUserAgent:(id<OIDExternalUserAgent>)externalUserAgent
-             callback:(OIDAuthorizationCallback)callback {
++ (id<EkoOIDExternalUserAgentSession>) presentAuthorizationRequest:(EkoOIDAuthorizationRequest *)request
+    externalUserAgent:(id<EkoOIDExternalUserAgent>)externalUserAgent
+             callback:(EkoOIDAuthorizationCallback)callback {
   
   AppAuthRequestTrace(@"Authorization Request: %@", request);
   
-  OIDAuthorizationSession *flowSession = [[OIDAuthorizationSession alloc] initWithRequest:request];
+  EkoOIDAuthorizationSession *flowSession = [[EkoOIDAuthorizationSession alloc] initWithRequest:request];
   [flowSession presentAuthorizationWithExternalUserAgent:externalUserAgent callback:callback];
   return flowSession;
 }
 
-+ (id<OIDExternalUserAgentSession>)
-    presentEndSessionRequest:(OIDEndSessionRequest *)request
-           externalUserAgent:(id<OIDExternalUserAgent>)externalUserAgent
-                    callback:(OIDEndSessionCallback)callback {
-  OIDEndSessionImplementation *flowSession =
-      [[OIDEndSessionImplementation alloc] initWithRequest:request];
++ (id<EkoOIDExternalUserAgentSession>)
+    presentEndSessionRequest:(EkoOIDEndSessionRequest *)request
+           externalUserAgent:(id<EkoOIDExternalUserAgent>)externalUserAgent
+                    callback:(EkoOIDEndSessionCallback)callback {
+  EkoOIDEndSessionImplementation *flowSession =
+      [[EkoOIDEndSessionImplementation alloc] initWithRequest:request];
   [flowSession presentAuthorizationWithExternalUserAgent:externalUserAgent callback:callback];
   return flowSession;
 }
 
 #pragma mark - Token Endpoint
 
-+ (void)performTokenRequest:(OIDTokenRequest *)request callback:(OIDTokenCallback)callback {
++ (void)performTokenRequest:(EkoOIDTokenRequest *)request callback:(EkoOIDTokenCallback)callback {
   [[self class] performTokenRequest:request
       originalAuthorizationResponse:nil
                            callback:callback];
 }
 
-+ (void)performTokenRequest:(OIDTokenRequest *)request
-    originalAuthorizationResponse:(OIDAuthorizationResponse *_Nullable)authorizationResponse
-                         callback:(OIDTokenCallback)callback {
++ (void)performTokenRequest:(EkoOIDTokenRequest *)request
+    originalAuthorizationResponse:(EkoOIDAuthorizationResponse *_Nullable)authorizationResponse
+                         callback:(EkoOIDTokenCallback)callback {
 
   NSURLRequest *URLRequest = [request URLRequest];
   
@@ -438,7 +438,7 @@ NS_ASSUME_NONNULL_BEGIN
                       [[NSString alloc] initWithData:URLRequest.HTTPBody
                                             encoding:NSUTF8StringEncoding]);
 
-  NSURLSession *session = [OIDURLSessionProvider session];
+  NSURLSession *session = [EkoOIDURLSessionProvider session];
   [[session dataTaskWithRequest:URLRequest
               completionHandler:^(NSData *_Nullable data,
                                   NSURLResponse *_Nullable response,
@@ -450,7 +450,7 @@ NS_ASSUME_NONNULL_BEGIN
                                      URLRequest.URL,
                                      error.localizedDescription];
       NSError *returnedError =
-          [OIDErrorUtilities errorWithCode:OIDErrorCodeNetworkError
+          [EkoOIDErrorUtilities errorWithCode:EkoOIDErrorCodeNetworkError
                            underlyingError:error
                                description:errorDescription];
       dispatch_async(dispatch_get_main_queue(), ^{
@@ -467,7 +467,7 @@ NS_ASSUME_NONNULL_BEGIN
     if (statusCode != 200) {
       // A server error occurred.
       NSError *serverError =
-          [OIDErrorUtilities HTTPErrorWithHTTPResponse:HTTPURLResponse data:data];
+          [EkoOIDErrorUtilities HTTPErrorWithHTTPResponse:HTTPURLResponse data:data];
 
       // HTTP 4xx may indicate an RFC6749 Section 5.2 error response, attempts to parse as such.
       if (statusCode >= 400 && statusCode < 500) {
@@ -477,9 +477,9 @@ NS_ASSUME_NONNULL_BEGIN
 
         // If the HTTP 4xx response parses as JSON and has an 'error' key, it's an OAuth error.
         // These errors are special as they indicate a problem with the authorization grant.
-        if (json[OIDOAuthErrorFieldError]) {
+        if (json[EkoOIDOAuthErrorFieldError]) {
           NSError *oauthError =
-            [OIDErrorUtilities OAuthErrorWithDomain:OIDOAuthTokenErrorDomain
+            [EkoOIDErrorUtilities OAuthErrorWithDomain:EkoOIDOAuthTokenErrorDomain
                                       OAuthResponse:json
                                     underlyingError:serverError];
           dispatch_async(dispatch_get_main_queue(), ^{
@@ -495,7 +495,7 @@ NS_ASSUME_NONNULL_BEGIN
                                      (int)statusCode,
                                       URLRequest.URL];
       NSError *returnedError =
-          [OIDErrorUtilities errorWithCode:OIDErrorCodeServerError
+          [EkoOIDErrorUtilities errorWithCode:EkoOIDErrorCodeServerError
                            underlyingError:serverError
                                description:errorDescription];
       dispatch_async(dispatch_get_main_queue(), ^{
@@ -513,7 +513,7 @@ NS_ASSUME_NONNULL_BEGIN
           [NSString stringWithFormat:@"JSON error parsing token response: %@",
                                      jsonDeserializationError.localizedDescription];
       NSError *returnedError =
-          [OIDErrorUtilities errorWithCode:OIDErrorCodeJSONDeserializationError
+          [EkoOIDErrorUtilities errorWithCode:EkoOIDErrorCodeJSONDeserializationError
                            underlyingError:jsonDeserializationError
                                description:errorDescription];
       dispatch_async(dispatch_get_main_queue(), ^{
@@ -522,12 +522,12 @@ NS_ASSUME_NONNULL_BEGIN
       return;
     }
 
-    OIDTokenResponse *tokenResponse =
-        [[OIDTokenResponse alloc] initWithRequest:request parameters:json];
+    EkoOIDTokenResponse *tokenResponse =
+        [[EkoOIDTokenResponse alloc] initWithRequest:request parameters:json];
     if (!tokenResponse) {
       // A problem occurred constructing the token response from the JSON.
       NSError *returnedError =
-          [OIDErrorUtilities errorWithCode:OIDErrorCodeTokenResponseConstructionError
+          [EkoOIDErrorUtilities errorWithCode:EkoOIDErrorCodeTokenResponseConstructionError
                            underlyingError:jsonDeserializationError
                                description:@"Token response invalid."];
       dispatch_async(dispatch_get_main_queue(), ^{
@@ -545,10 +545,10 @@ NS_ASSUME_NONNULL_BEGIN
     // Users of the library are welcome to perform the JWT signature verification themselves should
     // they wish.
     if (tokenResponse.idToken) {
-      OIDIDToken *idToken = [[OIDIDToken alloc] initWithIDTokenString:tokenResponse.idToken];
+      EkoOIDIDToken *idToken = [[EkoOIDIDToken alloc] initWithIDTokenString:tokenResponse.idToken];
       if (!idToken) {
         NSError *invalidIDToken =
-          [OIDErrorUtilities errorWithCode:OIDErrorCodeIDTokenParsingError
+          [EkoOIDErrorUtilities errorWithCode:EkoOIDErrorCodeIDTokenParsingError
                            underlyingError:nil
                                description:@"ID Token parsing failed"];
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -565,7 +565,7 @@ NS_ASSUME_NONNULL_BEGIN
       NSURL *issuer = tokenResponse.request.configuration.issuer;
       if (issuer && ![idToken.issuer isEqual:issuer]) {
         NSError *invalidIDToken =
-          [OIDErrorUtilities errorWithCode:OIDErrorCodeIDTokenFailedValidationError
+          [EkoOIDErrorUtilities errorWithCode:EkoOIDErrorCodeIDTokenFailedValidationError
                            underlyingError:nil
                                description:@"Issuer mismatch"];
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -581,7 +581,7 @@ NS_ASSUME_NONNULL_BEGIN
       if (![idToken.audience containsObject:clientID] &&
           ![idToken.claims[@"azp"] isEqualToString:clientID]) {
         NSError *invalidIDToken =
-          [OIDErrorUtilities errorWithCode:OIDErrorCodeIDTokenFailedValidationError
+          [EkoOIDErrorUtilities errorWithCode:EkoOIDErrorCodeIDTokenFailedValidationError
                            underlyingError:nil
                                description:@"Audience mismatch"];
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -607,7 +607,7 @@ NS_ASSUME_NONNULL_BEGIN
       NSTimeInterval expiresAtDifference = [idToken.expiresAt timeIntervalSinceNow];
       if (expiresAtDifference < 0) {
         NSError *invalidIDToken =
-            [OIDErrorUtilities errorWithCode:OIDErrorCodeIDTokenFailedValidationError
+            [EkoOIDErrorUtilities errorWithCode:EkoOIDErrorCodeIDTokenFailedValidationError
                              underlyingError:nil
                                  description:@"ID Token expired"];
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -619,13 +619,13 @@ NS_ASSUME_NONNULL_BEGIN
       // OpenID Connect Core Section 3.1.3.7. rule #10
       // Validates that the issued at time is not more than +/- 10 minutes on the current time.
       NSTimeInterval issuedAtDifference = [idToken.issuedAt timeIntervalSinceNow];
-      if (fabs(issuedAtDifference) > kOIDAuthorizationSessionIATMaxSkew) {
+      if (fabs(issuedAtDifference) > kEkoOIDAuthorizationSessionIATMaxSkew) {
         NSString *message =
             [NSString stringWithFormat:@"Issued at time is more than %d seconds before or after "
                                         "the current time",
-                                       kOIDAuthorizationSessionIATMaxSkew];
+                                       kEkoOIDAuthorizationSessionIATMaxSkew];
         NSError *invalidIDToken =
-          [OIDErrorUtilities errorWithCode:OIDErrorCodeIDTokenFailedValidationError
+          [EkoOIDErrorUtilities errorWithCode:EkoOIDErrorCodeIDTokenFailedValidationError
                            underlyingError:nil
                                description:message];
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -635,13 +635,13 @@ NS_ASSUME_NONNULL_BEGIN
       }
 
       // Only relevant for the authorization_code response type
-      if ([tokenResponse.request.grantType isEqual:OIDGrantTypeAuthorizationCode]) {
+      if ([tokenResponse.request.grantType isEqual:EkoOIDGrantTypeAuthorizationCode]) {
         // OpenID Connect Core Section 3.1.3.7. rule #11
         // Validates the nonce.
         NSString *nonce = authorizationResponse.request.nonce;
         if (nonce && ![idToken.nonce isEqual:nonce]) {
           NSError *invalidIDToken =
-          [OIDErrorUtilities errorWithCode:OIDErrorCodeIDTokenFailedValidationError
+          [EkoOIDErrorUtilities errorWithCode:EkoOIDErrorCodeIDTokenFailedValidationError
                            underlyingError:nil
                                description:@"Nonce mismatch"];
           dispatch_async(dispatch_get_main_queue(), ^{
@@ -668,12 +668,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - Registration Endpoint
 
-+ (void)performRegistrationRequest:(OIDRegistrationRequest *)request
-                          completion:(OIDRegistrationCompletion)completion {
++ (void)performRegistrationRequest:(EkoOIDRegistrationRequest *)request
+                          completion:(EkoOIDRegistrationCompletion)completion {
   NSURLRequest *URLRequest = [request URLRequest];
   if (!URLRequest) {
     // A problem occurred deserializing the response/JSON.
-    NSError *returnedError = [OIDErrorUtilities errorWithCode:OIDErrorCodeJSONSerializationError
+    NSError *returnedError = [EkoOIDErrorUtilities errorWithCode:EkoOIDErrorCodeJSONSerializationError
                                               underlyingError:nil
                                                   description:@"The registration request could not "
                                                                "be serialized as JSON."];
@@ -683,7 +683,7 @@ NS_ASSUME_NONNULL_BEGIN
     return;
   }
 
-  NSURLSession *session = [OIDURLSessionProvider session];
+  NSURLSession *session = [EkoOIDURLSessionProvider session];
   [[session dataTaskWithRequest:URLRequest
               completionHandler:^(NSData *_Nullable data,
                                   NSURLResponse *_Nullable response,
@@ -694,7 +694,7 @@ NS_ASSUME_NONNULL_BEGIN
           [NSString stringWithFormat:@"Connection error making registration request to '%@': %@.",
                                      URLRequest.URL,
                                      error.localizedDescription];
-      NSError *returnedError = [OIDErrorUtilities errorWithCode:OIDErrorCodeNetworkError
+      NSError *returnedError = [EkoOIDErrorUtilities errorWithCode:EkoOIDErrorCodeNetworkError
                                                 underlyingError:error
                                                     description:errorDescription];
       dispatch_async(dispatch_get_main_queue(), ^{
@@ -707,7 +707,7 @@ NS_ASSUME_NONNULL_BEGIN
 
     if (HTTPURLResponse.statusCode != 201 && HTTPURLResponse.statusCode != 200) {
       // A server error occurred.
-      NSError *serverError = [OIDErrorUtilities HTTPErrorWithHTTPResponse:HTTPURLResponse
+      NSError *serverError = [EkoOIDErrorUtilities HTTPErrorWithHTTPResponse:HTTPURLResponse
                                                                      data:data];
 
       // HTTP 400 may indicate an OpenID Connect Dynamic Client Registration 1.0 Section 3.3 error
@@ -719,9 +719,9 @@ NS_ASSUME_NONNULL_BEGIN
 
         // if the HTTP 400 response parses as JSON and has an 'error' key, it's an OAuth error
         // these errors are special as they indicate a problem with the authorization grant
-        if (json[OIDOAuthErrorFieldError]) {
+        if (json[EkoOIDOAuthErrorFieldError]) {
           NSError *oauthError =
-              [OIDErrorUtilities OAuthErrorWithDomain:OIDOAuthRegistrationErrorDomain
+              [EkoOIDErrorUtilities OAuthErrorWithDomain:EkoOIDOAuthRegistrationErrorDomain
                                         OAuthResponse:json
                                       underlyingError:serverError];
           dispatch_async(dispatch_get_main_queue(), ^{
@@ -737,7 +737,7 @@ NS_ASSUME_NONNULL_BEGIN
                                      "to '%@'.",
                                      (int)HTTPURLResponse.statusCode,
                                      URLRequest.URL];
-      NSError *returnedError = [OIDErrorUtilities errorWithCode:OIDErrorCodeServerError
+      NSError *returnedError = [EkoOIDErrorUtilities errorWithCode:EkoOIDErrorCodeServerError
                                                 underlyingError:serverError
                                                     description:errorDescription];
       dispatch_async(dispatch_get_main_queue(), ^{
@@ -754,7 +754,7 @@ NS_ASSUME_NONNULL_BEGIN
       NSString *errorDescription =
           [NSString stringWithFormat:@"JSON error parsing registration response: %@",
                                      jsonDeserializationError.localizedDescription];
-      NSError *returnedError = [OIDErrorUtilities errorWithCode:OIDErrorCodeJSONDeserializationError
+      NSError *returnedError = [EkoOIDErrorUtilities errorWithCode:EkoOIDErrorCodeJSONDeserializationError
                                                 underlyingError:jsonDeserializationError
                                                     description:errorDescription];
       dispatch_async(dispatch_get_main_queue(), ^{
@@ -763,13 +763,13 @@ NS_ASSUME_NONNULL_BEGIN
       return;
     }
 
-    OIDRegistrationResponse *registrationResponse =
-        [[OIDRegistrationResponse alloc] initWithRequest:request
+    EkoOIDRegistrationResponse *registrationResponse =
+        [[EkoOIDRegistrationResponse alloc] initWithRequest:request
                                               parameters:json];
     if (!registrationResponse) {
       // A problem occurred constructing the registration response from the JSON.
       NSError *returnedError =
-          [OIDErrorUtilities errorWithCode:OIDErrorCodeRegistrationResponseConstructionError
+          [EkoOIDErrorUtilities errorWithCode:EkoOIDErrorCodeRegistrationResponseConstructionError
                            underlyingError:nil
                                description:@"Registration response invalid."];
       dispatch_async(dispatch_get_main_queue(), ^{

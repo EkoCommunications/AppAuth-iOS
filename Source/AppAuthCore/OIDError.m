@@ -1,4 +1,4 @@
-/*! @file OIDError.m
+/*! @file EkoOIDError.m
     @brief AppAuth iOS SDK
     @copyright
         Copyright 2015 Google Inc. All Rights Reserved.
@@ -18,28 +18,28 @@
 
 #import "OIDError.h"
 
-NSString *const OIDGeneralErrorDomain = @"org.openid.appauth.general";
+NSString *const EkoOIDGeneralErrorDomain = @"org.openid.appauth.general";
 
-NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_token";
+NSString *const EkoOIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_token";
 
-NSString *const OIDOAuthAuthorizationErrorDomain = @"org.openid.appauth.oauth_authorization";
+NSString *const EkoOIDOAuthAuthorizationErrorDomain = @"org.openid.appauth.oauth_authorization";
 
-NSString *const OIDOAuthRegistrationErrorDomain = @"org.openid.appauth.oauth_registration";
+NSString *const EkoOIDOAuthRegistrationErrorDomain = @"org.openid.appauth.oauth_registration";
 
-NSString *const OIDResourceServerAuthorizationErrorDomain = @"org.openid.appauth.resourceserver";
+NSString *const EkoOIDResourceServerAuthorizationErrorDomain = @"org.openid.appauth.resourceserver";
 
-NSString *const OIDHTTPErrorDomain = @"org.openid.appauth.remote-http";
+NSString *const EkoOIDHTTPErrorDomain = @"org.openid.appauth.remote-http";
 
-NSString *const OIDOAuthExceptionInvalidAuthorizationFlow = @"An OAuth redirect was sent to a "
+NSString *const EkoOIDOAuthExceptionInvalidAuthorizationFlow = @"An OAuth redirect was sent to a "
     "OIDExternalUserAgentSession after it already completed.";
 
-NSString *const OIDOAuthExceptionInvalidTokenRequestNullRedirectURL = @"A OIDTokenRequest was "
+NSString *const EkoOIDOAuthExceptionInvalidTokenRequestNullRedirectURL = @"A EkoOIDTokenRequest was "
     "created with a grant_type that requires a redirectURL, but a null redirectURL was given";
 
-NSString *const OIDOAuthErrorResponseErrorKey = @"OIDOAuthErrorResponseErrorKey";
+NSString *const EkoOIDOAuthErrorResponseErrorKey = @"OIDOAuthErrorResponseErrorKey";
 
-NSString *const OIDOAuthErrorFieldError = @"error";
+NSString *const EkoOIDOAuthErrorFieldError = @"error";
 
-NSString *const OIDOAuthErrorFieldErrorDescription = @"error_description";
+NSString *const EkoOIDOAuthErrorFieldErrorDescription = @"error_description";
 
-NSString *const OIDOAuthErrorFieldErrorURI = @"error_uri";
+NSString *const EkoOIDOAuthErrorFieldErrorURI = @"error_uri";

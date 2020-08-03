@@ -1,4 +1,4 @@
-/*! @file OIDAuthState.h
+/*! @file EkoOIDAuthState.h
     @brief AppAuth iOS SDK
     @copyright
         Copyright 2015 Google Inc. All Rights Reserved.
@@ -17,16 +17,16 @@
  */
 #import <Foundation/Foundation.h>
 
-@class OIDAuthorizationRequest;
-@class OIDAuthorizationResponse;
-@class OIDAuthState;
-@class OIDRegistrationResponse;
-@class OIDTokenResponse;
-@class OIDTokenRequest;
-@protocol OIDAuthStateChangeDelegate;
-@protocol OIDAuthStateErrorDelegate;
-@protocol OIDExternalUserAgent;
-@protocol OIDExternalUserAgentSession;
+@class EkoOIDAuthorizationRequest;
+@class EkoOIDAuthorizationResponse;
+@class EkoOIDAuthState;
+@class EkoOIDRegistrationResponse;
+@class EkoOIDTokenResponse;
+@class EkoOIDTokenRequest;
+@protocol EkoOIDAuthStateChangeDelegate;
+@protocol EkoOIDAuthStateErrorDelegate;
+@protocol EkoOIDExternalUserAgent;
+@protocol EkoOIDExternalUserAgentSession;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -35,27 +35,27 @@ NS_ASSUME_NONNULL_BEGIN
     @param idToken A valid ID token if available.
     @param error The error if an error occurred.
  */
-typedef void (^OIDAuthStateAction)(NSString *_Nullable accessToken,
+typedef void (^EkoOIDAuthStateAction)(NSString *_Nullable accessToken,
                                    NSString *_Nullable idToken,
                                    NSError *_Nullable error);
 
 /*! @brief The method called when the @c
-        OIDAuthState.authStateByPresentingAuthorizationRequest:presentingViewController:callback:
+        EkoOIDAuthState.authStateByPresentingAuthorizationRequest:presentingViewController:callback:
         method has completed or failed.
     @param authState The auth state, if the authorization request succeeded.
     @param error The error if an error occurred.
  */
-typedef void (^OIDAuthStateAuthorizationCallback)(OIDAuthState *_Nullable authState,
+typedef void (^EkoOIDAuthStateAuthorizationCallback)(EkoOIDAuthState *_Nullable authState,
                                                   NSError *_Nullable error);
 
-/*! @brief A convenience class that retains the auth state between @c OIDAuthorizationResponse%s
-        and @c OIDTokenResponse%s.
+/*! @brief A convenience class that retains the auth state between @c EkoOIDAuthorizationResponse%s
+        and @c EkoOIDTokenResponse%s.
  */
-@interface OIDAuthState : NSObject <NSSecureCoding>
+@interface EkoOIDAuthState : NSObject <NSSecureCoding>
 
 /*! @brief The most recent refresh token received from the server.
     @discussion Rather than using this property directly, you should call
-        @c OIDAuthState.performActionWithFreshTokens:.
+        @c EkoOIDAuthState.performActionWithFreshTokens:.
     @remarks refresh_token
     @see https://tools.ietf.org/html/rfc6749#section-5.1
  */
@@ -71,24 +71,24 @@ typedef void (^OIDAuthStateAuthorizationCallback)(OIDAuthState *_Nullable authSt
 /*! @brief The most recent authorization response used to update the authorization state. For the
         implicit flow, this will contain the latest access token.
  */
-@property(nonatomic, readonly) OIDAuthorizationResponse *lastAuthorizationResponse;
+@property(nonatomic, readonly) EkoOIDAuthorizationResponse *lastAuthorizationResponse;
 
 /*! @brief The most recent token response used to update this authorization state. This will
         contain the latest access token.
  */
-@property(nonatomic, readonly, nullable) OIDTokenResponse *lastTokenResponse;
+@property(nonatomic, readonly, nullable) EkoOIDTokenResponse *lastTokenResponse;
 
 /*! @brief The most recent registration response used to update this authorization state. This will
         contain the latest client credentials.
  */
-@property(nonatomic, readonly, nullable) OIDRegistrationResponse *lastRegistrationResponse;
+@property(nonatomic, readonly, nullable) EkoOIDRegistrationResponse *lastRegistrationResponse;
 
-/*! @brief The authorization error that invalidated this @c OIDAuthState.
-    @discussion The authorization error encountered by @c OIDAuthState or set by the user via
-        @c OIDAuthState.updateWithAuthorizationError: that invalidated this @c OIDAuthState.
-        Authorization errors from @c OIDAuthState will always have a domain of
-        @c ::OIDOAuthAuthorizationErrorDomain or @c ::OIDOAuthTokenErrorDomain. Note: that after
-        unarchiving the @c OIDAuthState object, the \NSError_userInfo property of this error will
+/*! @brief The authorization error that invalidated this @c EkoOIDAuthState.
+    @discussion The authorization error encountered by @c EkoOIDAuthState or set by the user via
+        @c EkoOIDAuthState.updateWithAuthorizationError: that invalidated this @c EkoOIDAuthState.
+        Authorization errors from @c EkoOIDAuthState will always have a domain of
+        @c ::EkoOIDOAuthAuthorizationErrorDomain or @c ::EkoOIDOAuthTokenErrorDomain. Note: that after
+        unarchiving the @c EkoOIDAuthState object, the \NSError_userInfo property of this error will
         be nil.
  */
 @property(nonatomic, readonly, nullable) NSError *authorizationError;
@@ -98,41 +98,41 @@ typedef void (^OIDAuthStateAuthorizationCallback)(OIDAuthState *_Nullable authSt
         successful access token or id token. This does not mean that the access is fresh - just
         that it was valid the last time it was used. Note that network and other transient errors
         do not invalidate the authorized state.  If NO, you should authenticate the user again,
-        using a fresh authorization request. Invalid @c OIDAuthState objects may still be useful in
+        using a fresh authorization request. Invalid @c EkoOIDAuthState objects may still be useful in
         that case, to hint at the previously authorized user and streamline the re-authentication
         experience.
  */
 @property(nonatomic, readonly) BOOL isAuthorized;
 
-/*! @brief The @c OIDAuthStateChangeDelegate delegate.
+/*! @brief The @c EkoOIDAuthStateChangeDelegate delegate.
     @discussion Use the delegate to observe state changes (and update storage) as well as error
         states.
  */
-@property(nonatomic, weak, nullable) id<OIDAuthStateChangeDelegate> stateChangeDelegate;
+@property(nonatomic, weak, nullable) id<EkoOIDAuthStateChangeDelegate> stateChangeDelegate;
 
-/*! @brief The @c OIDAuthStateErrorDelegate delegate.
+/*! @brief The @c EkoOIDAuthStateErrorDelegate delegate.
     @discussion Use the delegate to observe state changes (and update storage) as well as error
         states.
  */
-@property(nonatomic, weak, nullable) id<OIDAuthStateErrorDelegate> errorDelegate;
+@property(nonatomic, weak, nullable) id<EkoOIDAuthStateErrorDelegate> errorDelegate;
 
-/*! @brief Convenience method to create a @c OIDAuthState by presenting an authorization request
+/*! @brief Convenience method to create a @c EkoOIDAuthState by presenting an authorization request
         and performing the authorization code exchange in the case of code flow requests. For
         the hybrid flow, the caller should validate the id_token and c_hash, then perform the token
-        request (@c OIDAuthorizationService.performTokenRequest:callback:)
-        and update the OIDAuthState with the results (@c
-        OIDAuthState.updateWithTokenResponse:error:).
+        request (@c EkoOIDAuthorizationService.performTokenRequest:callback:)
+        and update the EkoOIDAuthState with the results (@c
+        EkoOIDAuthState.updateWithTokenResponse:error:).
     @param authorizationRequest The authorization request to present.
     @param externalUserAgent A external user agent that can present an external user-agent request.
     @param callback The method called when the request has completed or failed.
-    @return A @c OIDExternalUserAgentSession instance which will terminate when it
-        receives a @c OIDExternalUserAgentSession.cancel message, or after processing a
-        @c OIDExternalUserAgentSession.resumeExternalUserAgentFlowWithURL: message.
+    @return A @c EkoOIDExternalUserAgentSession instance which will terminate when it
+        receives a @c EkoOIDExternalUserAgentSession.cancel message, or after processing a
+        @c EkoOIDExternalUserAgentSession.resumeExternalUserAgentFlowWithURL: message.
  */
-+ (id<OIDExternalUserAgentSession>)
-    authStateByPresentingAuthorizationRequest:(OIDAuthorizationRequest *)authorizationRequest
-                            externalUserAgent:(id<OIDExternalUserAgent>)externalUserAgent
-                                     callback:(OIDAuthStateAuthorizationCallback)callback;
++ (id<EkoOIDExternalUserAgentSession>)
+    authStateByPresentingAuthorizationRequest:(EkoOIDAuthorizationRequest *)authorizationRequest
+                            externalUserAgent:(id<EkoOIDExternalUserAgent>)externalUserAgent
+                                     callback:(EkoOIDAuthStateAuthorizationCallback)callback;
 
 /*! @internal
     @brief Unavailable. Please use @c initWithAuthorizationResponse:.
@@ -142,19 +142,19 @@ typedef void (^OIDAuthStateAuthorizationCallback)(OIDAuthState *_Nullable authSt
 /*! @brief Creates an auth state from an authorization response.
     @param authorizationResponse The authorization response.
  */
-- (instancetype)initWithAuthorizationResponse:(OIDAuthorizationResponse *)authorizationResponse;
+- (instancetype)initWithAuthorizationResponse:(EkoOIDAuthorizationResponse *)authorizationResponse;
 
 /*! @brief Creates an auth state from an authorization and token response.
     @param authorizationResponse The authorization response.
     @param tokenResponse The token response.
  */
-- (instancetype)initWithAuthorizationResponse:(OIDAuthorizationResponse *)authorizationResponse
-                                tokenResponse:(nullable OIDTokenResponse *)tokenResponse;
+- (instancetype)initWithAuthorizationResponse:(EkoOIDAuthorizationResponse *)authorizationResponse
+                                tokenResponse:(nullable EkoOIDTokenResponse *)tokenResponse;
 
 /*! @brief Creates an auth state from an registration response.
     @param registrationResponse The registration response.
  */
-- (instancetype)initWithRegistrationResponse:(OIDRegistrationResponse *)registrationResponse;
+- (instancetype)initWithRegistrationResponse:(EkoOIDRegistrationResponse *)registrationResponse;
 
 /*! @brief Creates an auth state from an authorization, token and registration response.
     @param authorizationResponse The authorization response.
@@ -162,31 +162,31 @@ typedef void (^OIDAuthStateAuthorizationCallback)(OIDAuthState *_Nullable authSt
     @param registrationResponse The registration response.
  */
 - (instancetype)initWithAuthorizationResponse:
-    (nullable OIDAuthorizationResponse *)authorizationResponse
-           tokenResponse:(nullable OIDTokenResponse *)tokenResponse
-    registrationResponse:(nullable OIDRegistrationResponse *)registrationResponse
+    (nullable EkoOIDAuthorizationResponse *)authorizationResponse
+           tokenResponse:(nullable EkoOIDTokenResponse *)tokenResponse
+    registrationResponse:(nullable EkoOIDRegistrationResponse *)registrationResponse
     NS_DESIGNATED_INITIALIZER;
 
 /*! @brief Updates the authorization state based on a new authorization response.
     @param authorizationResponse The new authorization response to update the state with.
     @param error Any error encountered when performing the authorization request. Errors in the
-        domain @c ::OIDOAuthAuthorizationErrorDomain are reflected in the auth state, other errors
+        domain @c ::EkoOIDOAuthAuthorizationErrorDomain are reflected in the auth state, other errors
         are assumed to be transient, and ignored.
     @discussion Typically called with the response from an incremental authorization request,
         or if using the implicit flow. Will clear the @c #lastTokenResponse property.
  */
-- (void)updateWithAuthorizationResponse:(nullable OIDAuthorizationResponse *)authorizationResponse
+- (void)updateWithAuthorizationResponse:(nullable EkoOIDAuthorizationResponse *)authorizationResponse
                                   error:(nullable NSError *)error;
 
 /*! @brief Updates the authorization state based on a new token response.
     @param tokenResponse The new token response to update the state from.
     @param error Any error encountered when performing the authorization request. Errors in the
-        domain @c ::OIDOAuthTokenErrorDomain are reflected in the auth state, other errors
+        domain @c ::EkoOIDOAuthTokenErrorDomain are reflected in the auth state, other errors
         are assumed to be transient, and ignored.
     @discussion Typically called with the response from an authorization code exchange, or a token
         refresh.
  */
-- (void)updateWithTokenResponse:(nullable OIDTokenResponse *)tokenResponse
+- (void)updateWithTokenResponse:(nullable EkoOIDTokenResponse *)tokenResponse
                           error:(nullable NSError *)error;
 
 /*! @brief Updates the authorization state based on a new registration response.
@@ -194,17 +194,17 @@ typedef void (^OIDAuthStateAuthorizationCallback)(OIDAuthState *_Nullable authSt
     @discussion Typically called with the response from a successful client registration
         request. Will reset the auth state.
  */
-- (void)updateWithRegistrationResponse:(nullable OIDRegistrationResponse *)registrationResponse;
+- (void)updateWithRegistrationResponse:(nullable EkoOIDRegistrationResponse *)registrationResponse;
 
 /*! @brief Updates the authorization state based on an authorization error.
     @param authorizationError The authorization error.
     @discussion Call this method if you receive an authorization error during an API call to
-        invalidate the authentication state of this @c OIDAuthState. Don't call with errors
+        invalidate the authentication state of this @c EkoOIDAuthState. Don't call with errors
         unrelated to authorization, such as transient network errors.
-        The OIDAuthStateErrorDelegate.authState:didEncounterAuthorizationError: method of
+        The EkoOIDAuthStateErrorDelegate.authState:didEncounterAuthorizationError: method of
         @c #errorDelegate will be called with the error.
         You may optionally use the convenience method
-        OIDErrorUtilities.resourceServerAuthorizationErrorWithCode:errorResponse:underlyingError:
+        EkoOIDErrorUtilities.resourceServerAuthorizationErrorWithCode:errorResponse:underlyingError:
         to create \NSError objects for use here.
         The latest error received is stored in @c #authorizationError. Note: that after unarchiving
         this object, the \NSError_userInfo property of this error will be nil.
@@ -216,7 +216,7 @@ typedef void (^OIDAuthStateAuthorizationCallback)(OIDAuthState *_Nullable authSt
     @param action The block to execute with a fresh token. This block will be executed on the main
         thread.
  */
-- (void)performActionWithFreshTokens:(OIDAuthStateAction)action;
+- (void)performActionWithFreshTokens:(EkoOIDAuthStateAction)action;
 
 /*! @brief Calls the block with a valid access token (refreshing it first, if needed), or if a
         refresh was needed and failed, with the error that caused it to fail.
@@ -225,7 +225,7 @@ typedef void (^OIDAuthStateAuthorizationCallback)(OIDAuthState *_Nullable authSt
     @param additionalParameters Additional parameters for the token request if token is
         refreshed.
  */
-- (void)performActionWithFreshTokens:(OIDAuthStateAction)action
+- (void)performActionWithFreshTokens:(EkoOIDAuthStateAction)action
          additionalRefreshParameters:
     (nullable NSDictionary<NSString *, NSString *> *)additionalParameters;
 
@@ -237,34 +237,34 @@ typedef void (^OIDAuthStateAuthorizationCallback)(OIDAuthState *_Nullable authSt
         refreshed.
     @param dispatchQueue The dispatchQueue on which to dispatch the action block.
  */
-- (void)performActionWithFreshTokens:(OIDAuthStateAction)action
+- (void)performActionWithFreshTokens:(EkoOIDAuthStateAction)action
          additionalRefreshParameters:
     (nullable NSDictionary<NSString *, NSString *> *)additionalParameters
                        dispatchQueue:(dispatch_queue_t)dispatchQueue;
 
-/*! @brief Forces a token refresh the next time @c OIDAuthState.performActionWithFreshTokens: is
+/*! @brief Forces a token refresh the next time @c EkoOIDAuthState.performActionWithFreshTokens: is
         called, even if the current tokens are considered valid.
  */
 - (void)setNeedsTokenRefresh;
 
 /*! @brief Creates a token request suitable for refreshing an access token.
-    @return A @c OIDTokenRequest suitable for using a refresh token to obtain a new access token.
-    @discussion After performing the refresh, call @c OIDAuthState.updateWithTokenResponse:error:
+    @return A @c EkoOIDTokenRequest suitable for using a refresh token to obtain a new access token.
+    @discussion After performing the refresh, call @c EkoOIDAuthState.updateWithTokenResponse:error:
         to update the authorization state based on the response. Rather than doing the token refresh
-        yourself, you should use @c OIDAuthState.performActionWithFreshTokens:.
+        yourself, you should use @c EkoOIDAuthState.performActionWithFreshTokens:.
     @see https://tools.ietf.org/html/rfc6749#section-1.5
  */
-- (nullable OIDTokenRequest *)tokenRefreshRequest;
+- (nullable EkoOIDTokenRequest *)tokenRefreshRequest;
 
 /*! @brief Creates a token request suitable for refreshing an access token.
     @param additionalParameters Additional parameters for the token request.
-    @return A @c OIDTokenRequest suitable for using a refresh token to obtain a new access token.
-    @discussion After performing the refresh, call @c OIDAuthState.updateWithTokenResponse:error:
+    @return A @c EkoOIDTokenRequest suitable for using a refresh token to obtain a new access token.
+    @discussion After performing the refresh, call @c EkoOIDAuthState.updateWithTokenResponse:error:
         to update the authorization state based on the response. Rather than doing the token refresh
-        yourself, you should use @c OIDAuthState.performActionWithFreshTokens:.
+        yourself, you should use @c EkoOIDAuthState.performActionWithFreshTokens:.
     @see https://tools.ietf.org/html/rfc6749#section-1.5
  */
-- (nullable OIDTokenRequest *)tokenRefreshRequestWithAdditionalParameters:
+- (nullable EkoOIDTokenRequest *)tokenRefreshRequestWithAdditionalParameters:
     (nullable NSDictionary<NSString *, NSString *> *)additionalParameters;
 
 @end

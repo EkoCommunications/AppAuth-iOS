@@ -1,4 +1,4 @@
-/*! @file OIDURLQueryComponent.m
+/*! @file EkoOIDURLQueryComponent.m
     @brief AppAuth iOS SDK
     @copyright
         Copyright 2015 Google Inc. All Rights Reserved.
@@ -18,7 +18,7 @@
 
 #import "OIDURLQueryComponent.h"
 
-BOOL gOIDURLQueryComponentForceIOS7Handling = NO;
+BOOL gEkoOIDURLQueryComponentForceIOS7Handling = NO;
 
 /*! @brief String representing the set of characters that are valid for the URL query
         (per @ NSCharacterSet.URLQueryAllowedCharacterSet), but are disallowed in URL query
@@ -26,7 +26,7 @@ BOOL gOIDURLQueryComponentForceIOS7Handling = NO;
  */
 static NSString *const kQueryStringParamAdditionalDisallowedCharacters = @"=&+";
 
-@implementation OIDURLQueryComponent {
+@implementation EkoOIDURLQueryComponent {
   /*! @brief A dictionary of parameter names and values representing the contents of the query.
    */
   NSMutableDictionary<NSString *, NSMutableArray<NSString *> *> *_parameters;
@@ -45,7 +45,7 @@ static NSString *const kQueryStringParamAdditionalDisallowedCharacters = @"=&+";
   if (self) {
     if (@available(iOS 8.0, macOS 10.10, *)) {
       // If NSURLQueryItem is available, use it for deconstructing the new URL. (iOS 8+)
-      if (!gOIDURLQueryComponentForceIOS7Handling) {
+      if (!gEkoOIDURLQueryComponentForceIOS7Handling) {
         NSURLComponents *components =
             [NSURLComponents componentsWithURL:URL resolvingAgainstBaseURL:NO];
         // As OAuth uses application/x-www-form-urlencoded encoding, interprets '+' as a space
@@ -179,7 +179,7 @@ static NSString *const kQueryStringParamAdditionalDisallowedCharacters = @"=&+";
 - (NSString *)URLEncodedParameters {
   // If NSURLQueryItem is available, uses it for constructing the encoded parameters. (iOS 8+)
   if (@available(iOS 8.0, macOS 10.10, *)) {
-    if (!gOIDURLQueryComponentForceIOS7Handling) {
+    if (!gEkoOIDURLQueryComponentForceIOS7Handling) {
       NSURLComponents *components = [[NSURLComponents alloc] init];
       components.queryItems = [self queryItems];
       NSString *encodedQuery = components.percentEncodedQuery;

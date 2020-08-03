@@ -1,4 +1,4 @@
-/*! @file OIDResponseTypes.h
+/*! @file EkoOIDResponseTypes.h
     @brief AppAuth iOS SDK
     @copyright
         Copyright 2015 Google Inc. All Rights Reserved.
@@ -20,12 +20,12 @@
 
 /*! @brief A constant for the standard OAuth2 Response Type of 'code'.
  */
-extern NSString *const OIDResponseTypeCode;
+extern NSString *const EkoOIDResponseTypeCode;
 
 /*! @brief A constant for the standard OAuth2 Response Type of 'token'.
  */
-extern NSString *const OIDResponseTypeToken;
+extern NSString *const EkoOIDResponseTypeToken;
 
 /*! @brief A constant for the standard OAuth2 Response Type of 'id_token'.
  */
-extern NSString *const OIDResponseTypeIDToken;
+extern NSString *const EkoOIDResponseTypeIDToken;

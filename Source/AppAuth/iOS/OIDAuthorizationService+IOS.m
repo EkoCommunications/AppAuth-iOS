@@ -1,4 +1,4 @@
-/*! @file OIDAuthorizationService+IOS.m
+/*! @file EkoOIDAuthorizationService+IOS.m
     @brief AppAuth iOS SDK
     @copyright
         Copyright 2016 Google Inc. All Rights Reserved.
@@ -26,17 +26,17 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@implementation OIDAuthorizationService (IOS)
+@implementation EkoOIDAuthorizationService (IOS)
 
-+ (id<OIDExternalUserAgentSession>) presentAuthorizationRequest:(OIDAuthorizationRequest *)request
++ (id<EkoOIDExternalUserAgentSession>) presentAuthorizationRequest:(EkoOIDAuthorizationRequest *)request
     presentingViewController:(UIViewController *)presentingViewController
-                    callback:(OIDAuthorizationCallback)callback {
-  id<OIDExternalUserAgent> externalUserAgent;
+                    callback:(EkoOIDAuthorizationCallback)callback {
+  id<EkoOIDExternalUserAgent> externalUserAgent;
 #if TARGET_OS_MACCATALYST
-  externalUserAgent = [[OIDExternalUserAgentCatalyst alloc]
+  externalUserAgent = [[EkoOIDExternalUserAgentCatalyst alloc]
       initWithPresentingViewController:presentingViewController];
 #else // TARGET_OS_MACCATALYST
-  externalUserAgent = [[OIDExternalUserAgentIOS alloc] initWithPresentingViewController:presentingViewController];
+  externalUserAgent = [[EkoOIDExternalUserAgentIOS alloc] initWithPresentingViewController:presentingViewController];
 #endif // TARGET_OS_MACCATALYST
   return [self presentAuthorizationRequest:request externalUserAgent:externalUserAgent callback:callback];
 }

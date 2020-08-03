@@ -1,4 +1,4 @@
-/*! @file OIDServiceDiscovery.m
+/*! @file EkoOIDServiceDiscovery.m
     @brief AppAuth iOS SDK
     @copyright
         Copyright 2015 Google Inc. All Rights Reserved.
@@ -72,11 +72,11 @@ static NSString *const kRequireRequestURIRegistrationKey = @"require_request_uri
 static NSString *const kOPPolicyURIKey = @"op_policy_uri";
 static NSString *const kOPTosURIKey = @"op_tos_uri";
 
-@implementation OIDServiceDiscovery {
+@implementation EkoOIDServiceDiscovery {
   NSDictionary *_discoveryDictionary;
 }
 
-- (nonnull instancetype)init OID_UNAVAILABLE_USE_INITIALIZER(@selector(initWithDictionary:error:))
+- (nonnull instancetype)init EkoOID_UNAVAILABLE_USE_INITIALIZER(@selector(initWithDictionary:error:))
 
 - (nullable instancetype)initWithJSON:(NSString *)serviceDiscoveryJSON error:(NSError **)error {
   NSData *jsonData = [serviceDiscoveryJSON dataUsingEncoding:NSUTF8StringEncoding];
@@ -89,13 +89,13 @@ static NSString *const kOPTosURIKey = @"op_tos_uri";
   NSDictionary *json =
       [NSJSONSerialization JSONObjectWithData:serviceDiscoveryJSONData options:0 error:&jsonError];
   if (!json || jsonError) {
-    *error = [OIDErrorUtilities errorWithCode:OIDErrorCodeJSONDeserializationError
+    *error = [EkoOIDErrorUtilities errorWithCode:EkoOIDErrorCodeJSONDeserializationError
                               underlyingError:jsonError
                                   description:jsonError.localizedDescription];
     return nil;
   }
   if (![json isKindOfClass:[NSDictionary class]]) {
-    *error = [OIDErrorUtilities errorWithCode:OIDErrorCodeInvalidDiscoveryDocument
+    *error = [EkoOIDErrorUtilities errorWithCode:EkoOIDErrorCodeInvalidDiscoveryDocument
                               underlyingError:nil
                                   description:@"Discovery document isn't a dictionary"];
     return nil;
@@ -143,7 +143,7 @@ static NSString *const kOPTosURIKey = @"op_tos_uri";
     if (!dictionary[field]) {
       if (error) {
         NSString *errorText = [NSString stringWithFormat:kMissingFieldErrorText, field];
-        *error = [OIDErrorUtilities errorWithCode:OIDErrorCodeInvalidDiscoveryDocument
+        *error = [EkoOIDErrorUtilities errorWithCode:EkoOIDErrorCodeInvalidDiscoveryDocument
                                   underlyingError:nil
                                       description:errorText];
       }
@@ -162,7 +162,7 @@ static NSString *const kOPTosURIKey = @"op_tos_uri";
     if (![NSURL URLWithString:dictionary[field]]) {
       if (error) {
         NSString *errorText = [NSString stringWithFormat:kInvalidURLFieldErrorText, field];
-        *error = [OIDErrorUtilities errorWithCode:OIDErrorCodeInvalidDiscoveryDocument
+        *error = [EkoOIDErrorUtilities errorWithCode:EkoOIDErrorCodeInvalidDiscoveryDocument
                                   underlyingError:nil
                                       description:errorText];
       }

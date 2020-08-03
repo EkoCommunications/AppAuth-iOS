@@ -1,4 +1,4 @@
-/*! @file OIDServiceConfiguration.h
+/*! @file EkoOIDServiceConfiguration.h
     @brief AppAuth iOS SDK
     @copyright
         Copyright 2015 Google Inc. All Rights Reserved.
@@ -18,21 +18,21 @@
 
 #import <Foundation/Foundation.h>
 
-@class OIDServiceConfiguration;
-@class OIDServiceDiscovery;
+@class EkoOIDServiceConfiguration;
+@class EkoOIDServiceDiscovery;
 
 NS_ASSUME_NONNULL_BEGIN
 
-/*! @brief The type of block called when a @c OIDServiceConfiguration has been created
-        by loading a @c OIDServiceDiscovery from an @c NSURL.
+/*! @brief The type of block called when a @c EkoOIDServiceConfiguration has been created
+        by loading a @c EkoOIDServiceDiscovery from an @c NSURL.
  */
-typedef void (^OIDServiceConfigurationCreated)
-    (OIDServiceConfiguration *_Nullable serviceConfiguration,
+typedef void (^EkoOIDServiceConfigurationCreated)
+    (EkoOIDServiceConfiguration *_Nullable serviceConfiguration,
      NSError *_Nullable error);
 
-/*! @brief Represents the information needed to construct a @c OIDAuthorizationService.
+/*! @brief Represents the information needed to construct a @c EkoOIDAuthorizationService.
  */
-@interface OIDServiceConfiguration : NSObject <NSCopying, NSSecureCoding>
+@interface EkoOIDServiceConfiguration : NSObject <NSCopying, NSSecureCoding>
 
 /*! @brief The authorization endpoint URI.
  */
@@ -56,7 +56,7 @@ typedef void (^OIDServiceConfigurationCreated)
 
 /*! @brief The discovery document.
  */
-@property(nonatomic, readonly, nullable) OIDServiceDiscovery *discoveryDocument;
+@property(nonatomic, readonly, nullable) EkoOIDServiceDiscovery *discoveryDocument;
 
 /*! @internal
     @brief Unavailable. Please use @c initWithAuthorizationEndpoint:tokenEndpoint: or
@@ -111,7 +111,7 @@ typedef void (^OIDServiceConfigurationCreated)
 /*! @param discoveryDocument The discovery document from which to extract the required OAuth
         configuration.
  */
-- (instancetype)initWithDiscoveryDocument:(OIDServiceDiscovery *)discoveryDocument;
+- (instancetype)initWithDiscoveryDocument:(EkoOIDServiceDiscovery *)discoveryDocument;
 
 @end
 

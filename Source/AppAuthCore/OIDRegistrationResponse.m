@@ -1,4 +1,4 @@
-/*! @file OIDRegistrationResponse.m
+/*! @file EkoOIDRegistrationResponse.m
     @brief AppAuth iOS SDK
     @copyright
         Copyright 2016 The AppAuth for iOS Authors. All Rights Reserved.
@@ -24,12 +24,12 @@
 #import "OIDRegistrationRequest.h"
 #import "OIDTokenUtilities.h"
 
-NSString *const OIDClientIDParam = @"client_id";
-NSString *const OIDClientIDIssuedAtParam = @"client_id_issued_at";
-NSString *const OIDClientSecretParam = @"client_secret";
-NSString *const OIDClientSecretExpirestAtParam = @"client_secret_expires_at";
-NSString *const OIDRegistrationAccessTokenParam = @"registration_access_token";
-NSString *const OIDRegistrationClientURIParam = @"registration_client_uri";
+NSString *const EkoOIDClientIDParam = @"client_id";
+NSString *const EkoOIDClientIDIssuedAtParam = @"client_id_issued_at";
+NSString *const EkoOIDClientSecretParam = @"client_secret";
+NSString *const EkoOIDClientSecretExpirestAtParam = @"client_secret_expires_at";
+NSString *const EkoOIDRegistrationAccessTokenParam = @"registration_access_token";
+NSString *const EkoOIDRegistrationClientURIParam = @"registration_client_uri";
 
 /*! @brief Key used to encode the @c request property for @c NSSecureCoding
  */
@@ -39,38 +39,38 @@ static NSString *const kRequestKey = @"request";
  */
 static NSString *const kAdditionalParametersKey = @"additionalParameters";
 
-@implementation OIDRegistrationResponse
+@implementation EkoOIDRegistrationResponse
 
 /*! @brief Returns a mapping of incoming parameters to instance variables.
     @return A mapping of incoming parameters to instance variables.
  */
-+ (NSDictionary<NSString *, OIDFieldMapping *> *)fieldMap {
-  static NSMutableDictionary<NSString *, OIDFieldMapping *> *fieldMap;
++ (NSDictionary<NSString *, EkoOIDFieldMapping *> *)fieldMap {
+  static NSMutableDictionary<NSString *, EkoOIDFieldMapping *> *fieldMap;
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
     fieldMap = [NSMutableDictionary dictionary];
-    fieldMap[OIDClientIDParam] = [[OIDFieldMapping alloc] initWithName:@"_clientID"
+    fieldMap[EkoOIDClientIDParam] = [[EkoOIDFieldMapping alloc] initWithName:@"_clientID"
                                                                   type:[NSString class]];
-    fieldMap[OIDClientIDIssuedAtParam] =
-    [[OIDFieldMapping alloc] initWithName:@"_clientIDIssuedAt"
+    fieldMap[EkoOIDClientIDIssuedAtParam] =
+    [[EkoOIDFieldMapping alloc] initWithName:@"_clientIDIssuedAt"
                                      type:[NSDate class]
-                               conversion:[OIDFieldMapping dateEpochConversion]];
-    fieldMap[OIDClientSecretParam] =
-    [[OIDFieldMapping alloc] initWithName:@"_clientSecret"
+                               conversion:[EkoOIDFieldMapping dateEpochConversion]];
+    fieldMap[EkoOIDClientSecretParam] =
+    [[EkoOIDFieldMapping alloc] initWithName:@"_clientSecret"
                                      type:[NSString class]];
-    fieldMap[OIDClientSecretExpirestAtParam] =
-    [[OIDFieldMapping alloc] initWithName:@"_clientSecretExpiresAt"
+    fieldMap[EkoOIDClientSecretExpirestAtParam] =
+    [[EkoOIDFieldMapping alloc] initWithName:@"_clientSecretExpiresAt"
                                      type:[NSDate class]
-                               conversion:[OIDFieldMapping dateEpochConversion]];
-    fieldMap[OIDRegistrationAccessTokenParam] =
-    [[OIDFieldMapping alloc] initWithName:@"_registrationAccessToken"
+                               conversion:[EkoOIDFieldMapping dateEpochConversion]];
+    fieldMap[EkoOIDRegistrationAccessTokenParam] =
+    [[EkoOIDFieldMapping alloc] initWithName:@"_registrationAccessToken"
                                      type:[NSString class]];
-    fieldMap[OIDRegistrationClientURIParam] =
-    [[OIDFieldMapping alloc] initWithName:@"_registrationClientURI"
+    fieldMap[EkoOIDRegistrationClientURIParam] =
+    [[EkoOIDFieldMapping alloc] initWithName:@"_registrationClientURI"
                                      type:[NSURL class]
-                               conversion:[OIDFieldMapping URLConversion]];
-    fieldMap[OIDTokenEndpointAuthenticationMethodParam] =
-    [[OIDFieldMapping alloc] initWithName:@"_tokenEndpointAuthenticationMethod"
+                               conversion:[EkoOIDFieldMapping URLConversion]];
+    fieldMap[EkoOIDTokenEndpointAuthenticationMethodParam] =
+    [[EkoOIDFieldMapping alloc] initWithName:@"_tokenEndpointAuthenticationMethod"
                                      type:[NSString class]];
   });
   return fieldMap;
@@ -80,15 +80,15 @@ static NSString *const kAdditionalParametersKey = @"additionalParameters";
 #pragma mark - Initializers
 
 - (nonnull instancetype)init
-  OID_UNAVAILABLE_USE_INITIALIZER(@selector(initWithRequest:parameters:))
+  EkoOID_UNAVAILABLE_USE_INITIALIZER(@selector(initWithRequest:parameters:))
 
-- (instancetype)initWithRequest:(OIDRegistrationRequest *)request
+- (instancetype)initWithRequest:(EkoOIDRegistrationRequest *)request
                               parameters:(NSDictionary<NSString *, NSObject <NSCopying> *> *)parameters {
   self = [super init];
   if (self) {
     _request = [request copy];
     NSDictionary<NSString *, NSObject <NSCopying> *> *additionalParameters =
-    [OIDFieldMapping remainingParametersWithMap:[[self class] fieldMap]
+    [EkoOIDFieldMapping remainingParametersWithMap:[[self class] fieldMap]
                                      parameters:parameters
                                        instance:self];
     _additionalParameters = additionalParameters;
@@ -121,22 +121,22 @@ static NSString *const kAdditionalParametersKey = @"additionalParameters";
 }
 
 - (nullable instancetype)initWithCoder:(NSCoder *)aDecoder {
-  OIDRegistrationRequest *request = [aDecoder decodeObjectOfClass:[OIDRegistrationRequest class]
+  EkoOIDRegistrationRequest *request = [aDecoder decodeObjectOfClass:[EkoOIDRegistrationRequest class]
                                                            forKey:kRequestKey];
   self = [self initWithRequest:request
                     parameters:@{}];
   if (self) {
-    [OIDFieldMapping decodeWithCoder:aDecoder
+    [EkoOIDFieldMapping decodeWithCoder:aDecoder
                                  map:[[self class] fieldMap]
                             instance:self];
-    _additionalParameters = [aDecoder decodeObjectOfClasses:[OIDFieldMapping JSONTypes]
+    _additionalParameters = [aDecoder decodeObjectOfClasses:[EkoOIDFieldMapping JSONTypes]
                                                      forKey:kAdditionalParametersKey];
   }
   return self;
 }
 
 - (void)encodeWithCoder:(NSCoder *)aCoder {
-  [OIDFieldMapping encodeWithCoder:aCoder map:[[self class] fieldMap] instance:self];
+  [EkoOIDFieldMapping encodeWithCoder:aCoder map:[[self class] fieldMap] instance:self];
   [aCoder encodeObject:_request forKey:kRequestKey];
   [aCoder encodeObject:_additionalParameters forKey:kAdditionalParametersKey];
 }
@@ -153,9 +153,9 @@ static NSString *const kAdditionalParametersKey = @"additionalParameters";
           (void *)self,
           _clientID,
           _clientIDIssuedAt,
-          [OIDTokenUtilities redact:_clientSecret],
+          [EkoOIDTokenUtilities redact:_clientSecret],
           _clientSecretExpiresAt,
-          [OIDTokenUtilities redact:_registrationAccessToken],
+          [EkoOIDTokenUtilities redact:_registrationAccessToken],
           _registrationClientURI,
           _additionalParameters,
           _request];

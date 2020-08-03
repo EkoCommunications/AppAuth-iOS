@@ -1,4 +1,4 @@
-/*! @file OIDExternalUserAgentIOSCustomBrowser.m
+/*! @file EkoOIDExternalUserAgentIOSCustomBrowser.m
     @brief AppAuth iOS SDK
     @copyright
         Copyright 2018 Google LLC
@@ -33,11 +33,11 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@implementation OIDExternalUserAgentIOSCustomBrowser
+@implementation EkoOIDExternalUserAgentIOSCustomBrowser
 
 + (instancetype)CustomBrowserChrome {
   // Chrome iOS documentation: https://developer.chrome.com/multidevice/ios/links
-  OIDCustomBrowserURLTransformation transform = [[self class] URLTransformationSchemeSubstitutionHTTPS:@"googlechromes" HTTP:@"googlechrome"];
+  EkoOIDCustomBrowserURLTransformation transform = [[self class] URLTransformationSchemeSubstitutionHTTPS:@"googlechromes" HTTP:@"googlechrome"];
   NSURL *appStoreURL =
   [NSURL URLWithString:@"https://itunes.apple.com/us/app/chrome/id535886823"];
   return [[[self class] alloc] initWithURLTransformation:transform
@@ -47,7 +47,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (instancetype)CustomBrowserFirefox {
   // Firefox iOS documentation: https://github.com/mozilla-mobile/firefox-ios-open-in-client
-  OIDCustomBrowserURLTransformation transform =
+  EkoOIDCustomBrowserURLTransformation transform =
       [[self class] URLTransformationSchemeConcatPrefix:@"firefox://open-url?url="];
   NSURL *appStoreURL =
   [NSURL URLWithString:@"https://itunes.apple.com/us/app/firefox-web-browser/id989804926"];
@@ -57,7 +57,7 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 + (instancetype)CustomBrowserOpera {
-  OIDCustomBrowserURLTransformation transform =
+  EkoOIDCustomBrowserURLTransformation transform =
       [[self class] URLTransformationSchemeSubstitutionHTTPS:@"opera-https" HTTP:@"opera-http"];
   NSURL *appStoreURL =
   [NSURL URLWithString:@"https://itunes.apple.com/us/app/opera-mini-web-browser/id363729560"];
@@ -67,18 +67,18 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 + (instancetype)CustomBrowserSafari {
-  OIDCustomBrowserURLTransformation transformNOP = ^NSURL *(NSURL *requestURL) {
+  EkoOIDCustomBrowserURLTransformation transformNOP = ^NSURL *(NSURL *requestURL) {
     return requestURL;
   };
-  OIDExternalUserAgentIOSCustomBrowser *transform =
+  EkoOIDExternalUserAgentIOSCustomBrowser *transform =
       [[[self class] alloc] initWithURLTransformation:transformNOP];
   return transform;
 }
 
-+ (OIDCustomBrowserURLTransformation)
++ (EkoOIDCustomBrowserURLTransformation)
     URLTransformationSchemeSubstitutionHTTPS:(NSString *)browserSchemeHTTPS
                                         HTTP:(nullable NSString *)browserSchemeHTTP {
-  OIDCustomBrowserURLTransformation transform = ^NSURL *(NSURL *requestURL) {
+  EkoOIDCustomBrowserURLTransformation transform = ^NSURL *(NSURL *requestURL) {
     // Replace the URL Scheme with the Chrome equivalent.
     NSString *newScheme = nil;
     if ([requestURL.scheme isEqualToString:@"https"]) {
@@ -100,11 +100,11 @@ NS_ASSUME_NONNULL_BEGIN
   return transform;
 }
 
-+ (OIDCustomBrowserURLTransformation)URLTransformationSchemeConcatPrefix:(NSString *)URLprefix {
-  OIDCustomBrowserURLTransformation transform = ^NSURL *(NSURL *requestURL) {
++ (EkoOIDCustomBrowserURLTransformation)URLTransformationSchemeConcatPrefix:(NSString *)URLprefix {
+  EkoOIDCustomBrowserURLTransformation transform = ^NSURL *(NSURL *requestURL) {
     NSString *requestURLString = [requestURL absoluteString];
     NSMutableCharacterSet *allowedParamCharacters =
-        [OIDURLQueryComponent URLParamValueAllowedCharacters];
+        [EkoOIDURLQueryComponent URLParamValueAllowedCharacters];
     NSString *encodedUrl = [requestURLString stringByAddingPercentEncodingWithAllowedCharacters:allowedParamCharacters];
     NSString *newURL = [NSString stringWithFormat:@"%@%@", URLprefix, encodedUrl];
     return [NSURL URLWithString:newURL];
@@ -113,12 +113,12 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 - (nullable instancetype)initWithURLTransformation:
-    (OIDCustomBrowserURLTransformation)URLTransformation {
+    (EkoOIDCustomBrowserURLTransformation)URLTransformation {
   return [self initWithURLTransformation:URLTransformation canOpenURLScheme:nil appStoreURL:nil];
 }
 
 - (nullable instancetype)
-    initWithURLTransformation:(OIDCustomBrowserURLTransformation)URLTransformation
+    initWithURLTransformation:(EkoOIDCustomBrowserURLTransformation)URLTransformation
              canOpenURLScheme:(nullable NSString *)canOpenURLScheme
                   appStoreURL:(nullable NSURL *)appStoreURL {
   self = [super init];
@@ -130,8 +130,8 @@ NS_ASSUME_NONNULL_BEGIN
   return self;
 }
 
-- (BOOL)presentExternalUserAgentRequest:(nonnull id<OIDExternalUserAgentRequest>)request
-                                session:(nonnull id<OIDExternalUserAgentSession>)session {
+- (BOOL)presentExternalUserAgentRequest:(nonnull id<EkoOIDExternalUserAgentRequest>)request
+                                session:(nonnull id<EkoOIDExternalUserAgentSession>)session {
   // If the app store URL is set, checks if the app is installed and if not opens the app store.
   if (_appStoreURL && _canOpenURLScheme) {
     // Verifies existence of LSApplicationQueriesSchemes Info.plist key.

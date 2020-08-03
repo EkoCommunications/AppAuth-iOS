@@ -1,4 +1,4 @@
-/*! @file OIDAuthorizationService.h
+/*! @file EkoOIDAuthorizationService.h
     @brief AppAuth iOS SDK
     @copyright
         Copyright 2015 Google Inc. All Rights Reserved.
@@ -18,18 +18,18 @@
 
 #import <Foundation/Foundation.h>
 
-@class OIDAuthorization;
-@class OIDAuthorizationRequest;
-@class OIDAuthorizationResponse;
-@class OIDEndSessionRequest;
-@class OIDEndSessionResponse;
-@class OIDRegistrationRequest;
-@class OIDRegistrationResponse;
-@class OIDServiceConfiguration;
-@class OIDTokenRequest;
-@class OIDTokenResponse;
-@protocol OIDExternalUserAgent;
-@protocol OIDExternalUserAgentSession;
+@class EkoOIDAuthorization;
+@class EkoOIDAuthorizationRequest;
+@class EkoOIDAuthorizationResponse;
+@class EkoOIDEndSessionRequest;
+@class EkoOIDEndSessionResponse;
+@class EkoOIDRegistrationRequest;
+@class EkoOIDRegistrationResponse;
+@class EkoOIDServiceConfiguration;
+@class EkoOIDTokenRequest;
+@class EkoOIDTokenResponse;
+@protocol EkoOIDExternalUserAgent;
+@protocol EkoOIDExternalUserAgentSession;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -38,49 +38,49 @@ NS_ASSUME_NONNULL_BEGIN
     @param configuration The service configuration, if available.
     @param error The error if an error occurred.
  */
-typedef void (^OIDDiscoveryCallback)(OIDServiceConfiguration *_Nullable configuration,
+typedef void (^EkoOIDDiscoveryCallback)(EkoOIDServiceConfiguration *_Nullable configuration,
                                      NSError *_Nullable error);
 
 /*! @brief Represents the type of block used as a callback for various methods of
-        @c OIDAuthorizationService.
+        @c EkoOIDAuthorizationService.
     @param authorizationResponse The authorization response, if available.
     @param error The error if an error occurred.
  */
-typedef void (^OIDAuthorizationCallback)(OIDAuthorizationResponse *_Nullable authorizationResponse,
+typedef void (^EkoOIDAuthorizationCallback)(EkoOIDAuthorizationResponse *_Nullable authorizationResponse,
                                          NSError *_Nullable error);
 
-/*! @brief Block used as a callback for the end-session request of @c OIDAuthorizationService.
+/*! @brief Block used as a callback for the end-session request of @c EkoOIDAuthorizationService.
     @param endSessionResponse The end-session response, if available.
     @param error The error if an error occurred.
  */
-typedef void (^OIDEndSessionCallback)(OIDEndSessionResponse *_Nullable endSessionResponse,
+typedef void (^EkoOIDEndSessionCallback)(EkoOIDEndSessionResponse *_Nullable endSessionResponse,
                                       NSError *_Nullable error);
 
 /*! @brief Represents the type of block used as a callback for various methods of
-        @c OIDAuthorizationService.
+        @c EkoOIDAuthorizationService.
     @param tokenResponse The token response, if available.
     @param error The error if an error occurred.
  */
-typedef void (^OIDTokenCallback)(OIDTokenResponse *_Nullable tokenResponse,
+typedef void (^EkoOIDTokenCallback)(EkoOIDTokenResponse *_Nullable tokenResponse,
                                  NSError *_Nullable error);
 
 /*! @brief Represents the type of dictionary used to specify additional querystring parameters
         when making authorization or token endpoint requests.
  */
-typedef NSDictionary<NSString *, NSString *> *_Nullable OIDTokenEndpointParameters;
+typedef NSDictionary<NSString *, NSString *> *_Nullable EkoOIDTokenEndpointParameters;
 
 /*! @brief Represents the type of block used as a callback for various methods of
-        @c OIDAuthorizationService.
+        @c EkoOIDAuthorizationService.
     @param registrationResponse The registration response, if available.
     @param error The error if an error occurred.
 */
-typedef void (^OIDRegistrationCompletion)(OIDRegistrationResponse *_Nullable registrationResponse,
+typedef void (^EkoOIDRegistrationCompletion)(EkoOIDRegistrationResponse *_Nullable registrationResponse,
                                           NSError *_Nullable error);
 
 /*! @brief Performs various OAuth and OpenID Connect related calls via the user agent or
         \NSURLSession.
  */
-@interface OIDAuthorizationService : NSObject
+@interface EkoOIDAuthorizationService : NSObject
 
 /*! @brief The service's configuration.
     @remarks Each authorization service is initialized with a configuration. This configuration
@@ -88,7 +88,7 @@ typedef void (^OIDRegistrationCompletion)(OIDRegistrationResponse *_Nullable reg
         authorization service instances for each provider they wish to integrate with.
         Configurations may be created manually, or via an OpenID Connect Discovery Document.
  */
-@property(nonatomic, readonly) OIDServiceConfiguration *configuration;
+@property(nonatomic, readonly) EkoOIDServiceConfiguration *configuration;
 
 /*! @internal
     @brief Unavailable. This class should not be initialized.
@@ -103,7 +103,7 @@ typedef void (^OIDRegistrationCompletion)(OIDRegistrationResponse *_Nullable reg
     @see https://openid.net/specs/openid-connect-discovery-1_0.html
  */
 + (void)discoverServiceConfigurationForIssuer:(NSURL *)issuerURL
-                                   completion:(OIDDiscoveryCallback)completion;
+                                   completion:(EkoOIDDiscoveryCallback)completion;
 
 
 /*! @brief Convenience method for creating an authorization service configuration from an OpenID
@@ -114,56 +114,56 @@ typedef void (^OIDRegistrationCompletion)(OIDRegistrationResponse *_Nullable reg
     @see https://openid.net/specs/openid-connect-discovery-1_0.html
  */
 + (void)discoverServiceConfigurationForDiscoveryURL:(NSURL *)discoveryURL
-                                         completion:(OIDDiscoveryCallback)completion;
+                                         completion:(EkoOIDDiscoveryCallback)completion;
 
 /*! @brief Perform an authorization flow using a generic flow shim.
     @param request The authorization request.
     @param externalUserAgent Generic external user-agent that can present an authorization
         request.
     @param callback The method called when the request has completed or failed.
-    @return A @c OIDExternalUserAgentSession instance which will terminate when it
-        receives a @c OIDExternalUserAgentSession.cancel message, or after processing a
-        @c OIDExternalUserAgentSession.resumeExternalUserAgentFlowWithURL: message.
+    @return A @c EkoOIDExternalUserAgentSession instance which will terminate when it
+        receives a @c EkoOIDExternalUserAgentSession.cancel message, or after processing a
+        @c EkoOIDExternalUserAgentSession.resumeExternalUserAgentFlowWithURL: message.
  */
-+ (id<OIDExternalUserAgentSession>) presentAuthorizationRequest:(OIDAuthorizationRequest *)request
-    externalUserAgent:(id<OIDExternalUserAgent>)externalUserAgent
-             callback:(OIDAuthorizationCallback)callback;
++ (id<EkoOIDExternalUserAgentSession>) presentAuthorizationRequest:(EkoOIDAuthorizationRequest *)request
+    externalUserAgent:(id<EkoOIDExternalUserAgent>)externalUserAgent
+             callback:(EkoOIDAuthorizationCallback)callback;
 
 /*! @brief Perform a logout request.
     @param request The end-session logout request.
     @param externalUserAgent Generic external user-agent that can present user-agent requests.
     @param callback The method called when the request has completed or failed.
-    @return A @c OIDExternalUserAgentSession instance which will terminate when it
-        receives a @c OIDExternalUserAgentSession.cancel message, or after processing a
-        @c OIDExternalUserAgentSession.resumeExternalUserAgentFlowWithURL: message.
+    @return A @c EkoOIDExternalUserAgentSession instance which will terminate when it
+        receives a @c EkoOIDExternalUserAgentSession.cancel message, or after processing a
+        @c EkoOIDExternalUserAgentSession.resumeExternalUserAgentFlowWithURL: message.
     @see http://openid.net/specs/openid-connect-session-1_0.html#RPLogout
  */
-+ (id<OIDExternalUserAgentSession>)
-    presentEndSessionRequest:(OIDEndSessionRequest *)request
-           externalUserAgent:(id<OIDExternalUserAgent>)externalUserAgent
-                    callback:(OIDEndSessionCallback)callback;
++ (id<EkoOIDExternalUserAgentSession>)
+    presentEndSessionRequest:(EkoOIDEndSessionRequest *)request
+           externalUserAgent:(id<EkoOIDExternalUserAgent>)externalUserAgent
+                    callback:(EkoOIDEndSessionCallback)callback;
 
 /*! @brief Performs a token request.
     @param request The token request.
     @param callback The method called when the request has completed or failed.
  */
-+ (void)performTokenRequest:(OIDTokenRequest *)request callback:(OIDTokenCallback)callback;
++ (void)performTokenRequest:(EkoOIDTokenRequest *)request callback:(EkoOIDTokenCallback)callback;
 
 /*! @brief Performs a token request.
     @param request The token request.
     @param authorizationResponse The original authorization response related to this token request.
     @param callback The method called when the request has completed or failed.
  */
-+ (void)performTokenRequest:(OIDTokenRequest *)request
-    originalAuthorizationResponse:(OIDAuthorizationResponse *_Nullable)authorizationResponse
-                         callback:(OIDTokenCallback)callback;
++ (void)performTokenRequest:(EkoOIDTokenRequest *)request
+    originalAuthorizationResponse:(EkoOIDAuthorizationResponse *_Nullable)authorizationResponse
+                         callback:(EkoOIDTokenCallback)callback;
 
 /*! @brief Performs a registration request.
     @param request The registration request.
     @param completion The method called when the request has completed or failed.
  */
-+ (void)performRegistrationRequest:(OIDRegistrationRequest *)request
-                        completion:(OIDRegistrationCompletion)completion;
++ (void)performRegistrationRequest:(EkoOIDRegistrationRequest *)request
+                        completion:(EkoOIDRegistrationCompletion)completion;
 
 @end
 

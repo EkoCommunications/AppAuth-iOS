@@ -1,4 +1,4 @@
-/*! @file OIDAuthorizationService+Mac.h
+/*! @file EkoOIDAuthorizationService+Mac.h
     @brief AppAuth iOS SDK
     @copyright
         Copyright 2016 Google Inc. All Rights Reserved.
@@ -26,17 +26,17 @@ NS_ASSUME_NONNULL_BEGIN
 
 /*! @brief Provides macOS specific authorization request handling.
  */
-@interface OIDAuthorizationService (Mac)
+@interface EkoOIDAuthorizationService (Mac)
 
 /*! @brief Perform an authorization flow using the default browser.
     @param request The authorization request.
     @param callback The method called when the request has completed or failed.
-    @return A @c OIDExternalUserAgentSession instance which will terminate when it
-        receives a @c OIDExternalUserAgentSession.cancel message, or after processing a
-        @c OIDExternalUserAgentSession.resumeExternalUserAgentFlowWithURL: message.
+    @return A @c EkoOIDExternalUserAgentSession instance which will terminate when it
+        receives a @c EkoOIDExternalUserAgentSession.cancel message, or after processing a
+        @c EkoOIDExternalUserAgentSession.resumeExternalUserAgentFlowWithURL: message.
  */
-+ (id<OIDExternalUserAgentSession>)presentAuthorizationRequest:(OIDAuthorizationRequest *)request
-                                                      callback:(OIDAuthorizationCallback)callback;
++ (id<EkoOIDExternalUserAgentSession>)presentAuthorizationRequest:(EkoOIDAuthorizationRequest *)request
+                                                      callback:(EkoOIDAuthorizationCallback)callback;
 
 @end
 

@@ -1,4 +1,4 @@
-/*! @file OIDClientMetadataParameters.h
+/*! @file EkoOIDClientMetadataParameters.h
     @brief AppAuth iOS SDK
     @copyright
         Copyright 2016 The AppAuth for iOS Authors. All Rights Reserved.
@@ -22,30 +22,30 @@ NS_ASSUME_NONNULL_BEGIN
 
 /*! @brief Parameter name for the token endpoint authentication method.
  */
-extern NSString *const OIDTokenEndpointAuthenticationMethodParam;
+extern NSString *const EkoOIDTokenEndpointAuthenticationMethodParam;
 
 /*! @brief Parameter name for the application type.
  */
-extern NSString *const OIDApplicationTypeParam;
+extern NSString *const EkoOIDApplicationTypeParam;
 
 /*! @brief Parameter name for the redirect URI values.
  */
-extern NSString *const OIDRedirectURIsParam;
+extern NSString *const EkoOIDRedirectURIsParam;
 
 /*! @brief Parameter name for the response type values.
  */
-extern NSString *const OIDResponseTypesParam;
+extern NSString *const EkoOIDResponseTypesParam;
 
 /*! @brief Parameter name for the grant type values.
  */
-extern NSString *const OIDGrantTypesParam;
+extern NSString *const EkoOIDGrantTypesParam;
 
 /*! @brief Parameter name for the subject type.
  */
-extern NSString *const OIDSubjectTypeParam;
+extern NSString *const EkoOIDSubjectTypeParam;
 
 /*! @brief Application type that indicates this client is a native (not a web) application.
  */
-extern NSString *const OIDApplicationTypeNative;
+extern NSString *const EkoOIDApplicationTypeNative;
 
 NS_ASSUME_NONNULL_END

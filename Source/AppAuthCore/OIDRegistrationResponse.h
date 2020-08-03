@@ -1,4 +1,4 @@
-/*! @file OIDRegistrationResponse.h
+/*! @file EkoOIDRegistrationResponse.h
     @brief AppAuth iOS SDK
     @copyright
         Copyright 2016 The AppAuth for iOS Authors. All Rights Reserved.
@@ -19,42 +19,42 @@
 
 #import <Foundation/Foundation.h>
 
-@class OIDRegistrationRequest;
+@class EkoOIDRegistrationRequest;
 
 NS_ASSUME_NONNULL_BEGIN
 
 /*! @brief Parameter name for the client id.
  */
-extern NSString *const OIDClientIDParam;
+extern NSString *const EkoOIDClientIDParam;
 
 /*! @brief Parameter name for the client id issuance timestamp.
  */
-extern NSString *const OIDClientIDIssuedAtParam;
+extern NSString *const EkoOIDClientIDIssuedAtParam;
 
 /*! @brief Parameter name for the client secret.
  */
-extern NSString *const OIDClientSecretParam;
+extern NSString *const EkoOIDClientSecretParam;
 
 /*! @brief Parameter name for the client secret expiration time.
  */
-extern NSString *const OIDClientSecretExpirestAtParam;
+extern NSString *const EkoOIDClientSecretExpirestAtParam;
 
 /*! @brief Parameter name for the registration access token.
  */
-extern NSString *const OIDRegistrationAccessTokenParam;
+extern NSString *const EkoOIDRegistrationAccessTokenParam;
 
 /*! @brief Parameter name for the client configuration URI.
  */
-extern NSString *const OIDRegistrationClientURIParam;
+extern NSString *const EkoOIDRegistrationClientURIParam;
 
 /*! @brief Represents a registration response.
     @see https://openid.net/specs/openid-connect-registration-1_0.html#RegistrationResponse
  */
-@interface OIDRegistrationResponse : NSObject <NSCopying, NSSecureCoding>
+@interface EkoOIDRegistrationResponse : NSObject <NSCopying, NSSecureCoding>
 
 /*! @brief The request which was serviced.
  */
-@property(nonatomic, readonly) OIDRegistrationRequest *request;
+@property(nonatomic, readonly) EkoOIDRegistrationRequest *request;
 
 /*! @brief The registered client identifier.
     @remarks client_id
@@ -117,7 +117,7 @@ extern NSString *const OIDRegistrationClientURIParam;
         properties are populated. Non-normative parameters are placed in the
         @c #additionalParameters dictionary.
  */
-- (instancetype)initWithRequest:(OIDRegistrationRequest *)request
+- (instancetype)initWithRequest:(EkoOIDRegistrationRequest *)request
                      parameters:(NSDictionary<NSString *, NSObject <NSCopying> *> *)parameters
                      NS_DESIGNATED_INITIALIZER;
 

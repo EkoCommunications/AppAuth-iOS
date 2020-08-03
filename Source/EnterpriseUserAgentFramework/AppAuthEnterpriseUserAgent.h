@@ -24,36 +24,36 @@ FOUNDATION_EXPORT double AppAuthEnterpriseUserAgentEnterpriseUserAgentVersionNum
 //! Project version string for AppAuthEnterpriseUserAgentEnterpriseUserAgentFramework.
 FOUNDATION_EXPORT const unsigned char AppAuthEnterpriseUserAgentEnterpriseUserAgentVersionString[];
 
-#import <AppAuthEnterpriseUserAgent/OIDAuthState.h>
-#import <AppAuthEnterpriseUserAgent/OIDAuthStateChangeDelegate.h>
-#import <AppAuthEnterpriseUserAgent/OIDAuthStateErrorDelegate.h>
-#import <AppAuthEnterpriseUserAgent/OIDAuthorizationRequest.h>
-#import <AppAuthEnterpriseUserAgent/OIDAuthorizationResponse.h>
-#import <AppAuthEnterpriseUserAgent/OIDAuthorizationService.h>
-#import <AppAuthEnterpriseUserAgent/OIDError.h>
-#import <AppAuthEnterpriseUserAgent/OIDErrorUtilities.h>
-#import <AppAuthEnterpriseUserAgent/OIDExternalUserAgent.h>
-#import <AppAuthEnterpriseUserAgent/OIDExternalUserAgentRequest.h>
-#import <AppAuthEnterpriseUserAgent/OIDExternalUserAgentSession.h>
-#import <AppAuthEnterpriseUserAgent/OIDGrantTypes.h>
-#import <AppAuthEnterpriseUserAgent/OIDIDToken.h>
-#import <AppAuthEnterpriseUserAgent/OIDRegistrationRequest.h>
-#import <AppAuthEnterpriseUserAgent/OIDRegistrationResponse.h>
-#import <AppAuthEnterpriseUserAgent/OIDResponseTypes.h>
-#import <AppAuthEnterpriseUserAgent/OIDScopes.h>
-#import <AppAuthEnterpriseUserAgent/OIDScopeUtilities.h>
-#import <AppAuthEnterpriseUserAgent/OIDServiceConfiguration.h>
-#import <AppAuthEnterpriseUserAgent/OIDServiceDiscovery.h>
-#import <AppAuthEnterpriseUserAgent/OIDTokenRequest.h>
-#import <AppAuthEnterpriseUserAgent/OIDTokenResponse.h>
-#import <AppAuthEnterpriseUserAgent/OIDTokenUtilities.h>
-#import <AppAuthEnterpriseUserAgent/OIDURLSessionProvider.h>
-#import <AppAuthEnterpriseUserAgent/OIDEndSessionRequest.h>
-#import <AppAuthEnterpriseUserAgent/OIDEndSessionResponse.h>
+#import <AppAuthEnterpriseUserAgent/EkoOIDAuthState.h>
+#import <AppAuthEnterpriseUserAgent/EkoOIDAuthStateChangeDelegate.h>
+#import <AppAuthEnterpriseUserAgent/EkoOIDAuthStateErrorDelegate.h>
+#import <AppAuthEnterpriseUserAgent/EkoOIDAuthorizationRequest.h>
+#import <AppAuthEnterpriseUserAgent/EkoOIDAuthorizationResponse.h>
+#import <AppAuthEnterpriseUserAgent/EkoOIDAuthorizationService.h>
+#import <AppAuthEnterpriseUserAgent/EkoOIDError.h>
+#import <AppAuthEnterpriseUserAgent/EkoOIDErrorUtilities.h>
+#import <AppAuthEnterpriseUserAgent/EkoOIDExternalUserAgent.h>
+#import <AppAuthEnterpriseUserAgent/EkoOIDExternalUserAgentRequest.h>
+#import <AppAuthEnterpriseUserAgent/EkoOIDExternalUserAgentSession.h>
+#import <AppAuthEnterpriseUserAgent/EkoOIDGrantTypes.h>
+#import <AppAuthEnterpriseUserAgent/EkoOIDIDToken.h>
+#import <AppAuthEnterpriseUserAgent/EkoOIDRegistrationRequest.h>
+#import <AppAuthEnterpriseUserAgent/EkoOIDRegistrationResponse.h>
+#import <AppAuthEnterpriseUserAgent/EkoOIDResponseTypes.h>
+#import <AppAuthEnterpriseUserAgent/EkoOIDScopes.h>
+#import <AppAuthEnterpriseUserAgent/EkoOIDScopeUtilities.h>
+#import <AppAuthEnterpriseUserAgent/EkoOIDServiceConfiguration.h>
+#import <AppAuthEnterpriseUserAgent/EkoOIDServiceDiscovery.h>
+#import <AppAuthEnterpriseUserAgent/EkoOIDTokenRequest.h>
+#import <AppAuthEnterpriseUserAgent/EkoOIDTokenResponse.h>
+#import <AppAuthEnterpriseUserAgent/EkoOIDTokenUtilities.h>
+#import <AppAuthEnterpriseUserAgent/EkoOIDURLSessionProvider.h>
+#import <AppAuthEnterpriseUserAgent/EkoOIDEndSessionRequest.h>
+#import <AppAuthEnterpriseUserAgent/EkoOIDEndSessionResponse.h>
 
-#import <AppAuthEnterpriseUserAgent/OIDAuthState+IOS.h>
-#import <AppAuthEnterpriseUserAgent/OIDAuthorizationService+IOS.h>
-#import <AppAuthEnterpriseUserAgent/OIDExternalUserAgentIOS.h>
-#import "AppAuthEnterpriseUserAgent/OIDExternalUserAgentCatalyst.h"
+#import <AppAuthEnterpriseUserAgent/EkoOIDAuthState+IOS.h>
+#import <AppAuthEnterpriseUserAgent/EkoOIDAuthorizationService+IOS.h>
+#import <AppAuthEnterpriseUserAgent/EkoOIDExternalUserAgentIOS.h>
+#import "AppAuthEnterpriseUserAgent/EkoOIDExternalUserAgentCatalyst.h"
 
-#import <AppAuthEnterpriseUserAgent/OIDExternalUserAgentIOSCustomBrowser.h>
+#import <AppAuthEnterpriseUserAgent/EkoOIDExternalUserAgentIOSCustomBrowser.h>

@@ -1,4 +1,4 @@
-/*! @file OIDExternalUserAgentCatalyst.h
+/*! @file EkoOIDExternalUserAgentCatalyst.h
    @brief AppAuth iOS SDK
    @copyright
        Copyright 2019 The AppAuth Authors. All Rights Reserved.
@@ -30,7 +30,7 @@ NS_ASSUME_NONNULL_BEGIN
        present the request.
 */
 API_AVAILABLE(macCatalyst(13)) API_UNAVAILABLE(ios)
-@interface OIDExternalUserAgentCatalyst : NSObject<OIDExternalUserAgent>
+@interface EkoOIDExternalUserAgentCatalyst : NSObject<EkoOIDExternalUserAgent>
 
 /*! @internal
     @brief Unavailable. Please use @c initWithPresentingViewController:

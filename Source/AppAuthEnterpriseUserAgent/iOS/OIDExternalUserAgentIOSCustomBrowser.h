@@ -1,4 +1,4 @@
-/*! @file OIDExternalUserAgentIOSCustomBrowser.h
+/*! @file EkoOIDExternalUserAgentIOSCustomBrowser.h
     @brief AppAuth iOS SDK
     @copyright
         Copyright 2018 Google LLC
@@ -31,20 +31,20 @@ NS_ASSUME_NONNULL_BEGIN
     @param requestURL the http/https request URL to be transformed.
     @return transformed URL.
  */
-typedef NSURL *_Nullable (^OIDCustomBrowserURLTransformation)(NSURL *_Nullable requestURL);
+typedef NSURL *_Nullable (^EkoOIDCustomBrowserURLTransformation)(NSURL *_Nullable requestURL);
 
-/*! @brief An implementation of the OIDExternalUserAgent protocol for iOS that uses
+/*! @brief An implementation of the EkoOIDExternalUserAgent protocol for iOS that uses
         a custom browser (i.e. not Safari) for external requests. It is suitable for browsers that
         offer a custom url scheme that simply replaces the "https" scheme. It is not designed
         for browsers that require other modifications to the URL.  If the browser is not installed
         the user will be prompted to install it.
  */
 API_UNAVAILABLE(macCatalyst)
-@interface OIDExternalUserAgentIOSCustomBrowser : NSObject<OIDExternalUserAgent>
+@interface EkoOIDExternalUserAgentIOSCustomBrowser : NSObject<EkoOIDExternalUserAgent>
 
 /*! @brief URL transformation block for the browser.
  */
-@property(nonatomic, readonly) OIDCustomBrowserURLTransformation URLTransformation;
+@property(nonatomic, readonly) EkoOIDCustomBrowserURLTransformation URLTransformation;
 
 /*! @brief URL Scheme used to test for whether the browser is installed.
  */
@@ -54,43 +54,43 @@ API_UNAVAILABLE(macCatalyst)
  */
 @property(nonatomic, readonly, nullable) NSURL *appStoreURL;
 
-/*! @brief An instance of @c OIDExternalUserAgentIOSCustomBrowser for Chrome.
+/*! @brief An instance of @c EkoOIDExternalUserAgentIOSCustomBrowser for Chrome.
  */
 + (instancetype)CustomBrowserChrome;
 
-/*! @brief An instance of @c OIDExternalUserAgentIOSCustomBrowser for Firefox.
+/*! @brief An instance of @c EkoOIDExternalUserAgentIOSCustomBrowser for Firefox.
  */
 + (instancetype)CustomBrowserFirefox;
 
-/*! @brief An instance of @c OIDExternalUserAgentIOSCustomBrowser for Opera.
+/*! @brief An instance of @c EkoOIDExternalUserAgentIOSCustomBrowser for Opera.
  */
 + (instancetype)CustomBrowserOpera;
 
-/*! @brief An instance of @c OIDExternalUserAgentIOSCustomBrowser for Safari.
+/*! @brief An instance of @c EkoOIDExternalUserAgentIOSCustomBrowser for Safari.
  */
 + (instancetype)CustomBrowserSafari;
 
-/*! @brief Creates a @c OIDCustomBrowserURLTransformation using the scheme substitution method used
+/*! @brief Creates a @c EkoOIDCustomBrowserURLTransformation using the scheme substitution method used
         iOS browsers like Chrome and Firefox.
  */
-+ (OIDCustomBrowserURLTransformation)
++ (EkoOIDCustomBrowserURLTransformation)
     URLTransformationSchemeSubstitutionHTTPS:(NSString *)browserSchemeHTTPS
                                         HTTP:(nullable NSString *)browserSchemeHTTP;
 
-/*! @brief Creates a @c OIDCustomBrowserURLTransformation with the URL prefix method used by
+/*! @brief Creates a @c EkoOIDCustomBrowserURLTransformation with the URL prefix method used by
         iOS browsers like Firefox.
  */
-+ (OIDCustomBrowserURLTransformation) URLTransformationSchemeConcatPrefix:(NSString*)URLprefix;
++ (EkoOIDCustomBrowserURLTransformation) URLTransformationSchemeConcatPrefix:(NSString*)URLprefix;
 
 /*! @internal
     @brief Unavailable. Please use @c initWithURLTransformation:canOpenURLScheme:appStoreURL:
  */
 - (nonnull instancetype)init NS_UNAVAILABLE;
 
-/*! @brief OIDExternalUserAgent for a custom browser. @c presentExternalUserAgentRequest:session method
+/*! @brief EkoOIDExternalUserAgent for a custom browser. @c presentExternalUserAgentRequest:session method
         will return NO if the browser isn't installed.
  */
-- (nullable instancetype)initWithURLTransformation:(OIDCustomBrowserURLTransformation)URLTransformation;
+- (nullable instancetype)initWithURLTransformation:(EkoOIDCustomBrowserURLTransformation)URLTransformation;
 
 /*! @brief The designated initializer.
     @param URLTransformation the transformation block to translate the URL into one that will open
@@ -101,7 +101,7 @@ API_UNAVAILABLE(macCatalyst)
         are non-nil, @c presentExternalUserAgentRequest:session will redirect the user to the app store
         if the browser is not installed.
  */
-- (nullable instancetype)initWithURLTransformation:(OIDCustomBrowserURLTransformation)URLTransformation
+- (nullable instancetype)initWithURLTransformation:(EkoOIDCustomBrowserURLTransformation)URLTransformation
                                   canOpenURLScheme:(nullable NSString *)canOpenURLScheme
                                        appStoreURL:(nullable NSURL *)appStoreURL
     NS_DESIGNATED_INITIALIZER;

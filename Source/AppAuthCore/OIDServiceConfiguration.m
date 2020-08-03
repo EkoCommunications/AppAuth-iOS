@@ -1,4 +1,4 @@
-/*! @file OIDServiceConfiguration.m
+/*! @file EkoOIDServiceConfiguration.m
     @brief AppAuth iOS SDK
     @copyright
         Copyright 2015 Google Inc. All Rights Reserved.
@@ -48,22 +48,22 @@ static NSString *const kDiscoveryDocumentKey = @"discoveryDocument";
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface OIDServiceConfiguration ()
+@interface EkoOIDServiceConfiguration ()
 
 - (instancetype)initWithAuthorizationEndpoint:(NSURL *)authorizationEndpoint
                                 tokenEndpoint:(NSURL *)tokenEndpoint
                                        issuer:(nullable NSURL *)issuer
                          registrationEndpoint:(nullable NSURL *)registrationEndpoint
                            endSessionEndpoint:(nullable NSURL *)endSessionEndpoint
-                            discoveryDocument:(nullable OIDServiceDiscovery *)discoveryDocument
+                            discoveryDocument:(nullable EkoOIDServiceDiscovery *)discoveryDocument
                             NS_DESIGNATED_INITIALIZER;
 
 @end
 
-@implementation OIDServiceConfiguration
+@implementation EkoOIDServiceConfiguration
 
 - (instancetype)init
-    OID_UNAVAILABLE_USE_INITIALIZER(@selector(
+    EkoOID_UNAVAILABLE_USE_INITIALIZER(@selector(
         initWithAuthorizationEndpoint:
                         tokenEndpoint:)
     )
@@ -72,8 +72,8 @@ NS_ASSUME_NONNULL_BEGIN
         tokenEndpoint:(NSURL *)tokenEndpoint
                issuer:(nullable NSURL *)issuer
  registrationEndpoint:(nullable NSURL *)registrationEndpoint
-   endSessionEndpoint:(nullable OIDServiceDiscovery *)endSessionEndpoint
-    discoveryDocument:(nullable OIDServiceDiscovery *)discoveryDocument {
+   endSessionEndpoint:(nullable EkoOIDServiceDiscovery *)endSessionEndpoint
+    discoveryDocument:(nullable EkoOIDServiceDiscovery *)discoveryDocument {
 
   self = [super init];
   if (self) {
@@ -144,7 +144,7 @@ NS_ASSUME_NONNULL_BEGIN
                            discoveryDocument:nil];
 }
 
-- (instancetype)initWithDiscoveryDocument:(OIDServiceDiscovery *) discoveryDocument {
+- (instancetype)initWithDiscoveryDocument:(EkoOIDServiceDiscovery *) discoveryDocument {
   return [self initWithAuthorizationEndpoint:discoveryDocument.authorizationEndpoint
                                tokenEndpoint:discoveryDocument.tokenEndpoint
                                       issuer:discoveryDocument.issuer
@@ -185,7 +185,7 @@ NS_ASSUME_NONNULL_BEGIN
     return nil;
   }
 
-  OIDServiceDiscovery *discoveryDocument = [aDecoder decodeObjectOfClass:[OIDServiceDiscovery class]
+  EkoOIDServiceDiscovery *discoveryDocument = [aDecoder decodeObjectOfClass:[EkoOIDServiceDiscovery class]
                                                                   forKey:kDiscoveryDocumentKey];
 
   return [self initWithAuthorizationEndpoint:authorizationEndpoint

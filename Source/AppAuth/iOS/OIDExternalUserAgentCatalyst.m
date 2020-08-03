@@ -1,4 +1,4 @@
-/*! @file OIDExternalUserAgentCatalyst.m
+/*! @file EkoOIDExternalUserAgentCatalyst.m
    @brief AppAuth iOS SDK
    @copyright
        Copyright 2019 The AppAuth Authors. All Rights Reserved.
@@ -33,14 +33,14 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface OIDExternalUserAgentCatalyst ()<ASWebAuthenticationPresentationContextProviding>
+@interface EkoOIDExternalUserAgentCatalyst ()<ASWebAuthenticationPresentationContextProviding>
 @end
 
-@implementation OIDExternalUserAgentCatalyst {
+@implementation EkoOIDExternalUserAgentCatalyst {
   UIViewController *_presentingViewController;
 
   BOOL _externalUserAgentFlowInProgress;
-  __weak id<OIDExternalUserAgentSession> _session;
+  __weak id<EkoOIDExternalUserAgentSession> _session;
   ASWebAuthenticationSession *_webAuthenticationVC;
 }
 
@@ -53,8 +53,8 @@ NS_ASSUME_NONNULL_BEGIN
   return self;
 }
 
-- (BOOL)presentExternalUserAgentRequest:(id<OIDExternalUserAgentRequest>)request
-                                session:(id<OIDExternalUserAgentSession>)session {
+- (BOOL)presentExternalUserAgentRequest:(id<EkoOIDExternalUserAgentRequest>)request
+                                session:(id<EkoOIDExternalUserAgentSession>)session {
   if (_externalUserAgentFlowInProgress) {
     // TODO: Handle errors as authorization is already in progress.
     return NO;
@@ -65,14 +65,14 @@ NS_ASSUME_NONNULL_BEGIN
   BOOL openedUserAgent = NO;
   NSURL *requestURL = [request externalUserAgentRequestURL];
 
-  __weak OIDExternalUserAgentCatalyst *weakSelf = self;
+  __weak EkoOIDExternalUserAgentCatalyst *weakSelf = self;
   NSString *redirectScheme = request.redirectScheme;
   ASWebAuthenticationSession *authenticationVC =
       [[ASWebAuthenticationSession alloc] initWithURL:requestURL
                                     callbackURLScheme:redirectScheme
                                     completionHandler:^(NSURL * _Nullable callbackURL,
                                                         NSError * _Nullable error) {
-    __strong OIDExternalUserAgentCatalyst *strongSelf = weakSelf;
+    __strong EkoOIDExternalUserAgentCatalyst *strongSelf = weakSelf;
     if (!strongSelf) {
         return;
     }
@@ -81,7 +81,7 @@ NS_ASSUME_NONNULL_BEGIN
       [strongSelf->_session resumeExternalUserAgentFlowWithURL:callbackURL];
     } else {
       NSError *safariError =
-          [OIDErrorUtilities errorWithCode:OIDErrorCodeUserCanceledAuthorizationFlow
+          [EkoOIDErrorUtilities errorWithCode:EkoOIDErrorCodeUserCanceledAuthorizationFlow
                            underlyingError:error
                                description:nil];
       [strongSelf->_session failExternalUserAgentFlowWithError:safariError];
@@ -94,7 +94,7 @@ NS_ASSUME_NONNULL_BEGIN
 
   if (!openedUserAgent) {
     [self cleanUp];
-    NSError *safariError = [OIDErrorUtilities errorWithCode:OIDErrorCodeSafariOpenError
+    NSError *safariError = [EkoOIDErrorUtilities errorWithCode:EkoOIDErrorCodeSafariOpenError
                                             underlyingError:nil
                                                 description:@"Unable to open ASWebAuthenticationSession view controller."];
     [session failExternalUserAgentFlowWithError:safariError];

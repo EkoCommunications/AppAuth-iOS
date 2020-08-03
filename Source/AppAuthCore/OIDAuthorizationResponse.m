@@ -1,4 +1,4 @@
-/*! @file OIDAuthorizationResponse.m
+/*! @file EkoOIDAuthorizationResponse.m
     @brief AppAuth iOS SDK
     @copyright
         Copyright 2015 Google Inc. All Rights Reserved.
@@ -72,24 +72,24 @@ static NSString *const kTokenExchangeRequestException =
     @"Attempted to create a token exchange request from an authorization response with no "
     "authorization code.";
 
-@implementation OIDAuthorizationResponse
+@implementation EkoOIDAuthorizationResponse
 
 /*! @brief Returns a mapping of incoming parameters to instance variables.
     @return A mapping of incoming parameters to instance variables.
  */
-+ (NSDictionary<NSString *, OIDFieldMapping *> *)fieldMap {
-  static NSMutableDictionary<NSString *, OIDFieldMapping *> *fieldMap;
++ (NSDictionary<NSString *, EkoOIDFieldMapping *> *)fieldMap {
+  static NSMutableDictionary<NSString *, EkoOIDFieldMapping *> *fieldMap;
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
     fieldMap = [NSMutableDictionary dictionary];
     fieldMap[kStateKey] =
-        [[OIDFieldMapping alloc] initWithName:@"_state" type:[NSString class]];
+        [[EkoOIDFieldMapping alloc] initWithName:@"_state" type:[NSString class]];
     fieldMap[kAuthorizationCodeKey] =
-        [[OIDFieldMapping alloc] initWithName:@"_authorizationCode" type:[NSString class]];
+        [[EkoOIDFieldMapping alloc] initWithName:@"_authorizationCode" type:[NSString class]];
     fieldMap[kAccessTokenKey] =
-        [[OIDFieldMapping alloc] initWithName:@"_accessToken" type:[NSString class]];
+        [[EkoOIDFieldMapping alloc] initWithName:@"_accessToken" type:[NSString class]];
     fieldMap[kExpiresInKey] =
-        [[OIDFieldMapping alloc] initWithName:@"_accessTokenExpirationDate"
+        [[EkoOIDFieldMapping alloc] initWithName:@"_accessTokenExpirationDate"
                                          type:[NSDate class]
                                    conversion:^id _Nullable(NSObject *_Nullable value) {
           if (![value isKindOfClass:[NSNumber class]]) {
@@ -99,11 +99,11 @@ static NSString *const kTokenExchangeRequestException =
           return [NSDate dateWithTimeIntervalSinceNow:[valueAsNumber longLongValue]];
         }];
     fieldMap[kTokenTypeKey] =
-        [[OIDFieldMapping alloc] initWithName:@"_tokenType" type:[NSString class]];
+        [[EkoOIDFieldMapping alloc] initWithName:@"_tokenType" type:[NSString class]];
     fieldMap[kIDTokenKey] =
-        [[OIDFieldMapping alloc] initWithName:@"_idToken" type:[NSString class]];
+        [[EkoOIDFieldMapping alloc] initWithName:@"_idToken" type:[NSString class]];
     fieldMap[kScopeKey] =
-        [[OIDFieldMapping alloc] initWithName:@"_scope" type:[NSString class]];
+        [[EkoOIDFieldMapping alloc] initWithName:@"_scope" type:[NSString class]];
   });
   return fieldMap;
 }
@@ -111,15 +111,15 @@ static NSString *const kTokenExchangeRequestException =
 #pragma mark - Initializers
 
 - (instancetype)init
-    OID_UNAVAILABLE_USE_INITIALIZER(@selector(initWithRequest:parameters:))
+    EkoOID_UNAVAILABLE_USE_INITIALIZER(@selector(initWithRequest:parameters:))
 
-- (instancetype)initWithRequest:(OIDAuthorizationRequest *)request
+- (instancetype)initWithRequest:(EkoOIDAuthorizationRequest *)request
     parameters:(NSDictionary<NSString *, NSObject<NSCopying> *> *)parameters {
   self = [super init];
   if (self) {
     _request = [request copy];
     NSDictionary<NSString *, NSObject<NSCopying> *> *additionalParameters =
-        [OIDFieldMapping remainingParametersWithMap:[[self class] fieldMap]
+        [EkoOIDFieldMapping remainingParametersWithMap:[[self class] fieldMap]
                                          parameters:parameters
                                            instance:self];
     _additionalParameters = additionalParameters;
@@ -144,12 +144,12 @@ static NSString *const kTokenExchangeRequestException =
 }
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
-  OIDAuthorizationRequest *request =
-      [aDecoder decodeObjectOfClass:[OIDAuthorizationRequest class] forKey:kRequestKey];
+  EkoOIDAuthorizationRequest *request =
+      [aDecoder decodeObjectOfClass:[EkoOIDAuthorizationRequest class] forKey:kRequestKey];
   self = [self initWithRequest:request parameters:@{ }];
   if (self) {
-    [OIDFieldMapping decodeWithCoder:aDecoder map:[[self class] fieldMap] instance:self];
-    _additionalParameters = [aDecoder decodeObjectOfClasses:[OIDFieldMapping JSONTypes]
+    [EkoOIDFieldMapping decodeWithCoder:aDecoder map:[[self class] fieldMap] instance:self];
+    _additionalParameters = [aDecoder decodeObjectOfClasses:[EkoOIDFieldMapping JSONTypes]
                                                      forKey:kAdditionalParametersKey];
   }
   return self;
@@ -157,7 +157,7 @@ static NSString *const kTokenExchangeRequestException =
 
 - (void)encodeWithCoder:(NSCoder *)aCoder {
   [aCoder encodeObject:_request forKey:kRequestKey];
-  [OIDFieldMapping encodeWithCoder:aCoder map:[[self class] fieldMap] instance:self];
+  [EkoOIDFieldMapping encodeWithCoder:aCoder map:[[self class] fieldMap] instance:self];
   [aCoder encodeObject:_additionalParameters forKey:kAdditionalParametersKey];
 }
 
@@ -172,10 +172,10 @@ static NSString *const kTokenExchangeRequestException =
                                     (void *)self,
                                     _authorizationCode,
                                     _state,
-                                    [OIDTokenUtilities redact:_accessToken],
+                                    [EkoOIDTokenUtilities redact:_accessToken],
                                     _accessTokenExpirationDate,
                                     _tokenType,
-                                    [OIDTokenUtilities redact:_idToken],
+                                    [EkoOIDTokenUtilities redact:_idToken],
                                     _scope,
                                     _additionalParameters,
                                     _request];
@@ -183,11 +183,11 @@ static NSString *const kTokenExchangeRequestException =
 
 #pragma mark -
 
-- (OIDTokenRequest *)tokenExchangeRequest {
+- (EkoOIDTokenRequest *)tokenExchangeRequest {
   return [self tokenExchangeRequestWithAdditionalParameters:nil];
 }
 
-- (OIDTokenRequest *)tokenExchangeRequestWithAdditionalParameters:
+- (EkoOIDTokenRequest *)tokenExchangeRequestWithAdditionalParameters:
     (NSDictionary<NSString *, NSString *> *)additionalParameters {
   // TODO: add a unit test to confirm exception is thrown when expected and the request is created
   //       with the correct parameters.
@@ -195,8 +195,8 @@ static NSString *const kTokenExchangeRequestException =
     [NSException raise:kTokenExchangeRequestException
                 format:kTokenExchangeRequestException];
   }
-  return [[OIDTokenRequest alloc] initWithConfiguration:_request.configuration
-                                              grantType:OIDGrantTypeAuthorizationCode
+  return [[EkoOIDTokenRequest alloc] initWithConfiguration:_request.configuration
+                                              grantType:EkoOIDGrantTypeAuthorizationCode
                                       authorizationCode:_authorizationCode
                                             redirectURL:_request.redirectURL
                                                clientID:_request.clientID

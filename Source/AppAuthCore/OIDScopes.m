@@ -1,4 +1,4 @@
-/*! @file OIDScopes.m
+/*! @file EkoOIDScopes.m
     @brief AppAuth iOS SDK
     @copyright
         Copyright 2015 Google Inc. All Rights Reserved.
@@ -18,12 +18,12 @@
 
 #import "OIDScopes.h"
 
-NSString *const OIDScopeOpenID = @"openid";
+NSString *const EkoOIDScopeOpenID = @"openid";
 
-NSString *const OIDScopeProfile = @"profile";
+NSString *const EkoOIDScopeProfile = @"profile";
 
-NSString *const OIDScopeEmail = @"email";
+NSString *const EkoOIDScopeEmail = @"email";
 
-NSString *const OIDScopeAddress = @"address";
+NSString *const EkoOIDScopeAddress = @"address";
 
-NSString *const OIDScopePhone = @"phone";
+NSString *const EkoOIDScopePhone = @"phone";

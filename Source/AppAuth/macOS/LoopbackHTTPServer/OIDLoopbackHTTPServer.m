@@ -1,4 +1,4 @@
-/*! @file OIDLoopbackHTTPServer.m
+/*! @file EkoOIDLoopbackHTTPServer.m
     @brief AppAuth iOS SDK
     @copyright
         Copyright 2016 The AppAuth Authors.

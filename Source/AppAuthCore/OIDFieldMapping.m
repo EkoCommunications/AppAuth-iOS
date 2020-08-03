@@ -1,4 +1,4 @@
-/*! @file OIDFieldMapping.m
+/*! @file EkoOIDFieldMapping.m
     @brief AppAuth iOS SDK
     @copyright
         Copyright 2015 Google Inc. All Rights Reserved.
@@ -20,10 +20,10 @@
 
 #import "OIDDefines.h"
 
-@implementation OIDFieldMapping
+@implementation EkoOIDFieldMapping
 
 - (nonnull instancetype)init
-    OID_UNAVAILABLE_USE_INITIALIZER(@selector(initWithName:type:conversion:))
+    EkoOID_UNAVAILABLE_USE_INITIALIZER(@selector(initWithName:type:conversion:))
 
 - (instancetype)initWithName:(NSString *)name
                                  type:(Class)type {
@@ -32,7 +32,7 @@
 
 - (instancetype)initWithName:(NSString *)name
                                  type:(Class)type
-                           conversion:(nullable OIDFieldMappingConversionFunction)conversion {
+                           conversion:(nullable EkoOIDFieldMappingConversionFunction)conversion {
   self = [super init];
   if (self) {
     _name = [name copy];
@@ -43,13 +43,13 @@
 }
 
 + (NSDictionary<NSString *, NSObject<NSCopying> *> *)remainingParametersWithMap:
-    (NSDictionary<NSString *, OIDFieldMapping *> *)map
+    (NSDictionary<NSString *, EkoOIDFieldMapping *> *)map
     parameters:(NSDictionary<NSString *, NSObject<NSCopying> *> *)parameters
       instance:(id)instance {
   NSMutableDictionary *additionalParameters = [NSMutableDictionary dictionary];
   for (NSString *key in parameters) {
     NSObject<NSCopying> *value = [parameters[key] copy];
-    OIDFieldMapping *mapping = map[key];
+    EkoOIDFieldMapping *mapping = map[key];
     // If the field doesn't appear in the mapping, we add it to the additional parameters
     // dictionary.
     if (!mapping) {
@@ -73,7 +73,7 @@
 }
 
 + (void)encodeWithCoder:(NSCoder *)aCoder
-                    map:(NSDictionary<NSString *, OIDFieldMapping *> *)map
+                    map:(NSDictionary<NSString *, EkoOIDFieldMapping *> *)map
                instance:(id)instance {
   for (NSString *key in map) {
     id value = [instance valueForKey:map[key].name];
@@ -82,10 +82,10 @@
 }
 
 + (void)decodeWithCoder:(NSCoder *)aCoder
-                    map:(NSDictionary<NSString *, OIDFieldMapping *> *)map
+                    map:(NSDictionary<NSString *, EkoOIDFieldMapping *> *)map
                instance:(id)instance {
   for (NSString *key in map) {
-    OIDFieldMapping *mapping = map[key];
+    EkoOIDFieldMapping *mapping = map[key];
     id value = [aCoder decodeObjectOfClass:mapping.expectedType forKey:key];
     [instance setValue:value forKey:mapping.name];
   }
@@ -100,7 +100,7 @@
   ]];
 }
 
-+ (OIDFieldMappingConversionFunction)URLConversion {
++ (EkoOIDFieldMappingConversionFunction)URLConversion {
   return ^id _Nullable(NSObject *_Nullable value) {
     if ([value isKindOfClass:[NSString class]]) {
       return [NSURL URLWithString:(NSString *)value];
@@ -109,7 +109,7 @@
   };
 }
 
-+ (OIDFieldMappingConversionFunction)dateSinceNowConversion {
++ (EkoOIDFieldMappingConversionFunction)dateSinceNowConversion {
   return ^id _Nullable(NSObject *_Nullable value) {
     if (![value isKindOfClass:[NSNumber class]]) {
       return value;
@@ -119,7 +119,7 @@
   };
 }
 
-+ (OIDFieldMappingConversionFunction)dateEpochConversion {
++ (EkoOIDFieldMappingConversionFunction)dateEpochConversion {
   return ^id _Nullable(NSObject *_Nullable value) {
     if (![value isKindOfClass:[NSNumber class]]) {
       return value;

@@ -1,4 +1,4 @@
-/*! @file OIDScopes.h
+/*! @file EkoOIDScopes.h
     @brief AppAuth iOS SDK
     @copyright
         Copyright 2015 Google Inc. All Rights Reserved.
@@ -21,26 +21,26 @@
 /*! @brief Scope that indicates this request is an OpenID Connect request.
     @see http://openid.net/specs/openid-connect-core-1_0.html#AuthRequestValidation
  */
-extern NSString *const OIDScopeOpenID;
+extern NSString *const EkoOIDScopeOpenID;
 
 /*! @brief This scope value requests access to the End-User's default profile Claims, which are:
         name, family_name, given_name, middle_name, nickname, preferred_username, profile, picture,
         website, gender, birthdate, zoneinfo, locale, and updated_at.
     @see http://openid.net/specs/openid-connect-core-1_0.html#ScopeClaims
  */
-extern NSString *const OIDScopeProfile;
+extern NSString *const EkoOIDScopeProfile;
 
 /*! @brief This scope value requests access to the email and email_verified Claims.
     @see http://openid.net/specs/openid-connect-core-1_0.html#ScopeClaims
  */
-extern NSString *const OIDScopeEmail;
+extern NSString *const EkoOIDScopeEmail;
 
 /*! @brief This scope value requests access to the address Claim.
     @see http://openid.net/specs/openid-connect-core-1_0.html#ScopeClaims
  */
-extern NSString *const OIDScopeAddress;
+extern NSString *const EkoOIDScopeAddress;
 
 /*! @brief This scope value requests access to the phone_number and phone_number_verified Claims.
     @see http://openid.net/specs/openid-connect-core-1_0.html#ScopeClaims
  */
-extern NSString *const OIDScopePhone;
+extern NSString *const EkoOIDScopePhone;

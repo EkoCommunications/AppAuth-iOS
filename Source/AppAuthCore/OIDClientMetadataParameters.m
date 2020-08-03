@@ -1,4 +1,4 @@
-/*! @file OIDClientMetadataParameters.h
+/*! @file EkoOIDClientMetadataParameters.h
     @brief AppAuth iOS SDK
     @copyright
         Copyright 2016 The AppAuth for iOS Authors. All Rights Reserved.
@@ -18,16 +18,16 @@
 
 #import "OIDClientMetadataParameters.h"
 
-NSString *const OIDTokenEndpointAuthenticationMethodParam = @"token_endpoint_auth_method";
+NSString *const EkoOIDTokenEndpointAuthenticationMethodParam = @"token_endpoint_auth_method";
 
-NSString *const OIDApplicationTypeParam = @"application_type";
+NSString *const EkoOIDApplicationTypeParam = @"application_type";
 
-NSString *const OIDRedirectURIsParam = @"redirect_uris";
+NSString *const EkoOIDRedirectURIsParam = @"redirect_uris";
 
-NSString *const OIDResponseTypesParam = @"response_types";
+NSString *const EkoOIDResponseTypesParam = @"response_types";
 
-NSString *const OIDGrantTypesParam = @"grant_types";
+NSString *const EkoOIDGrantTypesParam = @"grant_types";
 
-NSString *const OIDSubjectTypeParam = @"subject_type";
+NSString *const EkoOIDSubjectTypeParam = @"subject_type";
 
-NSString *const OIDApplicationTypeNative = @"native";
+NSString *const EkoOIDApplicationTypeNative = @"native";

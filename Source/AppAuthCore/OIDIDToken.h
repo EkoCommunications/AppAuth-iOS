@@ -1,4 +1,4 @@
-/*! @file OIDIDToken.h
+/*! @file EkoOIDIDToken.h
     @brief AppAuth iOS SDK
     @copyright
         Copyright 2017 Google Inc. All Rights Reserved.
@@ -29,7 +29,7 @@ NS_ASSUME_NONNULL_BEGIN
     @see https://tools.ietf.org/html/rfc7519
     @see https://jwt.io/
  */
-@interface OIDIDToken : NSObject
+@interface EkoOIDIDToken : NSObject
 
 /*! @internal
     @brief Unavailable. Please use @c initWithAuthorizationResponse:.

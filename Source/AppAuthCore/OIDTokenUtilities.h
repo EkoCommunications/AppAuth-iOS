@@ -1,4 +1,4 @@
-/*! @file OIDTokenUtilities.h
+/*! @file EkoOIDTokenUtilities.h
     @brief AppAuth iOS SDK
     @copyright
         Copyright 2015 Google Inc. All Rights Reserved.
@@ -22,7 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /*! @brief Provides data encoding/decoding methods, random string generators, etc.
  */
-@interface OIDTokenUtilities : NSObject
+@interface EkoOIDTokenUtilities : NSObject
 
 /*! @internal
     @brief Unavailable. This class should not be initialized.

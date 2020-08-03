@@ -1,4 +1,4 @@
-/*! @file OIDTokenUtilities.m
+/*! @file EkoOIDTokenUtilities.m
     @brief AppAuth iOS SDK
     @copyright
         Copyright 2015 Google Inc. All Rights Reserved.
@@ -26,7 +26,7 @@
 static NSString *const kFormUrlEncodedAllowedCharacters =
     @" *-._0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-@implementation OIDTokenUtilities
+@implementation EkoOIDTokenUtilities
 
 + (NSString *)encodeBase64urlNoPadding:(NSData *)data {
   NSString *base64string = [data base64EncodedStringWithOptions:0];

@@ -1,4 +1,4 @@
-/*! @file OIDEndSessionRequest.m
+/*! @file EkoOIDEndSessionRequest.m
     @brief AppAuth iOS SDK
     @copyright
         Copyright 2017 The AppAuth Authors. All Rights Reserved.
@@ -50,20 +50,20 @@ static NSUInteger const kStateSizeBytes = 32;
 
 /*! @brief Assertion text for missing end_session_endpoint.
  */
-static NSString *const OIDMissingEndSessionEndpointMessage =
+static NSString *const EkoOIDMissingEndSessionEndpointMessage =
 @"The service configuration is missing an end_session_endpoint.";
 
-@implementation OIDEndSessionRequest
+@implementation EkoOIDEndSessionRequest
 
 - (instancetype)init
-    OID_UNAVAILABLE_USE_INITIALIZER(
+    EkoOID_UNAVAILABLE_USE_INITIALIZER(
         @selector(initWithConfiguration:
                             idTokenHint:
                   postLogoutRedirectURL:
                    additionalParameters:)
     )
 
-- (instancetype)initWithConfiguration:(OIDServiceConfiguration *)configuration
+- (instancetype)initWithConfiguration:(EkoOIDServiceConfiguration *)configuration
                           idTokenHint:(NSString *)idTokenHint
                 postLogoutRedirectURL:(NSURL *)postLogoutRedirectURL
                                 state:(NSString *)state
@@ -81,7 +81,7 @@ static NSString *const OIDMissingEndSessionEndpointMessage =
   return self;
 }
 
-- (instancetype)initWithConfiguration:(OIDServiceConfiguration *)configuration
+- (instancetype)initWithConfiguration:(EkoOIDServiceConfiguration *)configuration
                           idTokenHint:(NSString *)idTokenHint
                 postLogoutRedirectURL:(NSURL *)postLogoutRedirectURL
                  additionalParameters:(NSDictionary<NSString *,NSString *> *)additionalParameters
@@ -109,7 +109,7 @@ static NSString *const OIDMissingEndSessionEndpointMessage =
 }
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
-  OIDServiceConfiguration *configuration = [aDecoder decodeObjectOfClass:[OIDServiceConfiguration class] forKey:kConfigurationKey];
+  EkoOIDServiceConfiguration *configuration = [aDecoder decodeObjectOfClass:[EkoOIDServiceConfiguration class] forKey:kConfigurationKey];
 
   NSString *idTokenHint = [aDecoder decodeObjectOfClass:[NSString class] forKey:kIdTokenHintKey];
   NSURL *postLogoutRedirectURL = [aDecoder decodeObjectOfClass:[NSURL class] forKey:kPostLogoutRedirectURLKey];
@@ -147,10 +147,10 @@ static NSString *const OIDMissingEndSessionEndpointMessage =
 }
 
 + (nullable NSString *)generateState {
-  return [OIDTokenUtilities randomURLSafeStringWithSize:kStateSizeBytes];
+  return [EkoOIDTokenUtilities randomURLSafeStringWithSize:kStateSizeBytes];
 }
 
-#pragma mark - OIDExternalUserAgentRequest
+#pragma mark - EkoOIDExternalUserAgentRequest
 
 - (NSURL*)externalUserAgentRequestURL {
   return [self endSessionRequestURL];
@@ -163,7 +163,7 @@ static NSString *const OIDMissingEndSessionEndpointMessage =
 #pragma mark -
 
 - (NSURL *)endSessionRequestURL {
-  OIDURLQueryComponent *query = [[OIDURLQueryComponent alloc] init];
+  EkoOIDURLQueryComponent *query = [[EkoOIDURLQueryComponent alloc] init];
 
   // Add any additional parameters the client has specified.
   [query addParameters:_additionalParameters];
@@ -181,7 +181,7 @@ static NSString *const OIDMissingEndSessionEndpointMessage =
     [query addParameter:kStateKey value:_state];
   }
 
-  NSAssert(_configuration.endSessionEndpoint, OIDMissingEndSessionEndpointMessage);
+  NSAssert(_configuration.endSessionEndpoint, EkoOIDMissingEndSessionEndpointMessage);
 
   // Construct the URL
   return [query URLByReplacingQueryInURL:_configuration.endSessionEndpoint];

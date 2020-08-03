@@ -1,4 +1,4 @@
-/*! @file OIDExternalUserAgentMac.m
+/*! @file EkoOIDExternalUserAgentMac.m
     @brief AppAuth iOS SDK
     @copyright
         Copyright 2016 Google Inc. All Rights Reserved.
@@ -30,13 +30,13 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@implementation OIDExternalUserAgentMac {
+@implementation EkoOIDExternalUserAgentMac {
   BOOL _externalUserAgentFlowInProgress;
-  __weak id<OIDExternalUserAgentSession> _session;
+  __weak id<EkoOIDExternalUserAgentSession> _session;
 }
 
-- (BOOL)presentExternalUserAgentRequest:(id<OIDExternalUserAgentRequest>)request
-                                session:(id<OIDExternalUserAgentSession>)session {
+- (BOOL)presentExternalUserAgentRequest:(id<EkoOIDExternalUserAgentRequest>)request
+                                session:(id<EkoOIDExternalUserAgentSession>)session {
   if (_externalUserAgentFlowInProgress) {
     // TODO: Handle errors as authorization is already in progress.
     return NO;
@@ -49,7 +49,7 @@ NS_ASSUME_NONNULL_BEGIN
   BOOL openedBrowser = [[NSWorkspace sharedWorkspace] openURL:requestURL];
   if (!openedBrowser) {
     [self cleanUp];
-    NSError *safariError = [OIDErrorUtilities errorWithCode:OIDErrorCodeBrowserOpenError
+    NSError *safariError = [EkoOIDErrorUtilities errorWithCode:EkoOIDErrorCodeBrowserOpenError
                                             underlyingError:nil
                                                 description:@"Unable to open the browser."];
     [session failExternalUserAgentFlowWithError:safariError];

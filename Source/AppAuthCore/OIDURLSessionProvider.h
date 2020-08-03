@@ -1,4 +1,4 @@
-/*! @file OIDURLSessionProvider.h
+/*! @file EkoOIDURLSessionProvider.h
  @brief AppAuth iOS SDK
  @copyright
  Copyright 2015 Google Inc. All Rights Reserved.
@@ -23,7 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 /*! @brief A NSURLSession provider that allows clients to provide custom implementation
         for NSURLSession
  */
-@interface OIDURLSessionProvider : NSObject
+@interface EkoOIDURLSessionProvider : NSObject
 
 /*! @brief Obtains the current @c NSURLSession; using the +[NSURLSession sharedSession] if
         no custom implementation is provided.

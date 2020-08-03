@@ -1,4 +1,4 @@
-/*! @file OIDRegistrationRequest.h
+/*! @file EkoOIDRegistrationRequest.h
     @brief AppAuth iOS SDK
     @copyright
         Copyright 2016 The AppAuth for iOS Authors. All Rights Reserved.
@@ -18,21 +18,21 @@
 
 #import <Foundation/Foundation.h>
 
-@class OIDAuthorizationResponse;
-@class OIDServiceConfiguration;
+@class EkoOIDAuthorizationResponse;
+@class EkoOIDServiceConfiguration;
 
 NS_ASSUME_NONNULL_BEGIN
 
 /*! @brief Represents a registration request.
     @see https://openid.net/specs/openid-connect-registration-1_0.html#RegistrationRequest
  */
-@interface OIDRegistrationRequest : NSObject <NSCopying, NSSecureCoding>
+@interface EkoOIDRegistrationRequest : NSObject <NSCopying, NSSecureCoding>
 
 /*! @brief The service's configuration.
     @remarks This configuration specifies how to connect to a particular OAuth provider.
         Configurations may be created manually, or via an OpenID Connect Discovery Document.
  */
-@property(nonatomic, readonly) OIDServiceConfiguration *configuration;
+@property(nonatomic, readonly) EkoOIDServiceConfiguration *configuration;
 
 /*! @brief The initial access token to access the Client Registration Endpoint
         (if required by the OpenID Provider).
@@ -100,7 +100,7 @@ NS_ASSUME_NONNULL_BEGIN
         client.
     @param additionalParameters The client's additional registration request parameters.
  */
-- (instancetype)initWithConfiguration:(OIDServiceConfiguration *)configuration
+- (instancetype)initWithConfiguration:(EkoOIDServiceConfiguration *)configuration
                redirectURIs:(NSArray<NSURL *> *)redirectURIs
               responseTypes:(nullable NSArray<NSString *> *)responseTypes
                  grantTypes:(nullable NSArray<NSString *> *)grantTypes
@@ -121,7 +121,7 @@ NS_ASSUME_NONNULL_BEGIN
     @param additionalParameters The client's additional registration request parameters.
     @see https://openid.net/specs/openid-connect-registration-1_0.html#ClientRegistration
  */
-- (instancetype)initWithConfiguration:(OIDServiceConfiguration *)configuration
+- (instancetype)initWithConfiguration:(EkoOIDServiceConfiguration *)configuration
                redirectURIs:(NSArray<NSURL *> *)redirectURIs
               responseTypes:(nullable NSArray<NSString *> *)responseTypes
                  grantTypes:(nullable NSArray<NSString *> *)grantTypes

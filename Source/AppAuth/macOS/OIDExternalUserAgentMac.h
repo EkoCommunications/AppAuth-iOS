@@ -1,4 +1,4 @@
-/*! @file OIDExternalUserAgentMac.h
+/*! @file EkoOIDExternalUserAgentMac.h
     @brief AppAuth iOS SDK
     @copyright
         Copyright 2016 Google Inc. All Rights Reserved.
@@ -27,7 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
 /*! @brief A Mac-specific external user-agent UI Coordinator that uses the default browser to
         present an external user-agent request.
  */
-@interface OIDExternalUserAgentMac : NSObject <OIDExternalUserAgent>
+@interface EkoOIDExternalUserAgentMac : NSObject <EkoOIDExternalUserAgent>
 
 @end
 

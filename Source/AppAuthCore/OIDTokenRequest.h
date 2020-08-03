@@ -1,4 +1,4 @@
-/*! @file OIDTokenRequest.h
+/*! @file EkoOIDTokenRequest.h
     @brief AppAuth iOS SDK
     @copyright
         Copyright 2015 Google Inc. All Rights Reserved.
@@ -18,12 +18,12 @@
 
 #import <Foundation/Foundation.h>
 
-// This file only declares string constants useful for constructing a @c OIDTokenRequest, so it is
+// This file only declares string constants useful for constructing a @c EkoOIDTokenRequest, so it is
 // imported here for convenience.
 #import "OIDGrantTypes.h"
 
-@class OIDAuthorizationResponse;
-@class OIDServiceConfiguration;
+@class EkoOIDAuthorizationResponse;
+@class EkoOIDServiceConfiguration;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -31,13 +31,13 @@ NS_ASSUME_NONNULL_BEGIN
     @see https://tools.ietf.org/html/rfc6749#section-3.2
     @see https://tools.ietf.org/html/rfc6749#section-4.1.3
  */
-@interface OIDTokenRequest : NSObject <NSCopying, NSSecureCoding>
+@interface EkoOIDTokenRequest : NSObject <NSCopying, NSSecureCoding>
 
 /*! @brief The service's configuration.
     @remarks This configuration specifies how to connect to a particular OAuth provider.
         Configurations may be created manually, or via an OpenID Connect Discovery Document.
  */
-@property(nonatomic, readonly) OIDServiceConfiguration *configuration;
+@property(nonatomic, readonly) EkoOIDServiceConfiguration *configuration;
 
 /*! @brief The type of token being sent to the token endpoint, i.e. "authorization_code" for the
         authorization code exchange, or "refresh_token" for an access token refresh request.
@@ -104,7 +104,7 @@ NS_ASSUME_NONNULL_BEGIN
 /*! @param configuration The service's configuration.
     @param grantType the type of token being sent to the token endpoint, i.e. "authorization_code"
         for the authorization code exchange, or "refresh_token" for an access token refresh request.
-        @see OIDGrantTypes.h
+        @see EkoOIDGrantTypes.h
     @param code The authorization code received from the authorization server.
     @param redirectURL The client's redirect URI.
     @param clientID The client identifier.
@@ -114,7 +114,7 @@ NS_ASSUME_NONNULL_BEGIN
     @param codeVerifier The PKCE code verifier.
     @param additionalParameters The client's additional token request parameters.
  */
-- (instancetype)initWithConfiguration:(OIDServiceConfiguration *)configuration
+- (instancetype)initWithConfiguration:(EkoOIDServiceConfiguration *)configuration
                grantType:(NSString *)grantType
        authorizationCode:(nullable NSString *)code
              redirectURL:(nullable NSURL *)redirectURL
@@ -129,7 +129,7 @@ NS_ASSUME_NONNULL_BEGIN
     @param configuration The service's configuration.
     @param grantType the type of token being sent to the token endpoint, i.e. "authorization_code"
         for the authorization code exchange, or "refresh_token" for an access token refresh request.
-        @see OIDGrantTypes.h
+        @see EkoOIDGrantTypes.h
     @param code The authorization code received from the authorization server.
     @param redirectURL The client's redirect URI.
     @param clientID The client identifier.
@@ -140,7 +140,7 @@ NS_ASSUME_NONNULL_BEGIN
     @param codeVerifier The PKCE code verifier.
     @param additionalParameters The client's additional token request parameters.
  */
-- (instancetype)initWithConfiguration:(OIDServiceConfiguration *)configuration
+- (instancetype)initWithConfiguration:(EkoOIDServiceConfiguration *)configuration
                grantType:(NSString *)grantType
        authorizationCode:(nullable NSString *)code
              redirectURL:(nullable NSURL *)redirectURL

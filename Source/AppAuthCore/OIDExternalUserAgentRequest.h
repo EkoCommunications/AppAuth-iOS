@@ -1,4 +1,4 @@
-/*! @file OIDExternalUserAgent.h
+/*! @file EkoOIDExternalUserAgent.h
     @brief AppAuth iOS SDK
     @copyright
         Copyright 2017 The AppAuth Authors. All Rights Reserved.
@@ -16,11 +16,11 @@
         limitations under the License.
  */
 
-/*! @protocol OIDExternalUserAgent
+/*! @protocol EkoOIDExternalUserAgent
     @brief An interface that any external user-agent request may implement to use the
-        @c OIDExternalUserAgent flow.
+        @c EkoOIDExternalUserAgent flow.
  */
-@protocol OIDExternalUserAgentRequest
+@protocol EkoOIDExternalUserAgentRequest
 
 /*! @brief Method to create and return the complete request URL instance.
     @return A @c NSURL instance which contains the URL to be opened in an external UI (i.e. browser)

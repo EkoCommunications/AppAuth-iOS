@@ -1,4 +1,4 @@
-/*! @file OIDTokenRequest.m
+/*! @file EkoOIDTokenRequest.m
     @brief AppAuth iOS SDK
     @copyright
         Copyright 2015 Google Inc. All Rights Reserved.
@@ -67,10 +67,10 @@ static NSString *const kCodeVerifierKey = @"code_verifier";
  */
 static NSString *const kAdditionalParametersKey = @"additionalParameters";
 
-@implementation OIDTokenRequest
+@implementation EkoOIDTokenRequest
 
 - (instancetype)init
-    OID_UNAVAILABLE_USE_INITIALIZER(
+    EkoOID_UNAVAILABLE_USE_INITIALIZER(
         @selector(initWithConfiguration:
                               grantType:
                       authorizationCode:
@@ -83,7 +83,7 @@ static NSString *const kAdditionalParametersKey = @"additionalParameters";
                    additionalParameters:)
     )
 
-- (instancetype)initWithConfiguration:(OIDServiceConfiguration *)configuration
+- (instancetype)initWithConfiguration:(EkoOIDServiceConfiguration *)configuration
                grantType:(NSString *)grantType
        authorizationCode:(nullable NSString *)code
              redirectURL:(nullable NSURL *)redirectURL
@@ -99,13 +99,13 @@ static NSString *const kAdditionalParametersKey = @"additionalParameters";
                          redirectURL:redirectURL
                             clientID:clientID
                         clientSecret:clientSecret
-                               scope:[OIDScopeUtilities scopesWithArray:scopes]
+                               scope:[EkoOIDScopeUtilities scopesWithArray:scopes]
                         refreshToken:refreshToken
                         codeVerifier:(NSString *)codeVerifier
                 additionalParameters:additionalParameters];
 }
 
-- (instancetype)initWithConfiguration:(OIDServiceConfiguration *)configuration
+- (instancetype)initWithConfiguration:(EkoOIDServiceConfiguration *)configuration
                grantType:(NSString *)grantType
        authorizationCode:(nullable NSString *)code
              redirectURL:(nullable NSURL *)redirectURL
@@ -130,11 +130,11 @@ static NSString *const kAdditionalParametersKey = @"additionalParameters";
         [[NSDictionary alloc] initWithDictionary:additionalParameters copyItems:YES];
     
     // Additional validation for the authorization_code grant type
-    if ([_grantType isEqual:OIDGrantTypeAuthorizationCode]) {
+    if ([_grantType isEqual:EkoOIDGrantTypeAuthorizationCode]) {
       // redirect URI must not be nil
       if (!_redirectURL) {
-        [NSException raise:OIDOAuthExceptionInvalidTokenRequestNullRedirectURL
-                    format:@"%@", OIDOAuthExceptionInvalidTokenRequestNullRedirectURL, nil];
+        [NSException raise:EkoOIDOAuthExceptionInvalidTokenRequestNullRedirectURL
+                    format:@"%@", EkoOIDOAuthExceptionInvalidTokenRequestNullRedirectURL, nil];
 
       }
     }
@@ -159,8 +159,8 @@ static NSString *const kAdditionalParametersKey = @"additionalParameters";
 }
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
-  OIDServiceConfiguration *configuration =
-      [aDecoder decodeObjectOfClass:[OIDServiceConfiguration class]
+  EkoOIDServiceConfiguration *configuration =
+      [aDecoder decodeObjectOfClass:[EkoOIDServiceConfiguration class]
                              forKey:kConfigurationKey];
   NSString *grantType = [aDecoder decodeObjectOfClass:[NSString class] forKey:kGrantTypeKey];
   NSString *code = [aDecoder decodeObjectOfClass:[NSString class] forKey:kAuthorizationCodeKey];
@@ -231,8 +231,8 @@ static NSString *const kAdditionalParametersKey = @"additionalParameters";
     @return The data to pass to the token request URL.
     @see https://tools.ietf.org/html/rfc6749#section-4.1.3
  */
-- (OIDURLQueryComponent *)tokenRequestBody {
-  OIDURLQueryComponent *query = [[OIDURLQueryComponent alloc] init];
+- (EkoOIDURLQueryComponent *)tokenRequestBody {
+  EkoOIDURLQueryComponent *query = [[EkoOIDURLQueryComponent alloc] init];
 
   // Add parameters, as applicable.
   if (_grantType) {
@@ -271,15 +271,15 @@ static NSString *const kAdditionalParametersKey = @"additionalParameters";
   URLRequest.HTTPMethod = kHTTPPost;
   [URLRequest setValue:kHTTPContentTypeHeaderValue forHTTPHeaderField:kHTTPContentTypeHeaderKey];
 
-  OIDURLQueryComponent *bodyParameters = [self tokenRequestBody];
+  EkoOIDURLQueryComponent *bodyParameters = [self tokenRequestBody];
   NSMutableDictionary *httpHeaders = [[NSMutableDictionary alloc] init];
 
   if (_clientSecret) {
     // The client id and secret are encoded using the "application/x-www-form-urlencoded" 
     // encoding algorithm per RFC 6749 Section 2.3.1.
     // https://tools.ietf.org/html/rfc6749#section-2.3.1
-    NSString *encodedClientID = [OIDTokenUtilities formUrlEncode:_clientID];
-    NSString *encodedClientSecret = [OIDTokenUtilities formUrlEncode:_clientSecret];
+    NSString *encodedClientID = [EkoOIDTokenUtilities formUrlEncode:_clientID];
+    NSString *encodedClientSecret = [EkoOIDTokenUtilities formUrlEncode:_clientSecret];
     
     NSString *credentials =
         [NSString stringWithFormat:@"%@:%@", encodedClientID, encodedClientSecret];

@@ -1,4 +1,4 @@
-/*! @file OIDScopeUtilities.h
+/*! @file EkoOIDScopeUtilities.h
     @brief AppAuth iOS SDK
     @copyright
         Copyright 2015 Google Inc. All Rights Reserved.
@@ -22,7 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /*! @brief Provides convenience methods for dealing with scope strings.
  */
-@interface OIDScopeUtilities : NSObject
+@interface EkoOIDScopeUtilities : NSObject
 
 /*! @internal
     @brief Unavailable. This class should not be initialized.

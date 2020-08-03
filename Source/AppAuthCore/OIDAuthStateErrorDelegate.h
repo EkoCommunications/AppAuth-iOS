@@ -1,4 +1,4 @@
-/*! @file OIDAuthStateErrorDelegate.h
+/*! @file EkoOIDAuthStateErrorDelegate.h
     @brief AppAuth iOS SDK
     @copyright
         Copyright 2015 Google Inc. All Rights Reserved.
@@ -18,44 +18,44 @@
 
 #import <Foundation/Foundation.h>
 
-@class OIDAuthState;
+@class EkoOIDAuthState;
 
 NS_ASSUME_NONNULL_BEGIN
 
-/*! @protocol OIDAuthStateErrorDelegate
-    @brief Delegate of the OIDAuthState used to monitor errors.
+/*! @protocol EkoOIDAuthStateErrorDelegate
+    @brief Delegate of the EkoOIDAuthState used to monitor errors.
  */
-@protocol OIDAuthStateErrorDelegate <NSObject>
+@protocol EkoOIDAuthStateErrorDelegate <NSObject>
 
 /*! @brief Called when an authentication occurs, which indicates the auth session is invalid.
-    @param state The @c OIDAuthState on which the error occurred.
+    @param state The @c EkoOIDAuthState on which the error occurred.
     @param error The authorization error.
     @discussion This is a hard error (not a transient network issue) that indicates a problem with
-        the authorization. You should stop using the @c OIDAuthState when such an error is
-        encountered. If the \NSError_code is @c ::OIDErrorCodeOAuthInvalidGrant then
+        the authorization. You should stop using the @c EkoOIDAuthState when such an error is
+        encountered. If the \NSError_code is @c ::EkoOIDErrorCodeOAuthInvalidGrant then
         the session may be recoverable with user interaction (i.e. re-authentication). In all cases
         you should consider the user unauthorized, and remove locally cached resources that require
-        that authorization.  @c OIDAuthState will call this method automatically if it encounters
+        that authorization.  @c EkoOIDAuthState will call this method automatically if it encounters
         an OAuth error (that is, an HTTP 400 response with a valid OAuth error response) during
         authorization or token refresh (such as performed automatically when using
-        @c OIDAuthState.performActionWithFreshTokens:). You can signal authorization errors with
-        @c OIDAuthState.updateWithAuthorizationError:.
+        @c EkoOIDAuthState.performActionWithFreshTokens:). You can signal authorization errors with
+        @c EkoOIDAuthState.updateWithAuthorizationError:.
     @see https://tools.ietf.org/html/rfc6749#section-5.2
  */
-- (void)authState:(OIDAuthState *)state didEncounterAuthorizationError:(NSError *)error;
+- (void)authState:(EkoOIDAuthState *)state didEncounterAuthorizationError:(NSError *)error;
 
 @optional
 
 /*! @brief Called when a network or other transient error occurs.
-    @param state The @c OIDAuthState on which the error occurred.
+    @param state The @c EkoOIDAuthState on which the error occurred.
     @param error The transient error.
-    @discussion This is a soft error, typically network related. The @c OIDAuthState is likely
+    @discussion This is a soft error, typically network related. The @c EkoOIDAuthState is likely
         still valid, and should not be discarded. Retry the request using an incremental backoff
-        strategy. This is only called when using the @c OIDAuthState convenience methods such as
-        @c OIDAuthState.performActionWithFreshTokens:. If you are refreshing the tokens yourself
-        outside of @c OIDAuthState class, it will never be called.
+        strategy. This is only called when using the @c EkoOIDAuthState convenience methods such as
+        @c EkoOIDAuthState.performActionWithFreshTokens:. If you are refreshing the tokens yourself
+        outside of @c EkoOIDAuthState class, it will never be called.
  */
-- (void)authState:(OIDAuthState *)state didEncounterTransientError:(NSError *)error;
+- (void)authState:(EkoOIDAuthState *)state didEncounterTransientError:(NSError *)error;
 
 @end
 

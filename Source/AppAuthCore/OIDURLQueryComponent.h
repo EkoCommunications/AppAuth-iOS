@@ -1,4 +1,4 @@
-/*! @file OIDURLQueryComponent.h
+/*! @file EkoOIDURLQueryComponent.h
     @brief AppAuth iOS SDK
     @copyright
         Copyright 2015 Google Inc. All Rights Reserved.
@@ -18,15 +18,15 @@
 
 #import <Foundation/Foundation.h>
 
-@class OIDAuthorizationRequest;
+@class EkoOIDAuthorizationRequest;
 
 NS_ASSUME_NONNULL_BEGIN
 
-/*! @brief If set to YES, will force the iOS 7-only code for @c OIDURLQueryComponent to be used,
+/*! @brief If set to YES, will force the iOS 7-only code for @c EkoOIDURLQueryComponent to be used,
         even on non-iOS 7 devices and simulators. Useful for testing the iOS 7 code paths on the
         simulator. Defaults to NO.
  */
-extern BOOL gOIDURLQueryComponentForceIOS7Handling;
+extern BOOL gEkoOIDURLQueryComponentForceIOS7Handling;
 
 /*! @brief A utility class for creating and parsing URL query components encoded with the
         application/x-www-form-urlencoded format.
@@ -38,7 +38,7 @@ extern BOOL gOIDURLQueryComponentForceIOS7Handling;
     @see https://tools.ietf.org/html/rfc6749#appendix-B
     @see https://url.spec.whatwg.org/#urlencoded-parsing
  */
-@interface OIDURLQueryComponent : NSObject
+@interface EkoOIDURLQueryComponent : NSObject
 
 /*! @brief The parameter names in the query.
  */
@@ -50,7 +50,7 @@ extern BOOL gOIDURLQueryComponentForceIOS7Handling;
  */
 @property(nonatomic, readonly) NSDictionary<NSString *, NSObject<NSCopying> *> *dictionaryValue;
 
-/*! @brief Creates an @c OIDURLQueryComponent by parsing the query string in a URL.
+/*! @brief Creates an @c EkoOIDURLQueryComponent by parsing the query string in a URL.
     @param URL The URL from which to extract a query component.
  */
 - (nullable instancetype)initWithURL:(NSURL *)URL;

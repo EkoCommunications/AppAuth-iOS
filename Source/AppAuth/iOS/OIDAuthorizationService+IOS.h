@@ -1,4 +1,4 @@
-/*! @file OIDAuthorizationService+IOS.h
+/*! @file EkoOIDAuthorizationService+IOS.h
     @brief AppAuth iOS SDK
     @copyright
         Copyright 2016 Google Inc. All Rights Reserved.
@@ -29,20 +29,20 @@ NS_ASSUME_NONNULL_BEGIN
 
 /*! @brief Provides iOS specific authorization request handling.
  */
-@interface OIDAuthorizationService (IOS)
+@interface EkoOIDAuthorizationService (IOS)
 
 /*! @brief Perform an authorization flow using \SFSafariViewController.
     @param request The authorization request.
     @param presentingViewController The view controller from which to present the
         \SFSafariViewController.
     @param callback The method called when the request has completed or failed.
-    @return A @c OIDExternalUserAgentSession instance which will terminate when it
-        receives a @c OIDExternalUserAgentSession.cancel message, or after processing a
-        @c OIDExternalUserAgentSession.resumeExternalUserAgentFlowWithURL: message.
+    @return A @c EkoOIDExternalUserAgentSession instance which will terminate when it
+        receives a @c EkoOIDExternalUserAgentSession.cancel message, or after processing a
+        @c EkoOIDExternalUserAgentSession.resumeExternalUserAgentFlowWithURL: message.
  */
-+ (id<OIDExternalUserAgentSession>) presentAuthorizationRequest:(OIDAuthorizationRequest *)request
++ (id<EkoOIDExternalUserAgentSession>) presentAuthorizationRequest:(EkoOIDAuthorizationRequest *)request
     presentingViewController:(UIViewController *)presentingViewController
-                    callback:(OIDAuthorizationCallback)callback;
+                    callback:(EkoOIDAuthorizationCallback)callback;
 @end
 
 NS_ASSUME_NONNULL_END

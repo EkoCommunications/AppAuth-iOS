@@ -1,4 +1,4 @@
-/*! @file OIDErrorUtilities.h
+/*! @file EkoOIDErrorUtilities.h
     @brief AppAuth iOS SDK
     @copyright
         Copyright 2015 Google Inc. All Rights Reserved.
@@ -24,23 +24,23 @@ NS_ASSUME_NONNULL_BEGIN
 
 /*! @brief Convenience methods for creating standardized \NSError instances.
  */
-@interface OIDErrorUtilities : NSObject
+@interface EkoOIDErrorUtilities : NSObject
 
-/*! @brief Creates a standard \NSError from an @c ::OIDErrorCode and custom user info.
+/*! @brief Creates a standard \NSError from an @c ::EkoOIDErrorCode and custom user info.
         Automatically populates the localized error description.
     @param code The error code.
     @param underlyingError The underlying error which occurred, if applicable.
     @param description A custom description, if applicable.
     @return An \NSError representing the error code.
  */
-+ (NSError *)errorWithCode:(OIDErrorCode)code
++ (NSError *)errorWithCode:(EkoOIDErrorCode)code
            underlyingError:(nullable NSError *)underlyingError
                description:(nullable NSString *)description;
 
-/*! @brief Creates a standard \NSError from an @c ::OIDErrorCode and custom user info.
+/*! @brief Creates a standard \NSError from an @c ::EkoOIDErrorCode and custom user info.
         Automatically populates the localized error description.
-    @param OAuthErrorDomain The OAuth error domain. Must be @c ::OIDOAuthAuthorizationErrorDomain or
-        @c ::OIDOAuthTokenErrorDomain.
+    @param OAuthErrorDomain The OAuth error domain. Must be @c ::EkoOIDOAuthAuthorizationErrorDomain or
+        @c ::EkoOIDOAuthTokenErrorDomain.
     @param errorResponse The dictionary from an OAuth error response (as per RFC6749 Section 5.2).
     @param underlyingError The underlying error which occurred, if applicable.
     @return An \NSError representing the OAuth error.
@@ -84,13 +84,13 @@ NS_ASSUME_NONNULL_BEGIN
  */
 + (void)raiseException:(NSString *)name message:(NSString *)message;
 
-/*! @brief Converts an OAuth error code into an @c ::OIDErrorCodeOAuth error code.
+/*! @brief Converts an OAuth error code into an @c ::EkoOIDErrorCodeOAuth error code.
     @param errorCode The OAuth error code.
-    @discussion Returns @c ::OIDErrorCodeOAuthOther if the string is not in AppAuth's list.
+    @discussion Returns @c ::EkoOIDErrorCodeOAuthOther if the string is not in AppAuth's list.
     @see https://tools.ietf.org/html/rfc6749#section-4.1.2.1
     @see https://tools.ietf.org/html/rfc6749#section-5.2
  */
-+ (OIDErrorCodeOAuth)OAuthErrorCodeFromString:(NSString *)errorCode;
++ (EkoOIDErrorCodeOAuth)OAuthErrorCodeFromString:(NSString *)errorCode;
 
 /*! @brief Returns true if the given error domain is an OAuth error domain.
     @param errorDomain The error domain to test.

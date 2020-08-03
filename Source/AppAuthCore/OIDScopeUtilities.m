@@ -1,4 +1,4 @@
-/*! @file OIDScopeUtilities.m
+/*! @file EkoOIDScopeUtilities.m
     @brief AppAuth iOS SDK
     @copyright
         Copyright 2015 Google Inc. All Rights Reserved.
@@ -18,7 +18,7 @@
 
 #import "OIDScopeUtilities.h"
 
-@implementation OIDScopeUtilities
+@implementation EkoOIDScopeUtilities
 
 /*! @brief A character set with the characters NOT allowed in a scope name.
     @see https://tools.ietf.org/html/rfc6749#section-3.3

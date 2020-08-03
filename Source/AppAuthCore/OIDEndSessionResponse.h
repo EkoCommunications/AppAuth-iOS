@@ -1,4 +1,4 @@
-/*! @file OIDEndSessionResponse.h
+/*! @file EkoOIDEndSessionResponse.h
     @brief AppAuth iOS SDK
     @copyright
         Copyright 2017 The AppAuth Authors. All Rights Reserved.
@@ -18,7 +18,7 @@
 
 #import <Foundation/Foundation.h>
 
-@class OIDEndSessionRequest;
+@class EkoOIDEndSessionRequest;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -26,11 +26,11 @@ NS_ASSUME_NONNULL_BEGIN
     @see http://openid.net/specs/openid-connect-session-1_0.html#RPLogout
  */
 
-@interface OIDEndSessionResponse : NSObject <NSCopying, NSSecureCoding>
+@interface EkoOIDEndSessionResponse : NSObject <NSCopying, NSSecureCoding>
 
 /*! @brief The request which was serviced.
  */
-@property(nonatomic, readonly) OIDEndSessionRequest *request;
+@property(nonatomic, readonly) EkoOIDEndSessionRequest *request;
 
 /*! @brief REQUIRED if the "state" parameter was present in the client end-session request. The
         exact value received from the client.
@@ -55,7 +55,7 @@ NS_ASSUME_NONNULL_BEGIN
         properties are populated. Non-normative parameters are placed in the
         @c #additionalParameters dictionary.
  */
-- (instancetype)initWithRequest:(OIDEndSessionRequest *)request
+- (instancetype)initWithRequest:(EkoOIDEndSessionRequest *)request
                      parameters:(NSDictionary<NSString *, NSObject<NSCopying> *> *)parameters
     NS_DESIGNATED_INITIALIZER;
 

@@ -1,4 +1,4 @@
-/*! @file OIDExternalUserAgentSession.h
+/*! @file EkoOIDExternalUserAgentSession.h
     @brief AppAuth iOS SDK
     @copyright
         Copyright 2017 The AppAuth Authors. All Rights Reserved.
@@ -20,23 +20,23 @@ NS_ASSUME_NONNULL_BEGIN
 
 /*! @brief Represents an in-flight external user-agent session.
  */
-@protocol OIDExternalUserAgentSession <NSObject>
+@protocol EkoOIDExternalUserAgentSession <NSObject>
 
 /*! @brief Cancels the code flow session, invoking the request's callback with a cancelled error.
     @remarks Has no effect if called more than once, or after a
-        @c OIDExternalUserAgentSession.resumeExternalUserAgentFlowWithURL: message was received.
-        Will cause an error with code: @c ::OIDErrorCodeProgramCanceledAuthorizationFlow to be
+        @c EkoOIDExternalUserAgentSession.resumeExternalUserAgentFlowWithURL: message was received.
+        Will cause an error with code: @c ::EkoOIDErrorCodeProgramCanceledAuthorizationFlow to be
         passed to the @c callback block passed to
-        @c OIDAuthorizationService.presentAuthorizationRequest:presentingViewController:callback:
+        @c EkoOIDAuthorizationService.presentAuthorizationRequest:presentingViewController:callback:
  */
 - (void)cancel;
 
 /*! @brief Cancels the code flow session, invoking the request's callback with a cancelled error.
     @remarks Has no effect if called more than once, or after a
-        @c OIDExternalUserAgentSession.resumeExternalUserAgentFlowWithURL: message was received.
-        Will cause an error with code: @c ::OIDErrorCodeProgramCanceledAuthorizationFlow to be
+        @c EkoOIDExternalUserAgentSession.resumeExternalUserAgentFlowWithURL: message was received.
+        Will cause an error with code: @c ::EkoOIDErrorCodeProgramCanceledAuthorizationFlow to be
         passed to the @c callback block passed to
-        @c OIDAuthorizationService.presentAuthorizationRequest:presentingViewController:callback:
+        @c EkoOIDAuthorizationService.presentAuthorizationRequest:presentingViewController:callback:
     @param completion The block to be called when the cancel operation ends
  */
 - (void)cancelWithCompletion:(nullable void (^)(void))completion;
@@ -53,7 +53,7 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (BOOL)resumeExternalUserAgentFlowWithURL:(NSURL *)URL;
 
-/*! @brief @c OIDExternalUserAgent or clients should call this method when the
+/*! @brief @c EkoOIDExternalUserAgent or clients should call this method when the
         external user-agent flow failed with a non-OAuth error.
     @param error The error that is the reason for the failure of this external flow.
     @remarks Has no effect if called more than once, or after a @c cancel message was received.

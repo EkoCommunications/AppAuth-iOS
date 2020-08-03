@@ -1,4 +1,4 @@
-/*! @file OIDGrantTypes.m
+/*! @file EkoOIDGrantTypes.m
     @brief AppAuth iOS SDK
     @copyright
         Copyright 2015 Google Inc. All Rights Reserved.
@@ -18,10 +18,10 @@
 
 #import "OIDGrantTypes.h"
 
-NSString *const OIDGrantTypeAuthorizationCode = @"authorization_code";
+NSString *const EkoOIDGrantTypeAuthorizationCode = @"authorization_code";
 
-NSString *const OIDGrantTypeRefreshToken = @"refresh_token";
+NSString *const EkoOIDGrantTypeRefreshToken = @"refresh_token";
 
-NSString *const OIDGrantTypePassword = @"password";
+NSString *const EkoOIDGrantTypePassword = @"password";
 
-NSString *const OIDGrantTypeClientCredentials = @"client_credentials";
+NSString *const EkoOIDGrantTypeClientCredentials = @"client_credentials";

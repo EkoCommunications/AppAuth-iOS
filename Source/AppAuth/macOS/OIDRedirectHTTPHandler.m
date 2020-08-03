@@ -1,4 +1,4 @@
-/*! @file OIDRedirectHTTPHandler.m
+/*! @file EkoOIDRedirectHTTPHandler.m
     @brief AppAuth iOS SDK
     @copyright
         Copyright 2016 Google Inc. All Rights Reserved.
@@ -36,14 +36,14 @@ static NSString *const kHTMLAuthorizationComplete =
 /*! @brief Error warning that the @c currentAuthorizationFlow is not set on this object (likely a
         developer error, unless the user stumbled upon the loopback server before the authorization
         had started completely).
-    @description An object conforming to @c OIDExternalUserAgentSession is returned when the
+    @description An object conforming to @c EkoOIDExternalUserAgentSession is returned when the
         authorization is presented with
-        @c OIDAuthorizationService::presentAuthorizationRequest:callback:. It should be set to
+        @c EkoOIDAuthorizationService::presentAuthorizationRequest:callback:. It should be set to
         @c currentAuthorization when using a loopback redirect.
  */
 static NSString *const kHTMLErrorMissingCurrentAuthorizationFlow =
     @"<html><body>AppAuth Error: No <code>currentAuthorizationFlow</code> is set on the "
-     "<code>OIDRedirectHTTPHandler</code>. Cannot process redirect.</body></html>";
+     "<code>EkoOIDRedirectHTTPHandler</code>. Cannot process redirect.</body></html>";
 
 /*! @brief Error warning that the URL does not represent a valid redirect. This should be rare, may
         happen if the user stumbles upon the loopback server randomly.
@@ -51,7 +51,7 @@ static NSString *const kHTMLErrorMissingCurrentAuthorizationFlow =
 static NSString *const kHTMLErrorRedirectNotValid =
     @"<html><body>AppAuth Error: Not a valid redirect.</body></html>";
 
-@implementation OIDRedirectHTTPHandler {
+@implementation EkoOIDRedirectHTTPHandler {
   HTTPServer *_httpServ;
   NSURL *_successURL;
 }
@@ -106,7 +106,7 @@ static NSString *const kHTMLErrorRedirectNotValid =
 
   // Cancels the pending authorization flow (if any) with error.
   NSError *cancelledError =
-      [OIDErrorUtilities errorWithCode:OIDErrorCodeProgramCanceledAuthorizationFlow
+      [EkoOIDErrorUtilities errorWithCode:EkoOIDErrorCodeProgramCanceledAuthorizationFlow
                        underlyingError:nil
                            description:@"The HTTP listener was cancelled programmatically."];
   [_currentAuthorizationFlow failExternalUserAgentFlowWithError:cancelledError];

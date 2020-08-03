@@ -1,4 +1,4 @@
-/*! @file OIDURLSessionProvider.m
+/*! @file EkoOIDURLSessionProvider.m
  @brief AppAuth iOS SDK
  @copyright
  Copyright 2015 Google Inc. All Rights Reserved.
@@ -22,7 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 static NSURLSession *__nullable gURLSession;
 
-@implementation OIDURLSessionProvider
+@implementation EkoOIDURLSessionProvider
 
 + (NSURLSession *)session {
     if (!gURLSession) {

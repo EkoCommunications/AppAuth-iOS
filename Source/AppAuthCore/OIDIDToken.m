@@ -1,4 +1,4 @@
-/*! @file OIDIDToken.m
+/*! @file EkoOIDIDToken.m
     @brief AppAuth iOS SDK
     @copyright
         Copyright 2017 Google Inc. All Rights Reserved.
@@ -28,7 +28,7 @@ static NSString *const kNonceKey = @"nonce";
 
 #import "OIDFieldMapping.h"
 
-@implementation OIDIDToken
+@implementation EkoOIDIDToken
 
 - (instancetype)initWithIDTokenString:(NSString *)idToken {
   self = [super init];
@@ -45,7 +45,7 @@ static NSString *const kNonceKey = @"nonce";
     return nil;
   }
 
-  [OIDFieldMapping remainingParametersWithMap:[[self class] fieldMap]
+  [EkoOIDFieldMapping remainingParametersWithMap:[[self class] fieldMap]
                                    parameters:_claims
                                      instance:self];
 
@@ -60,20 +60,20 @@ static NSString *const kNonceKey = @"nonce";
 /*! @brief Returns a mapping of incoming parameters to instance variables.
     @return A mapping of incoming parameters to instance variables.
  */
-+ (NSDictionary<NSString *, OIDFieldMapping *> *)fieldMap {
-  static NSMutableDictionary<NSString *, OIDFieldMapping *> *fieldMap;
++ (NSDictionary<NSString *, EkoOIDFieldMapping *> *)fieldMap {
+  static NSMutableDictionary<NSString *, EkoOIDFieldMapping *> *fieldMap;
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
     fieldMap = [NSMutableDictionary dictionary];
 
     fieldMap[kIssKey] =
-        [[OIDFieldMapping alloc] initWithName:@"_issuer"
+        [[EkoOIDFieldMapping alloc] initWithName:@"_issuer"
                                          type:[NSURL class]
-                                   conversion:[OIDFieldMapping URLConversion]];
+                                   conversion:[EkoOIDFieldMapping URLConversion]];
     fieldMap[kSubKey] =
-        [[OIDFieldMapping alloc] initWithName:@"_subject" type:[NSString class]];
+        [[EkoOIDFieldMapping alloc] initWithName:@"_subject" type:[NSString class]];
     fieldMap[kAudKey] =
-        [[OIDFieldMapping alloc] initWithName:@"_audience"
+        [[EkoOIDFieldMapping alloc] initWithName:@"_audience"
                                          type:[NSArray class]
                                    conversion:^id _Nullable(NSObject *_Nullable value) {
           if ([value isKindOfClass:[NSArray class]]) {
@@ -85,7 +85,7 @@ static NSString *const kNonceKey = @"nonce";
           return nil;
         }];
     fieldMap[kExpKey] =
-        [[OIDFieldMapping alloc] initWithName:@"_expiresAt"
+        [[EkoOIDFieldMapping alloc] initWithName:@"_expiresAt"
                                          type:[NSDate class]
                                    conversion:^id _Nullable(NSObject *_Nullable value) {
           if (![value isKindOfClass:[NSNumber class]]) {
@@ -95,7 +95,7 @@ static NSString *const kNonceKey = @"nonce";
           return [NSDate dateWithTimeIntervalSince1970:valueAsNumber.longLongValue];
         }];
     fieldMap[kIatKey] =
-        [[OIDFieldMapping alloc] initWithName:@"_issuedAt"
+        [[EkoOIDFieldMapping alloc] initWithName:@"_issuedAt"
                                          type:[NSDate class]
                                    conversion:^id _Nullable(NSObject *_Nullable value) {
           if (![value isKindOfClass:[NSNumber class]]) {
@@ -105,7 +105,7 @@ static NSString *const kNonceKey = @"nonce";
           return [NSDate dateWithTimeIntervalSince1970:valueAsNumber.longLongValue];
         }];
     fieldMap[kNonceKey] =
-        [[OIDFieldMapping alloc] initWithName:@"_nonce" type:[NSString class]];
+        [[EkoOIDFieldMapping alloc] initWithName:@"_nonce" type:[NSString class]];
   });
   return fieldMap;
 }

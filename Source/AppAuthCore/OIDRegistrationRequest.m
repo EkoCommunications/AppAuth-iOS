@@ -1,4 +1,4 @@
-/*! @file OIDRegistrationRequest.m
+/*! @file EkoOIDRegistrationRequest.m
     @brief AppAuth iOS SDK
     @copyright
         Copyright 2016 The AppAuth for iOS Authors. All Rights Reserved.
@@ -51,12 +51,12 @@ static NSString *const kSubjectTypeKey = @"subject_type";
  */
 static NSString *const kAdditionalParametersKey = @"additionalParameters";
 
-@implementation OIDRegistrationRequest
+@implementation EkoOIDRegistrationRequest
 
 #pragma mark - Initializers
 
 - (instancetype)init
-    OID_UNAVAILABLE_USE_INITIALIZER(
+    EkoOID_UNAVAILABLE_USE_INITIALIZER(
         @selector(initWithConfiguration:
                            redirectURIs:
                           responseTypes:
@@ -66,7 +66,7 @@ static NSString *const kAdditionalParametersKey = @"additionalParameters";
                    additionalParameters:)
     )
 
-- (instancetype)initWithConfiguration:(OIDServiceConfiguration *)configuration
+- (instancetype)initWithConfiguration:(EkoOIDServiceConfiguration *)configuration
             redirectURIs:(NSArray<NSURL *> *)redirectURIs
            responseTypes:(nullable NSArray<NSString *> *)responseTypes
               grantTypes:(nullable NSArray<NSString *> *)grantTypes
@@ -83,7 +83,7 @@ static NSString *const kAdditionalParametersKey = @"additionalParameters";
                 additionalParameters:additionalParameters];
 }
 
-- (instancetype)initWithConfiguration:(OIDServiceConfiguration *)configuration
+- (instancetype)initWithConfiguration:(EkoOIDServiceConfiguration *)configuration
                redirectURIs:(NSArray<NSURL *> *)redirectURIs
               responseTypes:(nullable NSArray<NSString *> *)responseTypes
                  grantTypes:(nullable NSArray<NSString *> *)grantTypes
@@ -103,7 +103,7 @@ static NSString *const kAdditionalParametersKey = @"additionalParameters";
     _additionalParameters =
         [[NSDictionary alloc] initWithDictionary:additionalParameters copyItems:YES];
 
-    _applicationType = OIDApplicationTypeNative;
+    _applicationType = EkoOIDApplicationTypeNative;
   }
   return self;
 }
@@ -125,8 +125,8 @@ static NSString *const kAdditionalParametersKey = @"additionalParameters";
 }
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
-  OIDServiceConfiguration *configuration =
-  [aDecoder decodeObjectOfClass:[OIDServiceConfiguration class]
+  EkoOIDServiceConfiguration *configuration =
+  [aDecoder decodeObjectOfClass:[EkoOIDServiceConfiguration class]
                          forKey:kConfigurationKey];
   NSString *initialAccessToken = [aDecoder decodeObjectOfClass:[NSString class]
                                                         forKey:kInitialAccessToken];
@@ -140,7 +140,7 @@ static NSString *const kAdditionalParametersKey = @"additionalParameters";
                                                  forKey:kSubjectTypeKey];
   NSString *tokenEndpointAuthenticationMethod =
       [aDecoder decodeObjectOfClass:[NSString class]
-                             forKey:OIDTokenEndpointAuthenticationMethodParam];
+                             forKey:EkoOIDTokenEndpointAuthenticationMethodParam];
   NSSet *additionalParameterCodingClasses = [NSSet setWithArray:@[ [NSDictionary class],
                                                                    [NSString class] ]];
   NSDictionary *additionalParameters =
@@ -165,7 +165,7 @@ static NSString *const kAdditionalParametersKey = @"additionalParameters";
   [aCoder encodeObject:_grantTypes forKey:kGrantTypesKey];
   [aCoder encodeObject:_subjectType forKey:kSubjectTypeKey];
   [aCoder encodeObject:_tokenEndpointAuthenticationMethod
-                forKey:OIDTokenEndpointAuthenticationMethodParam];
+                forKey:EkoOIDTokenEndpointAuthenticationMethodParam];
   [aCoder encodeObject:_additionalParameters forKey:kAdditionalParametersKey];
 }
 
@@ -215,8 +215,8 @@ static NSString *const kAdditionalParametersKey = @"additionalParameters";
   for (id obj in _redirectURIs) {
     [redirectURIStrings addObject:[obj absoluteString]];
   }
-  dict[OIDRedirectURIsParam] = redirectURIStrings;
-  dict[OIDApplicationTypeParam] = _applicationType;
+  dict[EkoOIDRedirectURIsParam] = redirectURIStrings;
+  dict[EkoOIDApplicationTypeParam] = _applicationType;
 
   if (_additionalParameters) {
     // Add any additional parameters first to allow them
@@ -224,16 +224,16 @@ static NSString *const kAdditionalParametersKey = @"additionalParameters";
     [dict addEntriesFromDictionary:_additionalParameters];
   }
   if (_responseTypes) {
-    dict[OIDResponseTypesParam] = _responseTypes;
+    dict[EkoOIDResponseTypesParam] = _responseTypes;
   }
   if (_grantTypes) {
-    dict[OIDGrantTypesParam] = _grantTypes;
+    dict[EkoOIDGrantTypesParam] = _grantTypes;
   }
   if (_subjectType) {
-    dict[OIDSubjectTypeParam] = _subjectType;
+    dict[EkoOIDSubjectTypeParam] = _subjectType;
   }
   if (_tokenEndpointAuthenticationMethod) {
-    dict[OIDTokenEndpointAuthenticationMethodParam] = _tokenEndpointAuthenticationMethod;
+    dict[EkoOIDTokenEndpointAuthenticationMethodParam] = _tokenEndpointAuthenticationMethod;
   }
 
   NSError *error;

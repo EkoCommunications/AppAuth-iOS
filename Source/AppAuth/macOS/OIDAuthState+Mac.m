@@ -1,4 +1,4 @@
-/*! @file OIDAuthState+Mac.m
+/*! @file EkoOIDAuthState+Mac.m
     @brief AppAuth iOS SDK
     @copyright
         Copyright 2016 Google Inc. All Rights Reserved.
@@ -24,12 +24,12 @@
 
 #import "OIDExternalUserAgentMac.h"
 
-@implementation OIDAuthState (Mac)
+@implementation EkoOIDAuthState (Mac)
 
-+ (id<OIDExternalUserAgentSession>)
-    authStateByPresentingAuthorizationRequest:(OIDAuthorizationRequest *)authorizationRequest
-                                     callback:(OIDAuthStateAuthorizationCallback)callback {
-  OIDExternalUserAgentMac *externalUserAgent = [[OIDExternalUserAgentMac alloc] init];
++ (id<EkoOIDExternalUserAgentSession>)
+    authStateByPresentingAuthorizationRequest:(EkoOIDAuthorizationRequest *)authorizationRequest
+                                     callback:(EkoOIDAuthStateAuthorizationCallback)callback {
+  EkoOIDExternalUserAgentMac *externalUserAgent = [[EkoOIDExternalUserAgentMac alloc] init];
   return [self authStateByPresentingAuthorizationRequest:authorizationRequest
                                        externalUserAgent:externalUserAgent
                                                 callback:callback];

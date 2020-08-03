@@ -1,4 +1,4 @@
-/*! @file OIDExternalUserAgentIOS.m
+/*! @file EkoOIDExternalUserAgentIOS.m
     @brief AppAuth iOS SDK
     @copyright
         Copyright 2016 Google Inc. All Rights Reserved.
@@ -34,18 +34,18 @@
 NS_ASSUME_NONNULL_BEGIN
 
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= 130000
-@interface OIDExternalUserAgentIOS ()<SFSafariViewControllerDelegate, ASWebAuthenticationPresentationContextProviding>
+@interface EkoOIDExternalUserAgentIOS ()<SFSafariViewControllerDelegate, ASWebAuthenticationPresentationContextProviding>
 @end
 #else
-@interface OIDExternalUserAgentIOS ()<SFSafariViewControllerDelegate>
+@interface EkoOIDExternalUserAgentIOS ()<SFSafariViewControllerDelegate>
 @end
 #endif
 
-@implementation OIDExternalUserAgentIOS {
+@implementation EkoOIDExternalUserAgentIOS {
   UIViewController *_presentingViewController;
 
   BOOL _externalUserAgentFlowInProgress;
-  __weak id<OIDExternalUserAgentSession> _session;
+  __weak id<EkoOIDExternalUserAgentSession> _session;
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wpartial-availability"
   __weak SFSafariViewController *_safariVC;
@@ -75,8 +75,8 @@ NS_ASSUME_NONNULL_BEGIN
   return self;
 }
 
-- (BOOL)presentExternalUserAgentRequest:(id<OIDExternalUserAgentRequest>)request
-                                session:(id<OIDExternalUserAgentSession>)session {
+- (BOOL)presentExternalUserAgentRequest:(id<EkoOIDExternalUserAgentRequest>)request
+                                session:(id<EkoOIDExternalUserAgentSession>)session {
   if (_externalUserAgentFlowInProgress) {
     // TODO: Handle errors as authorization is already in progress.
     return NO;
@@ -91,14 +91,14 @@ NS_ASSUME_NONNULL_BEGIN
   if (@available(iOS 12.0, *)) {
     // ASWebAuthenticationSession doesn't work with guided access (rdar://40809553)
     if (!UIAccessibilityIsGuidedAccessEnabled()) {
-      __weak OIDExternalUserAgentIOS *weakSelf = self;
+      __weak EkoOIDExternalUserAgentIOS *weakSelf = self;
       NSString *redirectScheme = request.redirectScheme;
       ASWebAuthenticationSession *authenticationVC =
           [[ASWebAuthenticationSession alloc] initWithURL:requestURL
                                         callbackURLScheme:redirectScheme
                                         completionHandler:^(NSURL * _Nullable callbackURL,
                                                             NSError * _Nullable error) {
-        __strong OIDExternalUserAgentIOS *strongSelf = weakSelf;
+        __strong EkoOIDExternalUserAgentIOS *strongSelf = weakSelf;
         if (!strongSelf) {
             return;
         }
@@ -107,7 +107,7 @@ NS_ASSUME_NONNULL_BEGIN
           [strongSelf->_session resumeExternalUserAgentFlowWithURL:callbackURL];
         } else {
           NSError *safariError =
-              [OIDErrorUtilities errorWithCode:OIDErrorCodeUserCanceledAuthorizationFlow
+              [EkoOIDErrorUtilities errorWithCode:EkoOIDErrorCodeUserCanceledAuthorizationFlow
                                underlyingError:error
                                    description:nil];
           [strongSelf->_session failExternalUserAgentFlowWithError:safariError];
@@ -126,14 +126,14 @@ NS_ASSUME_NONNULL_BEGIN
   if (@available(iOS 11.0, *)) {
     // SFAuthenticationSession doesn't work with guided access (rdar://40809553)
     if (!openedUserAgent && !UIAccessibilityIsGuidedAccessEnabled()) {
-      __weak OIDExternalUserAgentIOS *weakSelf = self;
+      __weak EkoOIDExternalUserAgentIOS *weakSelf = self;
       NSString *redirectScheme = request.redirectScheme;
       SFAuthenticationSession *authenticationVC =
           [[SFAuthenticationSession alloc] initWithURL:requestURL
                                      callbackURLScheme:redirectScheme
                                      completionHandler:^(NSURL * _Nullable callbackURL,
                                                          NSError * _Nullable error) {
-        __strong OIDExternalUserAgentIOS *strongSelf = weakSelf;
+        __strong EkoOIDExternalUserAgentIOS *strongSelf = weakSelf;
         if (!strongSelf) {
             return;
         }
@@ -142,7 +142,7 @@ NS_ASSUME_NONNULL_BEGIN
           [strongSelf->_session resumeExternalUserAgentFlowWithURL:callbackURL];
         } else {
           NSError *safariError =
-              [OIDErrorUtilities errorWithCode:OIDErrorCodeUserCanceledAuthorizationFlow
+              [EkoOIDErrorUtilities errorWithCode:EkoOIDErrorCodeUserCanceledAuthorizationFlow
                                underlyingError:error
                                    description:@"User cancelled."];
           [strongSelf->_session failExternalUserAgentFlowWithError:safariError];
@@ -170,7 +170,7 @@ NS_ASSUME_NONNULL_BEGIN
 
   if (!openedUserAgent) {
     [self cleanUp];
-    NSError *safariError = [OIDErrorUtilities errorWithCode:OIDErrorCodeSafariOpenError
+    NSError *safariError = [EkoOIDErrorUtilities errorWithCode:EkoOIDErrorCodeSafariOpenError
                                             underlyingError:nil
                                                 description:@"Unable to open Safari."];
     [session failExternalUserAgentFlowWithError:safariError];
@@ -231,9 +231,9 @@ NS_ASSUME_NONNULL_BEGIN
     // Ignore this call if there is no authorization flow in progress.
     return;
   }
-  id<OIDExternalUserAgentSession> session = _session;
+  id<EkoOIDExternalUserAgentSession> session = _session;
   [self cleanUp];
-  NSError *error = [OIDErrorUtilities errorWithCode:OIDErrorCodeUserCanceledAuthorizationFlow
+  NSError *error = [EkoOIDErrorUtilities errorWithCode:EkoOIDErrorCodeUserCanceledAuthorizationFlow
                                     underlyingError:nil
                                         description:@"No external user agent flow in progress."];
   [session failExternalUserAgentFlowWithError:error];
